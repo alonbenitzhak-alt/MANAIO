@@ -11,6 +11,8 @@ export interface Property {
   images: string[];
   agent_name: string;
   agent_email: string;
+  status?: "active" | "closed";
+  created_at?: string;
 }
 
 export interface Lead {

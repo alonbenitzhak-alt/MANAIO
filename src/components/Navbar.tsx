@@ -10,7 +10,7 @@ import LoginForm from "./LoginForm";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
   const { favorites } = useFavorites();
   const { lang, setLang, t } = useLanguage();
 
@@ -67,12 +67,14 @@ export default function Navbar() {
 
               {user ? (
                 <div className="flex items-center gap-3">
-                  <Link
-                    href="/admin"
-                    className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors"
-                  >
-                    {t("nav.admin")}
-                  </Link>
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors"
+                    >
+                      {t("nav.admin")}
+                    </Link>
+                  )}
                   <button
                     onClick={() => signOut()}
                     className="text-sm font-medium text-gray-500 hover:text-red-500 transition-colors"
@@ -140,13 +142,15 @@ export default function Navbar() {
             </button>
             {user ? (
               <>
-                <Link
-                  href="/admin"
-                  className="block text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-lg px-3 py-3"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {t("nav.admin")}
-                </Link>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="block text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-lg px-3 py-3"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {t("nav.admin")}
+                  </Link>
+                )}
                 <button
                   onClick={() => { signOut(); setMobileOpen(false); }}
                   className="block w-full text-start text-base font-medium text-red-500 hover:bg-red-50 rounded-lg px-3 py-3"
