@@ -1,4 +1,4 @@
--- ISRAVEST Supabase Database Schema
+-- NESTIGO Supabase Database Schema
 -- Run this SQL in your Supabase SQL Editor to set up the database
 
 -- Profiles table (extends auth.users)
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   excerpt TEXT NOT NULL DEFAULT '',
   content TEXT NOT NULL DEFAULT '',
   cover_image TEXT NOT NULL DEFAULT '',
-  author TEXT NOT NULL DEFAULT 'ISRAVEST',
+  author TEXT NOT NULL DEFAULT 'NESTIGO',
   category TEXT NOT NULL DEFAULT 'general',
   tags TEXT[] DEFAULT '{}',
   published BOOLEAN DEFAULT false,

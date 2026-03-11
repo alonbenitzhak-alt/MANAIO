@@ -18,7 +18,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("isravest_favorites");
+    const stored = localStorage.getItem("nestigo_favorites");
     if (stored) {
       try {
         setFavorites(JSON.parse(stored));
@@ -29,7 +29,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("isravest_favorites", JSON.stringify(favorites));
+    localStorage.setItem("nestigo_favorites", JSON.stringify(favorites));
   }, [favorites]);
 
   const isFavorite = (id: string) => favorites.includes(id);

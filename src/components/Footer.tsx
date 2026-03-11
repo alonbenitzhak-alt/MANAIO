@@ -13,9 +13,9 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">IV</span>
+                <span className="text-white font-bold text-sm">N</span>
               </div>
-              <span className="text-xl font-bold text-white">ISRAVEST</span>
+              <span className="text-xl font-bold text-white">NESTIGO</span>
             </div>
             <p className="text-sm leading-relaxed text-gray-400">
               {t("footer.description")}
@@ -49,8 +49,8 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">{t("footer.contact")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:info@isravest.com" className="hover:text-white transition-colors">
-                  info@isravest.com
+                <a href="mailto:info@nestigo.com" className="hover:text-white transition-colors">
+                  info@nestigo.com
                 </a>
               </li>
               <li className="text-gray-400">{t("contact.office")}</li>
@@ -63,7 +63,7 @@ export default function Footer() {
             <strong>{t("footer.disclaimer")}:</strong> {t("footer.disclaimerText")}
           </p>
           <p className="text-xs text-gray-500 mt-4">
-            &copy; {new Date().getFullYear()} ISRAVEST. {t("footer.rights")}
+            &copy; {new Date().getFullYear()} NESTIGO. {t("footer.rights")}
           </p>
         </div>
       </div>

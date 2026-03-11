@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 import { LayoutWrapper } from "./layout-wrapper";
 
 export const metadata: Metadata = {
-  title: "ISRAVEST - השקעות נדל\"ן גלובליות למשקיעים ישראלים",
+  title: "NESTIGO - השקעות נדל\"ן גלובליות למשקיעים ישראלים",
   description:
     "הדרך שלך להשקעות בעולם. השקיעו בנכסים ביוון, קפריסין, גאורגיה ופורטוגל עם ליווי מומחים ותמחור שקוף.",
 };

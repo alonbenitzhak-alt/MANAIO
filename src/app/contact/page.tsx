@@ -43,7 +43,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">{t("contact.emailLabel")}</div>
-                  <a href="mailto:info@isravest.com" className="text-primary-600 hover:underline">info@isravest.com</a>
+                  <a href="mailto:info@nestigo.com" className="text-primary-600 hover:underline">info@nestigo.com</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">

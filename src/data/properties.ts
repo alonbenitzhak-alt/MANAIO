@@ -18,7 +18,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop",
     ],
     agent_name: "Nikos Papadopoulos",
-    agent_email: "nikos@isravest.com",
+    agent_email: "nikos@nestigo.com",
   },
   {
     id: "2",
@@ -37,7 +37,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop",
     ],
     agent_name: "Maria Christou",
-    agent_email: "maria@isravest.com",
+    agent_email: "maria@nestigo.com",
   },
   {
     id: "3",
@@ -56,7 +56,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
     ],
     agent_name: "Giorgi Beridze",
-    agent_email: "giorgi@isravest.com",
+    agent_email: "giorgi@nestigo.com",
   },
   {
     id: "4",
@@ -75,7 +75,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&h=600&fit=crop",
     ],
     agent_name: "Sofia Mendes",
-    agent_email: "sofia@isravest.com",
+    agent_email: "sofia@nestigo.com",
   },
   {
     id: "5",
@@ -94,7 +94,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600573472556-e636c2acda9e?w=800&h=600&fit=crop",
     ],
     agent_name: "Andreas Georgiou",
-    agent_email: "andreas@isravest.com",
+    agent_email: "andreas@nestigo.com",
   },
   {
     id: "6",
@@ -113,7 +113,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&h=600&fit=crop",
     ],
     agent_name: "João Silva",
-    agent_email: "joao@isravest.com",
+    agent_email: "joao@nestigo.com",
   },
   {
     id: "7",
@@ -132,7 +132,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600585153490-76fb20a32601?w=800&h=600&fit=crop",
     ],
     agent_name: "Elena Vassilou",
-    agent_email: "elena@isravest.com",
+    agent_email: "elena@nestigo.com",
   },
   {
     id: "8",
@@ -151,7 +151,7 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
     ],
     agent_name: "Lasha Kvaratskhelia",
-    agent_email: "lasha@isravest.com",
+    agent_email: "lasha@nestigo.com",
   },
   {
     id: "9",
@@ -170,6 +170,6 @@ export const properties: Property[] = [
       "https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=800&h=600&fit=crop",
     ],
     agent_name: "Dimitris Alexiou",
-    agent_email: "dimitris@isravest.com",
+    agent_email: "dimitris@nestigo.com",
   },
 ];

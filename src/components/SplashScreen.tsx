@@ -34,7 +34,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
       >
         <img
           src="/logo.jpg"
-          alt="ISRAVEST"
+          alt="NESTIGO"
           className="w-48 h-48 sm:w-64 sm:h-64 object-contain drop-shadow-2xl"
         />
       </div>

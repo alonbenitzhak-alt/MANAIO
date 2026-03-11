@@ -43,7 +43,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "home.featured.title": "נכסי השקעה מומלצים",
     "home.featured.subtitle": "נכסים שנבחרו בקפידה עם פוטנציאל תשואה גבוה בשווקי הנדל\"ן המבטיחים ביותר באירופה.",
     "home.featured.browseAll": "עיין בכל ההשקעות",
-    "home.howItWorks.title": "איך ISRAVEST עובד",
+    "home.howItWorks.title": "איך NESTIGO עובד",
     "home.howItWorks.subtitle": "תהליך פשוט ושקוף מגילוי הנכס ועד השלמת ההשקעה.",
     "home.howItWorks.step": "שלב",
     "home.steps.browse.title": "עיון בנכסים",
@@ -292,11 +292,11 @@ const translations: Record<Lang, Record<string, string>> = {
     "calculator.disclaimer": "הערה: החישובים מבוססים על הנחות ואינם מהווים ייעוץ השקעות. התשואות בפועל עשויות להשתנות. יש להתייעץ עם מומחה לפני קבלת החלטות השקעה.",
 
     // About
-    "about.title": "אודות ISRAVEST",
+    "about.title": "אודות NESTIGO",
     "about.subtitle": "אנחנו מחברים משקיעים ישראלים עם הזדמנויות נדל\"ן פרימיום ברחבי אירופה. עם ניסיון רב שנים וצוות מומחים מקומיים, אנו מציעים ליווי מקצועי לאורך כל תהליך ההשקעה.",
     "about.missionTitle": "המשימה שלנו",
-    "about.missionText": "אנו מאמינים שכל משקיע ישראלי צריך גישה להזדמנויות נדל\"ן בינלאומיות ברמה הגבוהה ביותר. ISRAVEST נוסדה כדי לגשר על הפער בין משקיעים ישראלים לשווקי הנדל\"ן המבטיחים ביותר באירופה, תוך מתן שקיפות מלאה, ליווי מקצועי, וגישה להזדמנויות שבדרך כלל שמורות למשקיעים מוסדיים.",
-    "about.whyTitle": "למה ISRAVEST?",
+    "about.missionText": "אנו מאמינים שכל משקיע ישראלי צריך גישה להזדמנויות נדל\"ן בינלאומיות ברמה הגבוהה ביותר. NESTIGO נוסדה כדי לגשר על הפער בין משקיעים ישראלים לשווקי הנדל\"ן המבטיחים ביותר באירופה, תוך מתן שקיפות מלאה, ליווי מקצועי, וגישה להזדמנויות שבדרך כלל שמורות למשקיעים מוסדיים.",
+    "about.whyTitle": "למה NESTIGO?",
     "about.why1Title": "אמינות ושקיפות",
     "about.why1Desc": "כל נכס עובר בדיקת נאותות מקיפה. אנו מציגים נתונים אמיתיים ותשואות מבוססות שוק, ללא הבטחות מופרזות.",
     "about.why2Title": "מומחיות מקומית",
@@ -339,8 +339,8 @@ const translations: Record<Lang, Record<string, string>> = {
     "howItWorks.step4.desc": "השותפים שלנו יסייעו בכל התיעוד המשפטי, בדיקות הנכס וההסדרים הפיננסיים. אנו עובדים עם עורכי דין ורואי חשבון מקומיים מהימנים.",
     "howItWorks.step5.desc": "השלימו את רכישת הנכס בשקיפות מלאה. הצוות שלנו מנהל את כל תהליך הסגירה, מחתימת חוזים ועד רישום הנכס והעברתו.",
     "howItWorks.step6.desc": "התחילו לייצר הכנסות משכירות או להנות מעליית ערך הנכס. שותפי ניהול הנכסים שלנו יכולים לטפל באיתור שוכרים, תחזוקה וניהול שוטף.",
-    "howItWorks.faq1.q": "מי יכול להשקיע דרך ISRAVEST?",
-    "howItWorks.faq1.a": "ISRAVEST מיועדת בעיקר למשקיעים ישראלים שמעוניינים לגוון את תיק ההשקעות שלהם עם נדל\"ן בינלאומי. עם זאת, הפלטפורמה שלנו פתוחה לכל משקיע מוסמך.",
+    "howItWorks.faq1.q": "מי יכול להשקיע דרך NESTIGO?",
+    "howItWorks.faq1.a": "NESTIGO מיועדת בעיקר למשקיעים ישראלים שמעוניינים לגוון את תיק ההשקעות שלהם עם נדל\"ן בינלאומי. עם זאת, הפלטפורמה שלנו פתוחה לכל משקיע מוסמך.",
     "howItWorks.faq2.q": "מה סכום ההשקעה המינימלי?",
     "howItWorks.faq2.a": "נכסים בפלטפורמה שלנו מתחילים מכ-€68,000 בגאורגיה, עם אפשרויות בכל טווחי התקציב ועד וילות פרימיום מעל €500,000.",
     "howItWorks.faq3.q": "האם צריך לבקר בנכס לפני ההשקעה?",
@@ -360,7 +360,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "countries.backToCountries": "חזרה למדינות",
 
     // Footer
-    "footer.description": "ISRAVEST מחברת משקיעים ישראלים עם הזדמנויות נדל\"ן בינלאומיות פרימיום. חקרו נכסים נבחרים בשווקים גלובליים מובילים עם תמחור שקוף וליווי מומחים.",
+    "footer.description": "NESTIGO מחברת משקיעים ישראלים עם הזדמנויות נדל\"ן בינלאומיות פרימיום. חקרו נכסים נבחרים בשווקים גלובליים מובילים עם תמחור שקוף וליווי מומחים.",
     "footer.quickLinks": "קישורים מהירים",
     "footer.investmentCountries": "מדינות השקעה",
     "footer.contact": "יצירת קשר",
@@ -369,7 +369,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "footer.georgia": "גאורגיה",
     "footer.portugal": "פורטוגל",
     "footer.disclaimer": "הבהרה משפטית",
-    "footer.disclaimerText": "ISRAVEST היא פלטפורמת מידע ואינה מספקת ייעוץ פיננסי, משפטי או מיסויי. כל החלטות ההשקעה צריכות להתקבל לאחר התייעצות עם אנשי מקצוע מוסמכים. ערכי נכסים, תשואות שכירות והערכות תשואה הם תחזיות המבוססות על נתוני שוק ואינם מובטחים. ביצועי עבר אינם מעידים על תוצאות עתידיות.",
+    "footer.disclaimerText": "NESTIGO היא פלטפורמת מידע ואינה מספקת ייעוץ פיננסי, משפטי או מיסויי. כל החלטות ההשקעה צריכות להתקבל לאחר התייעצות עם אנשי מקצוע מוסמכים. ערכי נכסים, תשואות שכירות והערכות תשואה הם תחזיות המבוססות על נתוני שוק ואינם מובטחים. ביצועי עבר אינם מעידים על תוצאות עתידיות.",
     "footer.rights": "כל הזכויות שמורות.",
   },
 
@@ -404,7 +404,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "home.featured.title": "Featured Investment Properties",
     "home.featured.subtitle": "Hand-picked properties with strong ROI potential in Europe's most promising real estate markets.",
     "home.featured.browseAll": "Browse All Investments",
-    "home.howItWorks.title": "How ISRAVEST Works",
+    "home.howItWorks.title": "How NESTIGO Works",
     "home.howItWorks.subtitle": "A simple, transparent process from property discovery to investment completion.",
     "home.howItWorks.step": "STEP",
     "home.steps.browse.title": "Browse Properties",
@@ -653,11 +653,11 @@ const translations: Record<Lang, Record<string, string>> = {
     "calculator.disclaimer": "Note: Calculations are based on assumptions and do not constitute investment advice. Actual returns may vary. Consult a professional before making investment decisions.",
 
     // About
-    "about.title": "About ISRAVEST",
+    "about.title": "About NESTIGO",
     "about.subtitle": "We connect Israeli investors with premium real estate opportunities across Europe. With years of experience and a team of local experts, we offer professional guidance throughout the entire investment process.",
     "about.missionTitle": "Our Mission",
-    "about.missionText": "We believe every Israeli investor deserves access to top-tier international real estate opportunities. ISRAVEST was founded to bridge the gap between Israeli investors and Europe's most promising real estate markets, providing full transparency, professional guidance, and access to opportunities typically reserved for institutional investors.",
-    "about.whyTitle": "Why ISRAVEST?",
+    "about.missionText": "We believe every Israeli investor deserves access to top-tier international real estate opportunities. NESTIGO was founded to bridge the gap between Israeli investors and Europe's most promising real estate markets, providing full transparency, professional guidance, and access to opportunities typically reserved for institutional investors.",
+    "about.whyTitle": "Why NESTIGO?",
     "about.why1Title": "Trust & Transparency",
     "about.why1Desc": "Every property undergoes comprehensive due diligence. We present real data and market-based yields, without exaggerated promises.",
     "about.why2Title": "Local Expertise",
@@ -700,8 +700,8 @@ const translations: Record<Lang, Record<string, string>> = {
     "howItWorks.step4.desc": "Our partners will assist with all legal documentation, property inspections, and financial arrangements. We work with trusted local lawyers and accountants to ensure a smooth transaction.",
     "howItWorks.step5.desc": "Finalize your property purchase with full transparency. Our team manages the entire closing process, from signing contracts to property registration and handover.",
     "howItWorks.step6.desc": "Start generating rental income or benefit from property appreciation. Our property management partners can handle tenant sourcing, maintenance, and ongoing management on your behalf.",
-    "howItWorks.faq1.q": "Who can invest through ISRAVEST?",
-    "howItWorks.faq1.a": "ISRAVEST is primarily designed for Israeli investors looking to diversify their portfolio with international real estate. However, our platform is open to all qualified investors.",
+    "howItWorks.faq1.q": "Who can invest through NESTIGO?",
+    "howItWorks.faq1.a": "NESTIGO is primarily designed for Israeli investors looking to diversify their portfolio with international real estate. However, our platform is open to all qualified investors.",
     "howItWorks.faq2.q": "What is the minimum investment amount?",
     "howItWorks.faq2.a": "Properties on our platform start from approximately €68,000 in Georgia, with options available across all budget ranges up to premium villas exceeding €500,000.",
     "howItWorks.faq3.q": "Do I need to visit the property before investing?",
@@ -721,7 +721,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "countries.backToCountries": "Back to Countries",
 
     // Footer
-    "footer.description": "ISRAVEST connects Israeli investors with premium international real estate opportunities. Explore curated properties in top global markets with transparent pricing and expert guidance.",
+    "footer.description": "NESTIGO connects Israeli investors with premium international real estate opportunities. Explore curated properties in top global markets with transparent pricing and expert guidance.",
     "footer.quickLinks": "Quick Links",
     "footer.investmentCountries": "Investment Countries",
     "footer.contact": "Contact",
@@ -730,7 +730,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "footer.georgia": "Georgia",
     "footer.portugal": "Portugal",
     "footer.disclaimer": "Legal Disclaimer",
-    "footer.disclaimerText": "ISRAVEST is an information platform and does not provide financial, legal, or tax advice. All investment decisions should be made after consulting with qualified professionals. Property values, rental yields, and ROI estimates are projections based on market data and are not guaranteed. Past performance does not indicate future results.",
+    "footer.disclaimerText": "NESTIGO is an information platform and does not provide financial, legal, or tax advice. All investment decisions should be made after consulting with qualified professionals. Property values, rental yields, and ROI estimates are projections based on market data and are not guaranteed. Past performance does not indicate future results.",
     "footer.rights": "All rights reserved.",
   },
 };
@@ -746,7 +746,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("he");
 
   useEffect(() => {
-    const stored = localStorage.getItem("isravest_lang") as Lang | null;
+    const stored = localStorage.getItem("nestigo_lang") as Lang | null;
     if (stored && (stored === "he" || stored === "en")) {
       setLangState(stored);
     }
@@ -754,7 +754,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLang = (newLang: Lang) => {
     setLangState(newLang);
-    localStorage.setItem("isravest_lang", newLang);
+    localStorage.setItem("nestigo_lang", newLang);
   };
 
   const t = (key: string) => translations[lang][key] || key;
