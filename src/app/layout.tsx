@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
 import { Providers } from "./providers";
 import { LayoutWrapper } from "./layout-wrapper";
 
@@ -126,6 +127,7 @@ export default function RootLayout({
             <main className="min-h-screen">{children}</main>
             <Footer />
             {/* <AIChatWidget /> — disabled until official launch */}
+            <CookieBanner />
           </LayoutWrapper>
         </Providers>
       </body>
