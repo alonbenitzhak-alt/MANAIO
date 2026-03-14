@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { sendLeadNotification } from "@/lib/email";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -77,6 +78,17 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error("Lead insert error:", error);
       return NextResponse.json({ error: "Failed to submit lead" }, { status: 500 });
+    }
+
+    // Send email notifications (non-blocking)
+    if (process.env.RESEND_API_KEY) {
+      sendLeadNotification({
+        name: sanitize(name),
+        email: email.trim().toLowerCase(),
+        phone: sanitize(phone),
+        investment_budget: sanitize(investment_budget),
+        message: message ? sanitize(message) : undefined,
+      }).catch((err) => console.error("Email send error:", err));
     }
 
     return NextResponse.json({ success: true, lead: data });
