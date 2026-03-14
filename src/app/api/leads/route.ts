@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { sendLeadNotification } from "@/lib/email";
+import { sendAgentLeadNotification } from "@/lib/email";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -63,13 +63,20 @@ export async function POST(request: NextRequest) {
 
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    const { data, error } = await supabase.from("leads").insert({
+    const sanitizedName = sanitize(name);
+    const sanitizedEmail = email.trim().toLowerCase();
+    const sanitizedPhone = sanitize(phone);
+    const sanitizedBudget = sanitize(investment_budget);
+    const sanitizedMessage = message ? sanitize(message) : null;
+
+    // Save lead to DB (always — admin sees all leads in panel)
+    const { data: lead, error } = await supabase.from("leads").insert({
       property_id: property_id || null,
-      name: sanitize(name),
-      email: email.trim().toLowerCase(),
-      phone: sanitize(phone),
-      investment_budget: sanitize(investment_budget),
-      message: message ? sanitize(message) : null,
+      name: sanitizedName,
+      email: sanitizedEmail,
+      phone: sanitizedPhone,
+      investment_budget: sanitizedBudget,
+      message: sanitizedMessage,
       buyer_id: buyer_id || null,
       agent_id: agent_id || null,
       status: "sent",
@@ -80,18 +87,85 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to submit lead" }, { status: 500 });
     }
 
-    // Send email notifications (non-blocking)
-    if (process.env.RESEND_API_KEY) {
-      sendLeadNotification({
-        name: sanitize(name),
-        email: email.trim().toLowerCase(),
-        phone: sanitize(phone),
-        investment_budget: sanitize(investment_budget),
-        message: message ? sanitize(message) : undefined,
-      }).catch((err) => console.error("Email send error:", err));
+    let conversationId: string | null = null;
+
+    // If buyer is logged in and agent exists — create/find conversation + send first message
+    if (buyer_id && agent_id && property_id) {
+      try {
+        // Find or create conversation
+        const { data: existing } = await supabase
+          .from("conversations")
+          .select("id")
+          .eq("property_id", property_id)
+          .eq("buyer_id", buyer_id)
+          .eq("agent_id", agent_id)
+          .single();
+
+        if (existing) {
+          conversationId = existing.id;
+        } else {
+          const { data: created } = await supabase
+            .from("conversations")
+            .insert({ property_id, buyer_id, agent_id })
+            .select("id")
+            .single();
+          if (created) conversationId = created.id;
+        }
+
+        // Send first message with lead details
+        if (conversationId) {
+          const firstMessage = [
+            `שלום, אני מתעניין/ת בנכס הזה.`,
+            `תקציב השקעה: ${sanitizedBudget}`,
+            sanitizedMessage ? `\n${sanitizedMessage}` : "",
+          ].filter(Boolean).join("\n");
+
+          await supabase.from("messages").insert({
+            conversation_id: conversationId,
+            sender_id: buyer_id,
+            content: firstMessage,
+          });
+        }
+
+        // Create in-app notification for the agent
+        await supabase.from("notifications").insert({
+          user_id: agent_id,
+          type: "lead_update",
+          title: "ליד חדש התקבל",
+          body: `${sanitizedName} מתעניין/ת בנכס שלך (תקציב: ${sanitizedBudget})`,
+          link: "/dashboard/agent?tab=leads",
+        });
+      } catch (err) {
+        // Non-critical — lead is already saved, don't fail the request
+        console.error("Conversation/notification error:", err);
+      }
     }
 
-    return NextResponse.json({ success: true, lead: data });
+    // Send email to the AGENT (not admin) — so they know to check the platform
+    if (process.env.RESEND_API_KEY && agent_id) {
+      // Look up agent email
+      const { data: agentProfile } = await supabase
+        .from("profiles")
+        .select("email, full_name")
+        .eq("id", agent_id)
+        .single();
+
+      if (agentProfile?.email) {
+        sendAgentLeadNotification({
+          agentEmail: agentProfile.email,
+          agentName: agentProfile.full_name || "סוכן",
+          buyerName: sanitizedName,
+          budget: sanitizedBudget,
+          message: sanitizedMessage || undefined,
+        }).catch((err) => console.error("Agent email error:", err));
+      }
+    }
+
+    return NextResponse.json({
+      success: true,
+      lead,
+      conversationId,
+    });
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }

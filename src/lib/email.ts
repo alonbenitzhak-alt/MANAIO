@@ -2,6 +2,7 @@ import { Resend } from "resend";
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "MANAIO <noreply@mymanaio.com>";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "alon.benitzhak@gmail.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mymanaio.com";
 
 function getResend() {
   const key = process.env.RESEND_API_KEY;
@@ -9,50 +10,32 @@ function getResend() {
   return new Resend(key);
 }
 
-export async function sendLeadNotification(lead: {
-  name: string;
-  email: string;
-  phone: string;
-  investment_budget: string;
-  property_title?: string;
+// Notify the AGENT (not admin) about a new lead — directs them to the platform
+export async function sendAgentLeadNotification(data: {
+  agentEmail: string;
+  agentName: string;
+  buyerName: string;
+  budget: string;
   message?: string;
 }) {
   const resend = getResend();
 
-  // Notify admin about new lead
   await resend.emails.send({
     from: FROM_EMAIL,
-    to: ADMIN_EMAIL,
-    subject: `ליד חדש מ-MANAIO: ${lead.name}`,
+    to: data.agentEmail,
+    subject: `MANAIO - ליד חדש: ${data.buyerName}`,
     html: `
       <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e3a5f;">ליד חדש התקבל!</h2>
-        <table style="width: 100%; border-collapse: collapse;">
-          <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">שם:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.name}</td></tr>
-          <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">אימייל:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.email}</td></tr>
-          <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">טלפון:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.phone}</td></tr>
-          <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">תקציב:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.investment_budget}</td></tr>
-          ${lead.property_title ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">נכס:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.property_title}</td></tr>` : ""}
-          ${lead.message ? `<tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">הודעה:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${lead.message}</td></tr>` : ""}
-        </table>
-        <p style="color: #666; margin-top: 20px;">נשלח מ-MANAIO | <a href="https://mymanaio.com/admin">פאנל ניהול</a></p>
-      </div>
-    `,
-  });
-
-  // Send confirmation to the lead
-  await resend.emails.send({
-    from: FROM_EMAIL,
-    to: lead.email,
-    subject: "MANAIO - קיבלנו את פנייתך!",
-    html: `
-      <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #1e3a5f;">שלום ${lead.name},</h2>
-        <p>תודה שפנית אלינו! קיבלנו את בקשתך ונחזור אליך בהקדם.</p>
-        ${lead.property_title ? `<p>פנייתך לגבי הנכס: <strong>${lead.property_title}</strong></p>` : ""}
-        <p>בינתיים, מוזמן/ת לעיין בנכסים נוספים באתר שלנו.</p>
-        <a href="https://mymanaio.com/properties" style="display: inline-block; padding: 12px 24px; background-color: #1e3a5f; color: white; text-decoration: none; border-radius: 8px; margin-top: 10px;">צפייה בנכסים</a>
-        <p style="color: #666; margin-top: 30px;">בברכה,<br/>צוות MANAIO</p>
+        <h2 style="color: #1e3a5f;">שלום ${data.agentName},</h2>
+        <p>יש לך פנייה חדשה מפלטפורמת MANAIO!</p>
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 16px 0;">
+          <p style="margin: 4px 0;"><strong>שם המשקיע:</strong> ${data.buyerName}</p>
+          <p style="margin: 4px 0;"><strong>תקציב השקעה:</strong> ${data.budget}</p>
+          ${data.message ? `<p style="margin: 4px 0;"><strong>הודעה:</strong> ${data.message}</p>` : ""}
+        </div>
+        <p>המשקיע ממתין לך בצ'אט הפנימי. היכנס לפלטפורמה כדי להמשיך את השיחה:</p>
+        <a href="${SITE_URL}/dashboard/agent?tab=chats" style="display: inline-block; padding: 14px 28px; background-color: #1e3a5f; color: white; text-decoration: none; border-radius: 10px; margin-top: 12px; font-weight: bold;">כניסה לצ'אט</a>
+        <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">הודעה אוטומטית מפלטפורמת MANAIO</p>
       </div>
     `,
   });
