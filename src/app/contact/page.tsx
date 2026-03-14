@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ContactPage() {
@@ -13,8 +12,12 @@ export default function ContactPage() {
     e.preventDefault();
     setStatus("loading");
     try {
-      const { error } = await supabase.from("leads").insert({ property_id: null, ...form });
-      if (error) throw error;
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, property_id: null }),
+      });
+      if (!res.ok) throw new Error("Failed");
       setStatus("success");
       setForm({ name: "", email: "", phone: "", investment_budget: "", message: "" });
     } catch {

@@ -225,7 +225,7 @@ export default function PropertyDetailsPage({
 
           <div className="lg:col-span-1">
             <div className="sticky top-24">
-              <LeadForm propertyId={property.id} />
+              <LeadForm propertyId={property.id} agentId={property.agent_id} />
             </div>
           </div>
         </div>

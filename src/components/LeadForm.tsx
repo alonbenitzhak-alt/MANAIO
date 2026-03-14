@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useAuth } from "@/lib/AuthContext";
 
-export default function LeadForm({ propertyId }: { propertyId: string }) {
+export default function LeadForm({ propertyId, agentId }: { propertyId: string; agentId?: string }) {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -14,16 +15,33 @@ export default function LeadForm({ propertyId }: { propertyId: string }) {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
+    setErrorMsg("");
     try {
-      const { error } = await supabase.from("leads").insert({ property_id: propertyId, ...form });
-      if (error) throw error;
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          property_id: propertyId,
+          ...form,
+          buyer_id: user?.id || null,
+          agent_id: agentId || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setErrorMsg(data.error || "Failed to submit");
+        setStatus("error");
+        return;
+      }
       setStatus("success");
       setForm({ name: "", email: "", phone: "", investment_budget: "", message: "" });
     } catch {
+      setErrorMsg("Network error. Please try again.");
       setStatus("error");
     }
   };
@@ -77,7 +95,7 @@ export default function LeadForm({ propertyId }: { propertyId: string }) {
         <button type="submit" disabled={status === "loading"} className="w-full bg-primary-600 text-white py-3 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           {status === "loading" ? t("form.submitting") : t("form.submit")}
         </button>
-        {status === "error" && <p className="text-red-500 text-sm text-center">{t("form.error")}</p>}
+        {status === "error" && <p className="text-red-500 text-sm text-center">{errorMsg || t("form.error")}</p>}
       </form>
     </div>
   );

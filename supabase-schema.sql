@@ -17,12 +17,19 @@ CREATE TABLE IF NOT EXISTS profiles (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Auto-create profile on signup
+-- Auto-create profile on signup (never allows 'admin' role from signup)
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
+DECLARE
+  requested_role TEXT;
 BEGIN
+  requested_role := COALESCE(NEW.raw_user_meta_data->>'role', 'buyer');
+  -- Only allow 'buyer' or 'agent' - admin must be set manually in DB
+  IF requested_role NOT IN ('buyer', 'agent') THEN
+    requested_role := 'buyer';
+  END IF;
   INSERT INTO public.profiles (id, email, role)
-  VALUES (NEW.id, NEW.email, COALESCE(NEW.raw_user_meta_data->>'role', 'buyer'));
+  VALUES (NEW.id, NEW.email, requested_role);
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -144,8 +151,14 @@ ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
 CREATE POLICY "Users can read own profile" ON profiles FOR SELECT USING (auth.uid() = id);
-CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
+-- Users can update own profile but NOT their role (role changes require admin)
+CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE
+  USING (auth.uid() = id)
+  WITH CHECK (auth.uid() = id AND role = (SELECT role FROM profiles WHERE id = auth.uid()));
 CREATE POLICY "Admin can read all profiles" ON profiles FOR SELECT USING (
+  EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
+);
+CREATE POLICY "Admin can update any profile" ON profiles FOR UPDATE USING (
   EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
 );
 

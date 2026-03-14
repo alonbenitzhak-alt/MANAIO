@@ -5,8 +5,6 @@ import { supabase } from "./supabase";
 import type { User, Session } from "@supabase/supabase-js";
 import type { Profile, UserRole } from "./types";
 
-const ADMIN_EMAIL = "alon.benitzhak@gmail.com";
-
 interface AuthContextType {
   user: User | null;
   session: Session | null;
@@ -88,10 +86,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signUp = async (email: string, password: string, role: UserRole = "buyer") => {
+    // Never allow signing up as admin - admin role is set in DB only
+    const safeRole = role === "admin" ? "buyer" : role;
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { role } },
+      options: { data: { role: safeRole } },
     });
     return { error: error?.message ?? null };
   };
@@ -116,10 +116,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error?.message ?? null };
   };
 
-  const isAdmin = user?.email === ADMIN_EMAIL || profile?.role === "admin";
+  const isAdmin = profile?.role === "admin";
   const isAgent = profile?.role === "agent" || isAdmin;
   const isBuyer = profile?.role === "buyer";
-  const role: UserRole | null = isAdmin ? "admin" : profile?.role ?? null;
+  const role: UserRole | null = profile?.role ?? null;
 
   return (
     <AuthContext.Provider value={{

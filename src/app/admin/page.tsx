@@ -7,8 +7,6 @@ import { useProperties } from "@/lib/PropertiesContext";
 import { Property, Lead } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 
-const ADMIN_EMAIL = "alon.benitzhak@gmail.com";
-
 type Tab = "properties" | "closed" | "leads" | "agents" | "users";
 
 /* ─────────────── Property Form ─────────────── */

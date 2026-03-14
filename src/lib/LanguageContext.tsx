@@ -394,6 +394,8 @@ const translations: Record<Lang, Record<string, string>> = {
     "footer.disclaimer": "הבהרה משפטית",
     "footer.disclaimerText": "NESTIGO היא פלטפורמת מידע ואינה מספקת ייעוץ פיננסי, משפטי או מיסויי. כל החלטות ההשקעה צריכות להתקבל לאחר התייעצות עם אנשי מקצוע מוסמכים. ערכי נכסים, תשואות שכירות והערכות תשואה הם תחזיות המבוססות על נתוני שוק ואינם מובטחים. ביצועי עבר אינם מעידים על תוצאות עתידיות.",
     "footer.rights": "כל הזכויות שמורות.",
+    "footer.privacy": "מדיניות פרטיות",
+    "footer.terms": "תנאי שימוש",
   },
 
   en: {
@@ -778,6 +780,8 @@ const translations: Record<Lang, Record<string, string>> = {
     "footer.disclaimer": "Legal Disclaimer",
     "footer.disclaimerText": "NESTIGO is an information platform and does not provide financial, legal, or tax advice. All investment decisions should be made after consulting with qualified professionals. Property values, rental yields, and ROI estimates are projections based on market data and are not guaranteed. Past performance does not indicate future results.",
     "footer.rights": "All rights reserved.",
+    "footer.privacy": "Privacy Policy",
+    "footer.terms": "Terms of Service",
   },
 };
 

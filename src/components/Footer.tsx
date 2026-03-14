@@ -62,9 +62,17 @@ export default function Footer() {
           <p className="text-xs text-gray-500 leading-relaxed">
             <strong>{t("footer.disclaimer")}:</strong> {t("footer.disclaimerText")}
           </p>
-          <p className="text-xs text-gray-500 mt-4">
-            &copy; {new Date().getFullYear()} NESTIGO. {t("footer.rights")}
-          </p>
+          <div className="flex items-center gap-4 mt-4">
+            <p className="text-xs text-gray-500">
+              &copy; {new Date().getFullYear()} NESTIGO. {t("footer.rights")}
+            </p>
+            <Link href="/privacy" className="text-xs text-gray-500 hover:text-white transition-colors">
+              {t("footer.privacy") || "מדיניות פרטיות"}
+            </Link>
+            <Link href="/terms" className="text-xs text-gray-500 hover:text-white transition-colors">
+              {t("footer.terms") || "תנאי שימוש"}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
