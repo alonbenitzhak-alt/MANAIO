@@ -3,7 +3,6 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AIChatWidget from "@/components/AIChatWidget";
 import { Providers } from "./providers";
 import { LayoutWrapper } from "./layout-wrapper";
 
@@ -126,7 +125,7 @@ export default function RootLayout({
             <Navbar />
             <main className="min-h-screen">{children}</main>
             <Footer />
-            <AIChatWidget />
+            {/* <AIChatWidget /> — disabled until official launch */}
           </LayoutWrapper>
         </Providers>
       </body>
