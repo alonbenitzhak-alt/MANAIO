@@ -75,6 +75,7 @@ export default function AgentRegisterPage() {
             full_name: fullName,
             phone,
             company,
+            partnership_signed: agreedToPartnership,
           };
 
           // Upload license

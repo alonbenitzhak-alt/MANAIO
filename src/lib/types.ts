@@ -15,6 +15,7 @@ export interface Profile {
   approved?: boolean | null;
   license_url?: string | null;
   id_url?: string | null;
+  partnership_signed?: boolean | null;
   created_at: string;
 }
 

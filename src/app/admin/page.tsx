@@ -367,23 +367,61 @@ function AgentsTab() {
 }
 
 /* ─────────────── Pending Agents Tab ─────────────── */
+type PendingAgent = {
+  id: string;
+  email: string;
+  full_name: string;
+  phone: string;
+  company: string;
+  license_url: string | null;
+  id_url: string | null;
+  partnership_signed: boolean | null;
+  created_at: string;
+};
+
+function DocStatus({ url, label, icon }: { url: string | null; label: string; icon: React.ReactNode }) {
+  if (url) {
+    return (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium hover:bg-green-100 transition-colors"
+      >
+        <span className="w-5 h-5 text-green-500 shrink-0">{icon}</span>
+        <span>{label}</span>
+        <svg className="w-3.5 h-3.5 text-green-400 ms-auto shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 rounded-xl px-3 py-2 text-sm font-medium">
+      <span className="w-5 h-5 text-red-400 shrink-0">{icon}</span>
+      <span>{label}</span>
+      <span className="ms-auto text-xs text-red-400">חסר</span>
+    </div>
+  );
+}
+
 function PendingAgentsTab() {
-  const [agents, setAgents] = useState<{ id: string; email: string; full_name: string; phone: string; company: string; license_url: string | null; id_url: string | null; created_at: string }[]>([]);
+  const [agents, setAgents] = useState<PendingAgent[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetch = async () => {
+    const fetchAgents = async () => {
       const { data } = await supabase
         .from("profiles")
-        .select("id, email, full_name, phone, company, license_url, id_url, created_at")
+        .select("id, email, full_name, phone, company, license_url, id_url, partnership_signed, created_at")
         .eq("role", "agent")
         .or("approved.is.null,approved.eq.false")
         .order("created_at", { ascending: false });
       if (data) setAgents(data);
       setLoading(false);
     };
-    fetch();
+    fetchAgents();
   }, []);
 
   const handleApprove = async (id: string) => {
@@ -427,69 +465,94 @@ function PendingAgentsTab() {
       <p>אין בקשות סוכנים ממתינות</p>
     </div>
   ) : (
-    <div className="space-y-4">
-      {agents.map((agent) => (
-        <div key={agent.id} className="bg-white rounded-2xl border border-amber-200 p-5">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">ממתין לאישור</span>
+    <div className="space-y-5">
+      {agents.map((agent) => {
+        const allDocsOk = !!agent.license_url && !!agent.id_url && !!agent.partnership_signed;
+        return (
+          <div key={agent.id} className={`bg-white rounded-2xl border p-6 shadow-sm ${allDocsOk ? "border-amber-200" : "border-red-200"}`}>
+            {/* Header row */}
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <div>
+                <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                  <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">ממתין לאישור</span>
+                  {!allDocsOk && (
+                    <span className="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-1 rounded-full">מסמכים חסרים</span>
+                  )}
+                </div>
+                <h3 className="font-bold text-gray-900 text-lg leading-tight">{agent.full_name || "—"}</h3>
+                <a href={`mailto:${agent.email}`} className="text-sm text-primary-600 hover:underline">{agent.email}</a>
+                {agent.phone && <p className="text-sm text-gray-500 mt-0.5">{agent.phone}</p>}
+                {agent.company && <p className="text-sm text-gray-500">{agent.company}</p>}
+                <p className="text-xs text-gray-400 mt-1">
+                  נרשם: {new Date(agent.created_at).toLocaleDateString("he-IL")}
+                </p>
               </div>
-              <h3 className="font-semibold text-gray-900 text-lg">{agent.full_name || "—"}</h3>
-              <p className="text-sm text-gray-600">{agent.email}</p>
-              {agent.company && <p className="text-sm text-gray-500">{agent.company}</p>}
-              {agent.phone && <p className="text-sm text-gray-500">{agent.phone}</p>}
-              <p className="text-xs text-gray-400 mt-1">
-                נרשם: {new Date(agent.created_at).toLocaleDateString("he-IL")}
-              </p>
-              <div className="flex gap-3 mt-2 flex-wrap">
-                {agent.license_url && (
-                  <a
-                    href={agent.license_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    רישיון תיווך
-                  </a>
-                )}
-                {agent.id_url && (
-                  <a
-                    href={agent.id_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2" />
-                    </svg>
-                    תעודת זהות
-                  </a>
-                )}
+              <div className="flex gap-2 shrink-0">
+                <button
+                  onClick={() => handleApprove(agent.id)}
+                  disabled={actionLoading === agent.id}
+                  className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  אשר
+                </button>
+                <button
+                  onClick={() => handleReject(agent.id)}
+                  disabled={actionLoading === agent.id}
+                  className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  דחה
+                </button>
               </div>
             </div>
-            <div className="flex gap-2 shrink-0">
-              <button
-                onClick={() => handleApprove(agent.id)}
-                disabled={actionLoading === agent.id}
-                className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50"
-              >
-                ✓ אשר
-              </button>
-              <button
-                onClick={() => handleReject(agent.id)}
-                disabled={actionLoading === agent.id}
-                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50"
-              >
-                ✗ דחה
-              </button>
+
+            {/* Documents & contract status */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <DocStatus
+                url={agent.license_url}
+                label="רישיון תיווך"
+                icon={
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                }
+              />
+              <DocStatus
+                url={agent.id_url}
+                label="תעודת זהות"
+                icon={
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2" />
+                  </svg>
+                }
+              />
+              {/* Partnership agreement status (no URL, just signed/not) */}
+              {agent.partnership_signed ? (
+                <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium">
+                  <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>הסכם שותפות</span>
+                  <span className="ms-auto text-xs text-green-500">אושר</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 rounded-xl px-3 py-2 text-sm font-medium">
+                  <svg className="w-5 h-5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>הסכם שותפות</span>
+                  <span className="ms-auto text-xs text-red-400">לא נחתם</span>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
