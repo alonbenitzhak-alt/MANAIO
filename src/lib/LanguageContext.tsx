@@ -26,6 +26,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.favorites": "מועדפים",
 
     // Home
+    "home.hero.badge": "השקעות נדל\"ן בינלאומיות",
     "home.hero.title": "השקעות נדל\"ן גלובליות למשקיעים ישראלים",
     "home.hero.subtitle": "גלו נכסי השקעה פרימיום בשווקים המובילים של אירופה. הזדמנויות שנבחרו בקפידה עם תמחור שקוף ותשואות גבוהות.",
     "home.search.country": "מדינה",
@@ -412,6 +413,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.favorites": "Favorites",
 
     // Home
+    "home.hero.badge": "International Real Estate Investments",
     "home.hero.title": "Global Real Estate Investments for Israeli Investors",
     "home.hero.subtitle": "Discover premium investment properties in Europe's top markets. Expert-curated opportunities with transparent pricing and high returns.",
     "home.search.country": "Country",
