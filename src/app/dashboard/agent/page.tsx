@@ -33,7 +33,18 @@ const statusLabels: Record<string, Record<LeadStatus, string>> = {
   en: { sent: "Sent", in_progress: "In Progress", answered: "Answered", closed: "Closed" },
 };
 
-const AMENITIES_LIST = ["חניה", "מרפסת", "בריכה", "מעלית", "מחסן", "מאובזר", "נוף לים", "גינה", "מכון כושר", "שומר"];
+const AMENITIES_LIST = [
+  { key: "amenity.parking", he: "חניה", en: "Parking" },
+  { key: "amenity.balcony", he: "מרפסת", en: "Balcony" },
+  { key: "amenity.pool", he: "בריכה", en: "Pool" },
+  { key: "amenity.elevator", he: "מעלית", en: "Elevator" },
+  { key: "amenity.storage", he: "מחסן", en: "Storage" },
+  { key: "amenity.furnished", he: "מאובזר", en: "Furnished" },
+  { key: "amenity.seaView", he: "נוף לים", en: "Sea View" },
+  { key: "amenity.garden", he: "גינה", en: "Garden" },
+  { key: "amenity.gym", he: "מכון כושר", en: "Gym" },
+  { key: "amenity.security", he: "שומר", en: "Security" },
+];
 const PROPERTY_TYPES = ["Apartment", "Land", "Detached House", "Villa", "Maisonette", "Apartment Complex"];
 const CURRENCIES = ["EUR", "USD", "GBP", "ILS"] as const;
 
@@ -255,11 +266,11 @@ function AgentPropertyForm({
         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">{lang === "he" ? "מתקנים ואביזרים" : "Amenities"}</p>
         <div className="flex flex-wrap gap-2">
           {AMENITIES_LIST.map((a) => (
-            <button key={a} type="button" onClick={() => toggleAmenity(a)}
+            <button key={a.he} type="button" onClick={() => toggleAmenity(a.he)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                form.amenities.includes(a) ? "bg-primary-600 text-white border-primary-600" : "bg-white text-gray-600 border-gray-300 hover:border-primary-400"
+                form.amenities.includes(a.he) ? "bg-primary-600 text-white border-primary-600" : "bg-white text-gray-600 border-gray-300 hover:border-primary-400"
               }`}>
-              {a}
+              {lang === "he" ? a.he : a.en}
             </button>
           ))}
         </div>

@@ -222,7 +222,7 @@ export default function Navbar() {
                   </button>
                   <span className="text-gray-300">|</span>
                   <Link href="/register/buyer" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">
-                    {lang === "he" ? "הרשמה" : "Register"}
+                    {t("nav.register")}
                   </Link>
                 </div>
               )}
@@ -231,7 +231,7 @@ export default function Navbar() {
                 href={isAgent ? "/dashboard/agent" : "/properties"}
                 className="bg-primary-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-primary-700 transition-colors"
               >
-                {isAgent ? (lang === "he" ? "הנכסים שלי" : "My Properties") : t("nav.browseInvestments")}
+                {isAgent ? t("nav.myProperties") : t("nav.browseInvestments")}
               </Link>
             </div>
 
@@ -328,14 +328,14 @@ export default function Navbar() {
                   className="block text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-lg px-3 py-3"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {lang === "he" ? "הרשמה כמשקיע" : "Register as Investor"}
+                  {t("auth.registerAsInvestor")}
                 </Link>
                 <Link
                   href="/register/agent"
                   className="block text-base font-medium text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-lg px-3 py-3"
                   onClick={() => setMobileOpen(false)}
                 >
-                  {lang === "he" ? "הרשמה כסוכן" : "Register as Agent"}
+                  {t("auth.registerAsAgent")}
                 </Link>
               </>
             )}
@@ -345,7 +345,7 @@ export default function Navbar() {
                 className="block text-center bg-primary-600 text-white px-5 py-3.5 rounded-xl text-base font-semibold"
                 onClick={() => setMobileOpen(false)}
               >
-                {isAgent ? (lang === "he" ? "הנכסים שלי" : "My Properties") : t("nav.browseInvestments")}
+                {isAgent ? t("nav.myProperties") : t("nav.browseInvestments")}
               </Link>
             </div>
           </div>

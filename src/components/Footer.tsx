@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Footer() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -41,12 +41,12 @@ export default function Footer() {
               <li><Link href="/countries/cyprus" className="hover:text-white transition-colors">{t("footer.cyprus")}</Link></li>
               <li>
                 <span className="text-gray-500 cursor-default">
-                  {t("footer.georgia")} <span className="text-xs text-gold-500">({lang === "he" ? "בקרוב" : "Soon"})</span>
+                  {t("footer.georgia")} <span className="text-xs text-gold-500">({t("footer.soon")})</span>
                 </span>
               </li>
               <li>
                 <span className="text-gray-500 cursor-default">
-                  {t("footer.portugal")} <span className="text-xs text-gold-500">({lang === "he" ? "בקרוב" : "Soon"})</span>
+                  {t("footer.portugal")} <span className="text-xs text-gold-500">({t("footer.soon")})</span>
                 </span>
               </li>
             </ul>

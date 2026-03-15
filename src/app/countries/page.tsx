@@ -7,7 +7,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 
 export default function CountriesPage() {
   const { properties } = useProperties();
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function CountriesPage() {
                 >
                   {/* Coming Soon badge */}
                   <div className="absolute top-4 end-4 z-10 bg-gold-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
-                    {lang === "he" ? "בקרוב" : "Coming Soon"}
+                    {t("countries.comingSoon")}
                   </div>
                   <div className="relative h-56 overflow-hidden">
                     <img src={country.image} alt={country.name} className="w-full h-full object-cover grayscale-[30%]" />
@@ -39,7 +39,7 @@ export default function CountriesPage() {
                     <div className="absolute bottom-4 left-5">
                       <h2 className="text-white text-2xl font-bold">{country.name}</h2>
                       <p className="text-white/70 text-sm">
-                        {lang === "he" ? "עומד לצאת בקרוב" : "Launching soon"}
+                        {t("countries.launchingSoon")}
                       </p>
                     </div>
                   </div>

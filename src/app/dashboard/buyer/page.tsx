@@ -148,7 +148,7 @@ export default function BuyerDashboard() {
       .from("leads")
       .update({ updated_at: new Date().toISOString() })
       .eq("id", leadId);
-    alert(lang === "he" ? "תזכורת נשלחה לסוכן" : "Reminder sent to agent");
+    alert(t("dashboard.buyer.reminderSent"));
   };
 
   const tabs = [
@@ -231,7 +231,7 @@ export default function BuyerDashboard() {
                       </svg>
                     </button>
                     <span className="absolute top-3 left-3 bg-accent-600 text-white text-xs font-bold px-2.5 py-1 rounded-lg">
-                      {p.expected_roi}% ROI
+                      {p.expected_roi}% {t("card.roi")}
                     </span>
                   </div>
                   <div className="p-5">

@@ -6,6 +6,7 @@ import LoginForm from "@/components/LoginForm";
 import { useProperties } from "@/lib/PropertiesContext";
 import { Property, Lead, Payment, PaymentStatus, PaymentType } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
+import { useLanguage } from "@/lib/LanguageContext";
 
 type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance";
 
@@ -80,29 +81,30 @@ function PropertyForm({
     onSave({ ...form, images: reordered, expected_roi: form.show_roi ? form.expected_roi : 0 });
   };
 
+  const { t } = useLanguage();
   const inp = "w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none";
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
-      <h3 className="text-lg font-bold text-gray-900">{property ? "עריכת נכס" : "הוספת נכס חדש"}</h3>
+      <h3 className="text-lg font-bold text-gray-900">{property ? t("admin.form.editProperty") : t("admin.form.addNewProperty")}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-1">כותרת</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.titleLabel")}</label>
           <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">מדינה</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("detail.country")}</label>
           <select value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className={inp + " bg-white"}>
-            <option value="Greece">יוון</option><option value="Cyprus">קפריסין</option>
-            <option value="Georgia">גאורגיה</option><option value="Portugal">פורטוגל</option>
+            <option value="Greece">{t("footer.greece")}</option><option value="Cyprus">{t("footer.cyprus")}</option>
+            <option value="Georgia">{t("footer.georgia")}</option><option value="Portugal">{t("footer.portugal")}</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">עיר</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.city")}</label>
           <input type="text" required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">מחיר</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("card.price")}</label>
           <div className="flex gap-2">
             <select value={form.currency || "EUR"} onChange={(e) => setForm({ ...form, currency: e.target.value as "EUR" | "USD" | "GBP" | "ILS" })} className="px-3 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-primary-500 outline-none">
               {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -113,49 +115,49 @@ function PropertyForm({
         <div>
           <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1 cursor-pointer">
             <input type="checkbox" checked={form.show_roi} onChange={(e) => setForm({ ...form, show_roi: e.target.checked })} className="w-4 h-4 text-primary-600 rounded" />
-            תשואה צפויה (%)
+            {t("admin.form.expectedRoi")}
           </label>
           {form.show_roi && (
             <input type="number" min={0} step={0.1} value={form.expected_roi} onChange={(e) => setForm({ ...form, expected_roi: parseFloat(e.target.value) || 0 })} className={inp} />
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">חדרי שינה</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.bedrooms")}</label>
           <input type="number" required min={0} value={form.bedrooms} onChange={(e) => setForm({ ...form, bedrooms: parseInt(e.target.value) || 1 })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">סוג נכס</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("detail.propertyType")}</label>
           <select value={form.property_type} onChange={(e) => setForm({ ...form, property_type: e.target.value })} className={inp + " bg-white"}>
-            {ADMIN_PROPERTY_TYPES.map((pt) => <option key={pt} value={pt}>{pt}</option>)}
+            {ADMIN_PROPERTY_TYPES.map((pt) => <option key={pt} value={pt}>{t(`propertyType.${pt.toLowerCase().replace(/ /g, "")}`) || pt}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">שם סוכן</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.agentName")}</label>
           <input type="text" required value={form.agent_name} onChange={(e) => setForm({ ...form, agent_name: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">אימייל סוכן</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.agentEmail")}</label>
           <input type="email" required value={form.agent_email} onChange={(e) => setForm({ ...form, agent_email: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">סטטוס</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.status")}</label>
           <select value={form.status || "active"} onChange={(e) => setForm({ ...form, status: e.target.value as "active" | "closed" })} className={inp + " bg-white"}>
-            <option value="active">פעיל</option><option value="closed">סגור</option>
+            <option value="active">{t("admin.form.statusActive")}</option><option value="closed">{t("admin.form.statusClosed")}</option>
           </select>
         </div>
         {/* PREMIUM — admin only */}
         <div className="flex items-center gap-2 pt-5">
           <input type="checkbox" id="premium" checked={!!form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 text-amber-500 rounded" />
-          <label htmlFor="premium" className="text-sm font-semibold text-amber-600 cursor-pointer">⭐ נכס פרימיום</label>
+          <label htmlFor="premium" className="text-sm font-semibold text-amber-600 cursor-pointer">{t("admin.form.premium")}</label>
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">תיאור</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">{t("dashboard.agent.description")}</label>
         <textarea rows={3} required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp + " resize-none"} />
       </div>
       {/* Image upload */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">תמונות הנכס <span className="text-gray-400 font-normal text-xs">(לחץ על תמונה להגדיר כראשית)</span></label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">{t("admin.form.images")} <span className="text-gray-400 font-normal text-xs">{t("admin.form.clickToSetPrimary")}</span></label>
         {allPreviews.length > 0 && (
           <div className="flex flex-wrap gap-3 mb-3">
             {allPreviews.map((src, idx) => (
@@ -169,15 +171,15 @@ function PropertyForm({
         )}
         <label className="inline-flex items-center gap-2 cursor-pointer bg-gray-50 border border-dashed border-gray-300 hover:border-primary-400 rounded-xl px-4 py-3 text-sm text-gray-600">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-          הוסף תמונה
+          {t("admin.form.addImage")}
           <input type="file" accept="image/*" multiple onChange={handleFileAdd} className="hidden" />
         </label>
       </div>
       <div className="flex gap-3">
         <button type="submit" disabled={uploading} className="bg-primary-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors disabled:opacity-50">
-          {uploading ? "מעלה..." : property ? "עדכן נכס" : "הוסף נכס"}
+          {uploading ? t("admin.form.uploading") : property ? t("admin.updateProperty") : t("admin.addProperty")}
         </button>
-        <button type="button" onClick={onCancel} className="border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors">ביטול</button>
+        <button type="button" onClick={onCancel} className="border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors">{t("admin.cancel")}</button>
       </div>
     </form>
   );
@@ -196,6 +198,7 @@ function StatCard({ label, value, color }: { label: string; value: number; color
 /* ─────────────── Properties Tab ─────────────── */
 function PropertiesTab({ status }: { status: "active" | "closed" }) {
   const { properties, updateProperty, deleteProperty, addProperty } = useProperties();
+  const { t } = useLanguage();
   const [editing, setEditing] = useState<Property | null>(null);
   const [showForm, setShowForm] = useState(false);
 
@@ -217,7 +220,7 @@ function PropertiesTab({ status }: { status: "active" | "closed" }) {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("האם אתה בטוח שברצונך למחוק נכס זה?")) {
+    if (confirm(t("admin.deleteConfirm"))) {
       await deleteProperty(id);
     }
   };
@@ -241,14 +244,14 @@ function PropertiesTab({ status }: { status: "active" | "closed" }) {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            הוספת נכס חדש
+            {t("admin.addNew")}
           </button>
         )
       )}
 
       {filtered.length === 0 ? (
         <div className="text-center py-16 text-gray-400">
-          {status === "active" ? "אין נכסים פעילים" : "אין נכסים סגורים"}
+          {status === "active" ? t("admin.noActiveProperties") : t("admin.noClosedProperties")}
         </div>
       ) : (
         <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
@@ -256,12 +259,12 @@ function PropertiesTab({ status }: { status: "active" | "closed" }) {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">נכס</th>
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">מיקום</th>
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">מחיר</th>
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">תשואה</th>
-                  <th className="text-right px-6 py-3 font-semibold text-gray-600">סוג</th>
-                  <th className="text-left px-6 py-3 font-semibold text-gray-600">פעולות</th>
+                  <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.table.property")}</th>
+                  <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.table.location")}</th>
+                  <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("card.price")}</th>
+                  <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.table.roi")}</th>
+                  <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.table.type")}</th>
+                  <th className="text-left px-6 py-3 font-semibold text-gray-600">{t("admin.table.actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -279,11 +282,11 @@ function PropertiesTab({ status }: { status: "active" | "closed" }) {
                     <td className="px-6 py-4 text-gray-600">{p.property_type}</td>
                     <td className="px-6 py-4 text-left">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => { setEditing(p); setShowForm(false); }} className="text-primary-600 hover:text-primary-700 font-medium">עריכה</button>
+                        <button onClick={() => { setEditing(p); setShowForm(false); }} className="text-primary-600 hover:text-primary-700 font-medium">{t("admin.table.edit")}</button>
                         <button onClick={() => handleToggleStatus(p)} className={`font-medium ${status === "active" ? "text-amber-600 hover:text-amber-700" : "text-green-600 hover:text-green-700"}`}>
-                          {status === "active" ? "סגור" : "פתח מחדש"}
+                          {status === "active" ? t("admin.closeProperty") : t("admin.reopenProperty")}
                         </button>
-                        <button onClick={() => handleDelete(p.id)} className="text-red-500 hover:text-red-600 font-medium">מחק</button>
+                        <button onClick={() => handleDelete(p.id)} className="text-red-500 hover:text-red-600 font-medium">{t("admin.delete")}</button>
                       </div>
                     </td>
                   </tr>
@@ -1025,19 +1028,20 @@ function FinanceTab() {
 }
 
 /* ─────────────── Admin Page ─────────────── */
-const tabs: { key: Tab; label: string; icon: string }[] = [
-  { key: "pending_agents", label: "סוכנים ממתינים", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-  { key: "properties", label: "נכסים פעילים", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
-  { key: "leads", label: "לידים", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
-  { key: "closed", label: "נכסים סגורים", icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" },
-  { key: "agents", label: "סוכנים", icon: "M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" },
-  { key: "users", label: "משתמשים", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
-  { key: "finance", label: "כספים", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+const TAB_DEFS: { key: Tab; tKey: string; icon: string }[] = [
+  { key: "pending_agents", tKey: "admin.tab.pendingAgents", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+  { key: "properties", tKey: "admin.tab.properties", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+  { key: "leads", tKey: "admin.tab.leads", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+  { key: "closed", tKey: "admin.tab.closed", icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" },
+  { key: "agents", tKey: "admin.tab.agents", icon: "M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" },
+  { key: "users", tKey: "admin.tab.users", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
+  { key: "finance", tKey: "admin.tab.finance", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
 ];
 
 export default function AdminPage() {
   const { user, loading, isAdmin } = useAuth();
   const { properties } = useProperties();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<Tab>("pending_agents");
   const [leads, setLeads] = useState<Lead[]>([]);
 
@@ -1048,15 +1052,15 @@ export default function AdminPage() {
   }, []);
 
   if (loading) {
-    return <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-400">טוען...</div>;
+    return <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-400">{t("admin.loading")}</div>;
   }
 
   if (!user) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex justify-center">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">פאנל ניהול</h1>
-          <p className="text-gray-500 mb-6 text-center">התחברו לגישה לפאנל הניהול</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t("admin.title")}</h1>
+          <p className="text-gray-500 mb-6 text-center">{t("admin.signInRequired")}</p>
           <LoginForm />
         </div>
       </div>
@@ -1069,9 +1073,9 @@ export default function AdminPage() {
         <svg className="w-16 h-16 text-red-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
         </svg>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">גישה נדחתה</h1>
-        <p className="text-gray-500">אין לכם הרשאה לגשת לפאנל הניהול.</p>
-        <p className="text-gray-400 text-sm mt-1">מחובר כ: {user.email}</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t("admin.accessDenied")}</h1>
+        <p className="text-gray-500">{t("admin.accessDeniedSub")}</p>
+        <p className="text-gray-400 text-sm mt-1">{t("admin.connectedAs")} {user.email}</p>
       </div>
     );
   }
@@ -1084,12 +1088,12 @@ export default function AdminPage() {
       {/* Header */}
       <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">פאנל ניהול</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{t("admin.title")}</h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="נכסים פעילים" value={activeProperties.length} color="text-green-600" />
-            <StatCard label="סה״כ לידים" value={leads.length} color="text-blue-600" />
-            <StatCard label="נכסים סגורים" value={closedProperties.length} color="text-amber-600" />
-            <StatCard label="סוכנים" value={new Set(properties.map((p) => p.agent_email)).size} color="text-purple-600" />
+            <StatCard label={t("admin.stat.activeProperties")} value={activeProperties.length} color="text-green-600" />
+            <StatCard label={t("admin.stat.totalLeads")} value={leads.length} color="text-blue-600" />
+            <StatCard label={t("admin.stat.closedProperties")} value={closedProperties.length} color="text-amber-600" />
+            <StatCard label={t("admin.stat.agents")} value={new Set(properties.map((p) => p.agent_email)).size} color="text-purple-600" />
           </div>
         </div>
       </section>
@@ -1097,7 +1101,7 @@ export default function AdminPage() {
       {/* Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-1 mb-8 overflow-x-auto pb-2">
-          {tabs.map((tab) => (
+          {TAB_DEFS.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
@@ -1110,7 +1114,7 @@ export default function AdminPage() {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={tab.icon} />
               </svg>
-              {tab.label}
+              {t(tab.tKey)}
             </button>
           ))}
         </div>

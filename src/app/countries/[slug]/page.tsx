@@ -12,7 +12,7 @@ export default function CountryPage() {
   const slug = params.slug as string;
   const country = countries.find((c) => c.slug === slug);
   const { properties } = useProperties();
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   if (!country) {
     return (
@@ -31,7 +31,7 @@ export default function CountryPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
             <div className="inline-block bg-gold-500 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-3">
-              {lang === "he" ? "בקרוב" : "Coming Soon"}
+              {t("countries.comingSoon")}
             </div>
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{country.name}</h1>
           </div>
@@ -43,12 +43,10 @@ export default function CountryPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">
-            {lang === "he" ? `נכסים ב${country.name} — בקרוב` : `Properties in ${country.name} — Coming Soon`}
+            {t("countries.propertiesComingSoon").replace("{name}", country.name)}
           </h2>
           <p className="text-gray-500 leading-relaxed mb-8">
-            {lang === "he"
-              ? "אנחנו עובדים על הבאת נכסי השקעה איכותיים במדינה זו. הישארו מעודכנים."
-              : "We're working on bringing quality investment properties in this country. Stay tuned."}
+            {t("countries.stayTuned")}
           </p>
           <Link href="/countries" className="inline-block bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors">
             {t("countries.backToCountries")}

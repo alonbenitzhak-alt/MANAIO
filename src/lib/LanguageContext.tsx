@@ -584,6 +584,35 @@ const translations: Record<string, Record<string, string>> = {
     "dashboard.buyer.listings": "מודעות",
     "dashboard.buyer.unfollow": "הסר מעקב",
 
+    // Footer
+    "footer.soon": "בקרוב",
+
+    // Navbar extras
+    "nav.register": "הרשמה",
+    "nav.myProperties": "הנכסים שלי",
+    "auth.registerAsInvestor": "הרשמה כמשקיע",
+    "auth.registerAsAgent": "הרשמה כסוכן",
+
+    // Dashboard extras
+    "dashboard.buyer.reminderSent": "תזכורת נשלחה לסוכן",
+
+    // Chat
+    "chat.agent": "סוכן",
+
+    // About extras
+    "about.aboutUs": "מי אנחנו",
+    "about.foundersText": "מפתחי האתר רצו לאפשר פלטפורמה נוחה — לא רק לנדל\"ן בחו\"ל, אלא לכל עולם ההשקעות. זאת תוך הנגשת המתווכים הזרים והאופן שבו משקיעים בכל מדינה, כך שכל משקיע ישראלי יוכל לפעול בשוקי נדל\"ן בינלאומיים בביטחון, בשקיפות ובפשטות — בלי להתמצא מראש בכל שוק.",
+    "about.stat.founded": "שנת הקמה",
+    "about.stat.investments": "השקעות שהושלמו",
+    "about.stat.investors": "משקיעים מרוצים",
+    "about.stat.countries": "מדינות פעילות",
+
+    // Countries extras
+    "countries.comingSoon": "בקרוב",
+    "countries.launchingSoon": "עומד לצאת בקרוב",
+    "countries.stayTuned": "אנחנו עובדים על הבאת נכסי השקעה איכותיים במדינה זו. הישארו מעודכנים.",
+    "countries.propertiesComingSoon": "נכסים ב{name} — בקרוב",
+
     // Property types
     "propertyType.apartment": "דירה",
     "propertyType.villa": "וילה",
@@ -595,6 +624,51 @@ const translations: Record<string, Record<string, string>> = {
 
     // Card price label
     "card.price": "מחיר",
+
+    // Admin tabs & stats
+    "admin.tab.pendingAgents": "סוכנים ממתינים",
+    "admin.tab.properties": "נכסים פעילים",
+    "admin.tab.leads": "לידים",
+    "admin.tab.closed": "נכסים סגורים",
+    "admin.tab.agents": "סוכנים",
+    "admin.tab.users": "משתמשים",
+    "admin.tab.finance": "כספים",
+    "admin.stat.activeProperties": "נכסים פעילים",
+    "admin.stat.totalLeads": "סה\"כ לידים",
+    "admin.stat.closedProperties": "נכסים סגורים",
+    "admin.stat.agents": "סוכנים",
+    "admin.accessDenied": "גישה נדחתה",
+    "admin.accessDeniedSub": "אין לכם הרשאה לגשת לפאנל הניהול.",
+    "admin.loading": "טוען...",
+    "admin.connectedAs": "מחובר כ:",
+
+    // Admin form
+    "admin.form.editProperty": "עריכת נכס",
+    "admin.form.addNewProperty": "הוספת נכס חדש",
+    "admin.form.titleLabel": "כותרת",
+    "admin.form.city": "עיר",
+    "admin.form.expectedRoi": "תשואה צפויה (%)",
+    "admin.form.bedrooms": "חדרי שינה",
+    "admin.form.agentName": "שם סוכן",
+    "admin.form.agentEmail": "אימייל סוכן",
+    "admin.form.status": "סטטוס",
+    "admin.form.statusActive": "פעיל",
+    "admin.form.statusClosed": "סגור",
+    "admin.form.premium": "⭐ נכס פרימיום",
+    "admin.form.images": "תמונות הנכס",
+    "admin.form.clickToSetPrimary": "(לחץ על תמונה להגדיר כראשית)",
+    "admin.form.addImage": "הוסף תמונה",
+    "admin.form.uploading": "מעלה...",
+    "admin.table.property": "נכס",
+    "admin.table.location": "מיקום",
+    "admin.table.roi": "תשואה",
+    "admin.table.type": "סוג",
+    "admin.table.actions": "פעולות",
+    "admin.table.edit": "עריכה",
+    "admin.closeProperty": "סגור",
+    "admin.reopenProperty": "פתח מחדש",
+    "admin.noActiveProperties": "אין נכסים פעילים",
+    "admin.noClosedProperties": "אין נכסים סגורים",
 
     // Footer
     "footer.description": "MANAIO מחברת משקיעים ישראלים עם הזדמנויות נדל\"ן בינלאומיות פרימיום. חקרו נכסים נבחרים בשווקים גלובליים מובילים עם תמחור שקוף וליווי מומחים.",
@@ -983,6 +1057,35 @@ const translations: Record<string, Record<string, string>> = {
     "dashboard.buyer.listings": "listings",
     "dashboard.buyer.unfollow": "Unfollow",
 
+    // Footer extras
+    "footer.soon": "Soon",
+
+    // Navbar extras
+    "nav.register": "Register",
+    "nav.myProperties": "My Properties",
+    "auth.registerAsInvestor": "Register as Investor",
+    "auth.registerAsAgent": "Register as Agent",
+
+    // Dashboard extras
+    "dashboard.buyer.reminderSent": "Reminder sent to agent",
+
+    // Chat extras
+    "chat.agent": "Agent",
+
+    // About extras
+    "about.aboutUs": "About Us",
+    "about.foundersText": "The site developers wanted to create a convenient platform — not just for real estate abroad, but for the entire investment world. By making foreign brokers and the way investors operate in each country accessible, every Israeli investor can act in international real estate markets with confidence, transparency, and simplicity — without needing prior knowledge of each market.",
+    "about.stat.founded": "Founded",
+    "about.stat.investments": "Investments Completed",
+    "about.stat.investors": "Happy Investors",
+    "about.stat.countries": "Active Countries",
+
+    // Countries extras
+    "countries.comingSoon": "Coming Soon",
+    "countries.launchingSoon": "Launching soon",
+    "countries.stayTuned": "We're working on bringing quality investment properties in this country. Stay tuned.",
+    "countries.propertiesComingSoon": "Properties in {name} — Coming Soon",
+
     // Property types
     "propertyType.apartment": "Apartment",
     "propertyType.villa": "Villa",
@@ -994,6 +1097,51 @@ const translations: Record<string, Record<string, string>> = {
 
     // Card price label
     "card.price": "Price",
+
+    // Admin tabs & stats
+    "admin.tab.pendingAgents": "Pending Agents",
+    "admin.tab.properties": "Active Properties",
+    "admin.tab.leads": "Leads",
+    "admin.tab.closed": "Closed Properties",
+    "admin.tab.agents": "Agents",
+    "admin.tab.users": "Users",
+    "admin.tab.finance": "Finance",
+    "admin.stat.activeProperties": "Active Properties",
+    "admin.stat.totalLeads": "Total Leads",
+    "admin.stat.closedProperties": "Closed Properties",
+    "admin.stat.agents": "Agents",
+    "admin.accessDenied": "Access Denied",
+    "admin.accessDeniedSub": "You don't have permission to access the admin panel.",
+    "admin.loading": "Loading...",
+    "admin.connectedAs": "Connected as:",
+
+    // Admin form
+    "admin.form.editProperty": "Edit Property",
+    "admin.form.addNewProperty": "Add New Property",
+    "admin.form.titleLabel": "Title",
+    "admin.form.city": "City",
+    "admin.form.expectedRoi": "Expected ROI (%)",
+    "admin.form.bedrooms": "Bedrooms",
+    "admin.form.agentName": "Agent Name",
+    "admin.form.agentEmail": "Agent Email",
+    "admin.form.status": "Status",
+    "admin.form.statusActive": "Active",
+    "admin.form.statusClosed": "Closed",
+    "admin.form.premium": "⭐ Premium Property",
+    "admin.form.images": "Property Images",
+    "admin.form.clickToSetPrimary": "(Click image to set as primary)",
+    "admin.form.addImage": "Add Image",
+    "admin.form.uploading": "Uploading...",
+    "admin.table.property": "Property",
+    "admin.table.location": "Location",
+    "admin.table.roi": "ROI",
+    "admin.table.type": "Type",
+    "admin.table.actions": "Actions",
+    "admin.table.edit": "Edit",
+    "admin.closeProperty": "Close",
+    "admin.reopenProperty": "Reopen",
+    "admin.noActiveProperties": "No active properties",
+    "admin.noClosedProperties": "No closed properties",
 
     // Footer
     "footer.description": "MANAIO connects Israeli investors with premium international real estate opportunities. Explore curated properties in top global markets with transparent pricing and expert guidance.",

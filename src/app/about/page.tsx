@@ -5,14 +5,14 @@ import Link from "next/link";
 
 
 const stats = [
-  { value: "2019", labelHe: "שנת הקמה", labelEn: "Founded" },
-  { value: "€50M+", labelHe: "השקעות שהושלמו", labelEn: "Investments Completed" },
-  { value: "200+", labelHe: "משקיעים מרוצים", labelEn: "Happy Investors" },
-  { value: "4", labelHe: "מדינות פעילות", labelEn: "Active Countries" },
+  { value: "2019", key: "about.stat.founded" },
+  { value: "€50M+", key: "about.stat.investments" },
+  { value: "200+", key: "about.stat.investors" },
+  { value: "4", key: "about.stat.countries" },
 ];
 
 export default function AboutPage() {
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function AboutPage() {
             {stats.map((s) => (
               <div key={s.value} className="text-center">
                 <p className="text-3xl md:text-4xl font-bold text-primary-700">{s.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{lang === "he" ? s.labelHe : s.labelEn}</p>
+                <p className="text-sm text-gray-500 mt-1">{t(s.key)}</p>
               </div>
             ))}
           </div>
@@ -76,13 +76,11 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8 text-center">
-            {lang === "he" ? "מי אנחנו" : "About Us"}
+            {t("about.aboutUs")}
           </h2>
           <div className="bg-white rounded-2xl border border-gray-200 p-8 md:p-12 text-center">
-            <p className="text-gray-700 leading-relaxed text-lg md:text-xl" dir="rtl">
-              מפתחי האתר רצו לאפשר פלטפורמה נוחה — לא רק לנדל&quot;ן בחו&quot;ל, אלא לכל עולם ההשקעות.
-              זאת תוך הנגשת המתווכים הזרים והאופן שבו משקיעים בכל מדינה, כך שכל משקיע ישראלי יוכל לפעול
-              בשוקי נדל&quot;ן בינלאומיים בביטחון, בשקיפות ובפשטות — בלי להתמצא מראש בכל שוק.
+            <p className="text-gray-700 leading-relaxed text-lg md:text-xl">
+              {t("about.foundersText")}
             </p>
           </div>
         </div>
