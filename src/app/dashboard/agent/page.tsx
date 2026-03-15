@@ -809,7 +809,7 @@ export default function AgentDashboard() {
                         <div className="flex items-center gap-3 mb-2">
                           <h3 className="font-semibold text-gray-900">{lead.name}</h3>
                           <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[lead.status || "sent"]}`}>
-                            {statusLabels[lang][lead.status || "sent"]}
+                            {(statusLabels[lang] ?? statusLabels["en"])[lead.status || "sent"]}
                           </span>
                         </div>
                         <p className="text-sm text-gray-600 mb-1">
@@ -829,10 +829,10 @@ export default function AgentDashboard() {
                           onChange={(e) => handleUpdateLeadStatus(lead.id!, e.target.value as LeadStatus)}
                           className="text-sm border border-gray-300 rounded-xl px-3 py-2 bg-white focus:ring-2 focus:ring-primary-500 outline-none"
                         >
-                          <option value="sent">{statusLabels[lang].sent}</option>
-                          <option value="in_progress">{statusLabels[lang].in_progress}</option>
-                          <option value="answered">{statusLabels[lang].answered}</option>
-                          <option value="closed">{statusLabels[lang].closed}</option>
+                          <option value="sent">{(statusLabels[lang] ?? statusLabels["en"]).sent}</option>
+                          <option value="in_progress">{(statusLabels[lang] ?? statusLabels["en"]).in_progress}</option>
+                          <option value="answered">{(statusLabels[lang] ?? statusLabels["en"]).answered}</option>
+                          <option value="closed">{(statusLabels[lang] ?? statusLabels["en"]).closed}</option>
                         </select>
                       </div>
                     </div>

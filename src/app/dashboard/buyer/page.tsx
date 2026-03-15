@@ -327,7 +327,7 @@ export default function BuyerDashboard() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[lead.status || "sent"]}`}>
-                        {statusLabels[lang][lead.status || "sent"]}
+                        {(statusLabels[lang] ?? statusLabels["en"])[lead.status || "sent"]}
                       </span>
                       {(lead.status === "sent" || lead.status === "in_progress") && (
                         <button
