@@ -9,6 +9,9 @@ import { supabase } from "@/lib/supabase";
 
 type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance";
 
+const ADMIN_PROPERTY_TYPES = ["Apartment", "Land", "Detached House", "Villa", "Maisonette", "Apartment Complex"];
+const CURRENCIES = ["EUR", "USD", "GBP", "ILS"] as const;
+
 /* ─────────────── Property Form ─────────────── */
 function PropertyForm({
   property,
@@ -19,105 +22,162 @@ function PropertyForm({
   onSave: (data: Property) => void;
   onCancel: () => void;
 }) {
-  const [form, setForm] = useState<Property>(
-    property || {
-      id: Date.now().toString(),
-      title: "",
-      country: "Greece",
-      city: "",
-      price: 0,
-      expected_roi: 0,
-      bedrooms: 1,
-      property_type: "Apartment",
-      description: "",
-      images: ["", "", ""],
-      agent_name: "",
-      agent_email: "",
-      status: "active",
+  const [form, setForm] = useState<Property & { show_roi: boolean }>(
+    {
+      id: property?.id || Date.now().toString(),
+      title: property?.title || "",
+      country: property?.country || "Greece",
+      city: property?.city || "",
+      price: property?.price || 0,
+      currency: property?.currency || "EUR",
+      show_roi: property?.show_roi ?? true,
+      expected_roi: property?.expected_roi || 0,
+      bedrooms: property?.bedrooms || 1,
+      property_type: property?.property_type || "Apartment",
+      description: property?.description || "",
+      images: property?.images || [],
+      agent_name: property?.agent_name || "",
+      agent_email: property?.agent_email || "",
+      status: property?.status || "active",
+      featured: property?.featured || false,
     }
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(form);
+  // Image upload
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [primaryIdx, setPrimaryIdx] = useState(0);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setImageFiles((prev) => [...prev, ...files]);
+    e.target.value = "";
   };
+
+  const allPreviews = [
+    ...form.images,
+    ...imageFiles.map((f) => URL.createObjectURL(f)),
+  ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUploading(imageFiles.length > 0);
+    const uploadedUrls: string[] = [];
+    for (const file of imageFiles) {
+      const ext = file.name.split(".").pop();
+      const path = `admin/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { data, error } = await supabase.storage.from("property-images").upload(path, file, { upsert: false });
+      if (data && !error) {
+        const { data: urlData } = supabase.storage.from("property-images").getPublicUrl(path);
+        uploadedUrls.push(urlData.publicUrl);
+      }
+    }
+    const allImages = [...form.images, ...uploadedUrls];
+    const reordered = allImages.length > 0
+      ? [allImages[primaryIdx], ...allImages.filter((_, i) => i !== primaryIdx)]
+      : [];
+    setUploading(false);
+    onSave({ ...form, images: reordered, expected_roi: form.show_roi ? form.expected_roi : 0 });
+  };
+
+  const inp = "w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none";
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
-      <h3 className="text-lg font-bold text-gray-900">
-        {property ? "Edit Property" : "Add New Property"}
-      </h3>
+      <h3 className="text-lg font-bold text-gray-900">{property ? "עריכת נכס" : "הוספת נכס חדש"}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-          <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">כותרת</label>
+          <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
-          <select value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none bg-white">
-            <option value="Greece">Greece</option>
-            <option value="Cyprus">Cyprus</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Portugal">Portugal</option>
+          <label className="block text-sm font-medium text-gray-700 mb-1">מדינה</label>
+          <select value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className={inp + " bg-white"}>
+            <option value="Greece">יוון</option><option value="Cyprus">קפריסין</option>
+            <option value="Georgia">גאורגיה</option><option value="Portugal">פורטוגל</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-          <input type="text" required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">עיר</label>
+          <input type="text" required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Price (€)</label>
-          <input type="number" required min={0} value={form.price} onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) || 0 })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">מחיר</label>
+          <div className="flex gap-2">
+            <select value={form.currency || "EUR"} onChange={(e) => setForm({ ...form, currency: e.target.value as "EUR" | "USD" | "GBP" | "ILS" })} className="px-3 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-primary-500 outline-none">
+              {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+            <input type="number" required min={0} value={form.price} onChange={(e) => setForm({ ...form, price: parseInt(e.target.value) || 0 })} className={inp} />
+          </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Expected ROI (%)</label>
-          <input type="number" required min={0} step={0.1} value={form.expected_roi} onChange={(e) => setForm({ ...form, expected_roi: parseFloat(e.target.value) || 0 })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-1 cursor-pointer">
+            <input type="checkbox" checked={form.show_roi} onChange={(e) => setForm({ ...form, show_roi: e.target.checked })} className="w-4 h-4 text-primary-600 rounded" />
+            תשואה צפויה (%)
+          </label>
+          {form.show_roi && (
+            <input type="number" min={0} step={0.1} value={form.expected_roi} onChange={(e) => setForm({ ...form, expected_roi: parseFloat(e.target.value) || 0 })} className={inp} />
+          )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label>
-          <input type="number" required min={1} value={form.bedrooms} onChange={(e) => setForm({ ...form, bedrooms: parseInt(e.target.value) || 1 })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">חדרי שינה</label>
+          <input type="number" required min={0} value={form.bedrooms} onChange={(e) => setForm({ ...form, bedrooms: parseInt(e.target.value) || 1 })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-          <select value={form.property_type} onChange={(e) => setForm({ ...form, property_type: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none bg-white">
-            <option value="Apartment">Apartment</option>
-            <option value="Villa">Villa</option>
-            <option value="Studio">Studio</option>
-            <option value="Condo">Condo</option>
-            <option value="Penthouse">Penthouse</option>
+          <label className="block text-sm font-medium text-gray-700 mb-1">סוג נכס</label>
+          <select value={form.property_type} onChange={(e) => setForm({ ...form, property_type: e.target.value })} className={inp + " bg-white"}>
+            {ADMIN_PROPERTY_TYPES.map((pt) => <option key={pt} value={pt}>{pt}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Agent Name</label>
-          <input type="text" required value={form.agent_name} onChange={(e) => setForm({ ...form, agent_name: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">שם סוכן</label>
+          <input type="text" required value={form.agent_name} onChange={(e) => setForm({ ...form, agent_name: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Agent Email</label>
-          <input type="email" required value={form.agent_email} onChange={(e) => setForm({ ...form, agent_email: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" />
+          <label className="block text-sm font-medium text-gray-700 mb-1">אימייל סוכן</label>
+          <input type="email" required value={form.agent_email} onChange={(e) => setForm({ ...form, agent_email: e.target.value })} className={inp} />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-          <select value={form.status || "active"} onChange={(e) => setForm({ ...form, status: e.target.value as "active" | "closed" })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none bg-white">
-            <option value="active">Active</option>
-            <option value="closed">Closed</option>
+          <label className="block text-sm font-medium text-gray-700 mb-1">סטטוס</label>
+          <select value={form.status || "active"} onChange={(e) => setForm({ ...form, status: e.target.value as "active" | "closed" })} className={inp + " bg-white"}>
+            <option value="active">פעיל</option><option value="closed">סגור</option>
           </select>
+        </div>
+        {/* PREMIUM — admin only */}
+        <div className="flex items-center gap-2 pt-5">
+          <input type="checkbox" id="premium" checked={!!form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} className="w-4 h-4 text-amber-500 rounded" />
+          <label htmlFor="premium" className="text-sm font-semibold text-amber-600 cursor-pointer">⭐ נכס פרימיום</label>
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-        <textarea rows={3} required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none resize-none" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">תיאור</label>
+        <textarea rows={3} required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp + " resize-none"} />
       </div>
+      {/* Image upload */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Image URLs (one per line)</label>
-        <textarea rows={3} value={form.images.join("\n")} onChange={(e) => setForm({ ...form, images: e.target.value.split("\n").filter(Boolean) })} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none resize-none" placeholder="https://images.unsplash.com/..." />
+        <label className="block text-sm font-medium text-gray-700 mb-2">תמונות הנכס <span className="text-gray-400 font-normal text-xs">(לחץ על תמונה להגדיר כראשית)</span></label>
+        {allPreviews.length > 0 && (
+          <div className="flex flex-wrap gap-3 mb-3">
+            {allPreviews.map((src, idx) => (
+              <div key={idx} className="relative group">
+                <img src={src} alt="" onClick={() => setPrimaryIdx(idx)}
+                  className={`w-20 h-20 object-cover rounded-xl border-2 cursor-pointer ${primaryIdx === idx ? "border-amber-500 ring-2 ring-amber-300" : "border-gray-200"}`} />
+                {primaryIdx === idx && <span className="absolute top-1 left-1 text-xs bg-amber-500 text-white px-1 rounded-full">★</span>}
+              </div>
+            ))}
+          </div>
+        )}
+        <label className="inline-flex items-center gap-2 cursor-pointer bg-gray-50 border border-dashed border-gray-300 hover:border-primary-400 rounded-xl px-4 py-3 text-sm text-gray-600">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+          הוסף תמונה
+          <input type="file" accept="image/*" multiple onChange={handleFileAdd} className="hidden" />
+        </label>
       </div>
       <div className="flex gap-3">
-        <button type="submit" className="bg-primary-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors">
-          {property ? "Update Property" : "Add Property"}
+        <button type="submit" disabled={uploading} className="bg-primary-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors disabled:opacity-50">
+          {uploading ? "מעלה..." : property ? "עדכן נכס" : "הוסף נכס"}
         </button>
-        <button type="button" onClick={onCancel} className="border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors">
-          Cancel
-        </button>
+        <button type="button" onClick={onCancel} className="border border-gray-300 text-gray-700 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-colors">ביטול</button>
       </div>
     </form>
   );
@@ -367,23 +427,46 @@ function AgentsTab() {
 }
 
 /* ─────────────── Pending Agents Tab ─────────────── */
+type PendingAgentRow = { id: string; email: string; full_name: string; phone: string; company: string; license_url: string | null; id_url: string | null; created_at: string; approved?: boolean | null };
+
 function PendingAgentsTab() {
-  const [agents, setAgents] = useState<{ id: string; email: string; full_name: string; phone: string; company: string; license_url: string | null; id_url: string | null; created_at: string }[]>([]);
+  const [agents, setAgents] = useState<PendingAgentRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
+  const fetchAgents = async () => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("id, email, full_name, phone, company, license_url, id_url, created_at")
+      .eq("role", "agent")
+      .or("approved.is.null,approved.eq.false")
+      .order("created_at", { ascending: false });
+    if (data) setAgents(data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("id, email, full_name, phone, company, license_url, id_url, created_at")
-        .eq("role", "agent")
-        .or("approved.is.null,approved.eq.false")
-        .order("created_at", { ascending: false });
-      if (data) setAgents(data);
-      setLoading(false);
-    };
-    fetch();
+    fetchAgents();
+
+    // Realtime: new agent registrations appear instantly
+    const channel = supabase
+      .channel("pending-agents-realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "profiles", filter: "role=eq.agent" },
+        (payload) => {
+          const newAgent = payload.new as PendingAgentRow;
+          if (!newAgent.approved) {
+            setAgents((prev) => {
+              if (prev.find((a) => a.id === newAgent.id)) return prev;
+              return [newAgent, ...prev];
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
   }, []);
 
   const handleApprove = async (id: string) => {

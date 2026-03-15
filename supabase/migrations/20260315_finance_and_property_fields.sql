@@ -11,7 +11,16 @@ ALTER TABLE properties
   ADD COLUMN IF NOT EXISTS floor          INTEGER,
   ADD COLUMN IF NOT EXISTS year_built     INTEGER,
   ADD COLUMN IF NOT EXISTS amenities      TEXT[]  DEFAULT '{}',
-  ADD COLUMN IF NOT EXISTS furnished      BOOLEAN DEFAULT FALSE;
+  ADD COLUMN IF NOT EXISTS furnished      BOOLEAN DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS currency       TEXT    DEFAULT 'EUR',
+  ADD COLUMN IF NOT EXISTS show_roi       BOOLEAN DEFAULT TRUE;
+
+-- 2. Storage bucket for property images
+-- Run this in Supabase Dashboard > Storage > New Bucket:
+--   Name: property-images
+--   Public: true
+-- Or via SQL (requires storage schema access):
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('property-images', 'property-images', true) ON CONFLICT DO NOTHING;
 
 -- 2. Payments / commissions table
 CREATE TABLE IF NOT EXISTS payments (

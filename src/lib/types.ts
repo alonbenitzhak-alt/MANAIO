@@ -36,6 +36,8 @@ export interface Property {
   images: string[];
   amenities?: string[];
   furnished?: boolean;
+  currency?: "EUR" | "USD" | "GBP" | "ILS";
+  show_roi?: boolean;
   agent_name: string;
   agent_email: string;
   agent_id?: string;
