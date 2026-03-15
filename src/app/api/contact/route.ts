@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendContactNotification } from "@/lib/email";
+import { validateOrigin } from "@/lib/csrf";
 
 // Simple in-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -24,6 +25,9 @@ function isValidEmail(email: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  const originError = validateOrigin(request);
+  if (originError) return originError;
+
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||

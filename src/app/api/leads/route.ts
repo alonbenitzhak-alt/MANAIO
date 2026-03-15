@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { sendAgentLeadNotification } from "@/lib/email";
+import { validateOrigin } from "@/lib/csrf";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!supabaseServiceKey) {
+  console.error("SUPABASE_SERVICE_ROLE_KEY is not set — leads API will not function");
+}
 
 // Simple in-memory rate limiter (per IP, 5 leads per minute)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -31,6 +35,9 @@ function sanitize(str: string): string {
 }
 
 export async function POST(request: NextRequest) {
+  const originError = validateOrigin(request);
+  if (originError) return originError;
+
   // Rate limiting
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
     || request.headers.get("x-real-ip")
@@ -43,9 +50,22 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!supabaseServiceKey) {
+    return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
+  }
+
   try {
     const body = await request.json();
     const { property_id, name, email, phone, investment_budget, message, buyer_id, agent_id } = body;
+
+    // Validate buyer_id is a valid UUID if provided (prevent injection of arbitrary IDs)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (buyer_id && !uuidRegex.test(buyer_id)) {
+      return NextResponse.json({ error: "Invalid buyer_id" }, { status: 400 });
+    }
+    if (agent_id && !uuidRegex.test(agent_id)) {
+      return NextResponse.json({ error: "Invalid agent_id" }, { status: 400 });
+    }
 
     // Validate required fields
     if (!name || typeof name !== "string" || name.trim().length < 2) {
@@ -61,7 +81,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Investment budget is required" }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createClient(supabaseUrl, supabaseServiceKey!);
 
     const sanitizedName = sanitize(name);
     const sanitizedEmail = email.trim().toLowerCase();

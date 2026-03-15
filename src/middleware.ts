@@ -22,7 +22,7 @@ export async function middleware(request: NextRequest) {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    return NextResponse.next();
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   // Extract access token from Supabase auth cookie
@@ -30,8 +30,7 @@ export async function middleware(request: NextRequest) {
     ?? request.cookies.getAll().find(c => c.name.includes("-auth-token"))?.value;
 
   if (!accessToken) {
-    // No auth cookie - let client-side handle redirect
-    return NextResponse.next();
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   try {
@@ -40,7 +39,7 @@ export async function middleware(request: NextRequest) {
     });
 
     const { data: { user } } = await supabase.auth.getUser(accessToken);
-    if (!user) return NextResponse.next();
+    if (!user) return NextResponse.redirect(new URL("/", request.url));
 
     const { data: profile } = await supabase
       .from("profiles")
@@ -48,15 +47,15 @@ export async function middleware(request: NextRequest) {
       .eq("id", user.id)
       .single();
 
-    if (!profile) return NextResponse.next();
+    if (!profile) return NextResponse.redirect(new URL("/", request.url));
 
     const allowedRoles = protectedRoutes[matchedRoute];
     if (!allowedRoles.includes(profile.role)) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   } catch {
-    // On error, let client-side auth handle it
-    return NextResponse.next();
+    // On error, deny access (fail-closed)
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();

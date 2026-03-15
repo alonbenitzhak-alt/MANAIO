@@ -441,20 +441,27 @@ type PendingAgent = {
 };
 
 function DocStatus({ url, label, icon }: { url: string | null; label: string; icon: React.ReactNode }) {
+  const handleView = async () => {
+    if (!url) return;
+    // Generate a short-lived signed URL (60 seconds) for private bucket access
+    const { data } = await supabase.storage
+      .from("agent-licenses")
+      .createSignedUrl(url, 60);
+    if (data?.signedUrl) window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
+
   if (url) {
     return (
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium hover:bg-green-100 transition-colors"
+      <button
+        onClick={handleView}
+        className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium hover:bg-green-100 transition-colors w-full text-start"
       >
         <span className="w-5 h-5 text-green-500 shrink-0">{icon}</span>
         <span>{label}</span>
         <svg className="w-3.5 h-3.5 text-green-400 ms-auto shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
         </svg>
-      </a>
+      </button>
     );
   }
   return (

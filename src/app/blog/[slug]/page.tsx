@@ -5,6 +5,12 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { blogPosts } from "@/lib/blogData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import sanitizeHtml from "sanitize-html";
+
+const ALLOWED_TAGS = ["h2", "h3", "p", "strong", "em", "ul", "ol", "li", "a", "br"];
+const ALLOWED_ATTRS: sanitizeHtml.IOptions["allowedAttributes"] = {
+  a: ["href", "target", "rel"],
+};
 
 export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -49,7 +55,12 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
             prose-h2:text-xl prose-h2:font-bold prose-h2:text-gray-900 prose-h2:mt-8 prose-h2:mb-3
             prose-p:mb-4 prose-strong:text-gray-900"
           dir={lang === "he" ? "rtl" : "ltr"}
-          dangerouslySetInnerHTML={{ __html: lang === "he" ? post.content.he : post.content.en }}
+          dangerouslySetInnerHTML={{
+            __html: sanitizeHtml(lang === "he" ? post.content.he : post.content.en, {
+              allowedTags: ALLOWED_TAGS,
+              allowedAttributes: ALLOWED_ATTRS,
+            }),
+          }}
         />
 
         {/* CTA */}

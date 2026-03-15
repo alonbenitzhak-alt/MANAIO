@@ -36,17 +36,40 @@ export default function AgentRegisterPage() {
     setError("");
     setLoading(true);
 
+    const ALLOWED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png", "image/webp"];
+    const ALLOWED_EXTENSIONS = ["pdf", "jpg", "jpeg", "png", "webp"];
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
+    const validateFile = (file: File): string | null => {
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        return isHe ? "סוג קובץ לא מורשה. יש להעלות PDF או תמונה (JPG/PNG)" : "Invalid file type. Please upload PDF or image (JPG/PNG)";
+      }
+      const ext = file.name.split(".").pop()?.toLowerCase() || "";
+      if (!ALLOWED_EXTENSIONS.includes(ext)) {
+        return isHe ? "סיומת קובץ לא מורשית" : "Invalid file extension";
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        return isHe ? "הקובץ גדול מדי. גודל מקסימלי: 5MB" : "File too large. Max size: 5MB";
+      }
+      return null;
+    };
+
     if (mode === "register") {
       if (!licenseFile) {
         setError(isHe ? "יש להעלות רישיון תיווך" : "Please upload your broker license");
         setLoading(false);
         return;
       }
+      const licenseErr = validateFile(licenseFile);
+      if (licenseErr) { setError(licenseErr); setLoading(false); return; }
+
       if (!idFile) {
         setError(isHe ? "יש להעלות תעודת זהות" : "Please upload your ID card");
         setLoading(false);
         return;
       }
+      const idErr = validateFile(idFile);
+      if (idErr) { setError(idErr); setLoading(false); return; }
       if (!agreedToPartnership) {
         setError(isHe ? "יש לאשר את הסכם השותפות" : "Please agree to the partnership agreement");
         setLoading(false);
@@ -78,30 +101,24 @@ export default function AgentRegisterPage() {
             partnership_signed: agreedToPartnership,
           };
 
-          // Upload license
-          const licenseExt = licenseFile.name.split(".").pop();
+          // Upload license (store path only — admin accesses via signed URL)
+          const licenseExt = licenseFile.name.split(".").pop()?.toLowerCase();
           const licensePath = `${currentUser.id}/license.${licenseExt}`;
           const { data: licenseUpload } = await supabase.storage
             .from("agent-licenses")
             .upload(licensePath, licenseFile, { upsert: true });
           if (licenseUpload) {
-            const { data: licenseUrl } = supabase.storage
-              .from("agent-licenses")
-              .getPublicUrl(licensePath);
-            updates.license_url = licenseUrl.publicUrl;
+            updates.license_url = licensePath;
           }
 
-          // Upload ID card
-          const idExt = idFile.name.split(".").pop();
+          // Upload ID card (store path only — admin accesses via signed URL)
+          const idExt = idFile.name.split(".").pop()?.toLowerCase();
           const idPath = `${currentUser.id}/id.${idExt}`;
           const { data: idUpload } = await supabase.storage
             .from("agent-licenses")
             .upload(idPath, idFile, { upsert: true });
           if (idUpload) {
-            const { data: idUrl } = supabase.storage
-              .from("agent-licenses")
-              .getPublicUrl(idPath);
-            updates.id_url = idUrl.publicUrl;
+            updates.id_url = idPath;
           }
 
           await supabase.from("profiles").update(updates).eq("id", currentUser.id);
@@ -243,7 +260,7 @@ export default function AgentRegisterPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{t("auth.password")}</label>
-                <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("auth.passwordPlaceholder")} />
+                <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("auth.passwordPlaceholder")} />
               </div>
 
               {/* Partnership Agreement */}
