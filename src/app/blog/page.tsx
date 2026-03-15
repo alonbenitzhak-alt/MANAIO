@@ -18,9 +18,10 @@ export default function BlogPage() {
   const { t, lang } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  const baseLang = lang === "he" ? "he" : "en";
   const filtered = selectedCategory === "All" || selectedCategory === "הכל"
     ? blogPosts
-    : blogPosts.filter((p) => p.category[lang] === selectedCategory);
+    : blogPosts.filter((p) => p.category[baseLang] === selectedCategory);
 
   return (
     <>
