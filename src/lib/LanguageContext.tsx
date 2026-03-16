@@ -335,6 +335,8 @@ const translations: Record<string, Record<string, string>> = {
     "contact.sent": "ההודעה נשלחה!",
     "contact.sentSub": "תודה שפניתם אלינו. נחזור אליכם תוך 24 שעות.",
     "contact.messagePlaceholder": "איך נוכל לעזור לכם?",
+    "contact.simpleTitle": "יצירת קשר",
+    "contact.simpleDesc": "לכל שאלה או פנייה, נשמח לשמוע מכם.",
 
     // Countries
     "countries.title": "מדינות השקעה",
@@ -515,6 +517,12 @@ const translations: Record<string, Record<string, string>> = {
     "blog.minRead": "דק' קריאה",
     "blog.readMore": "קראו עוד",
     "blog.noArticles": "אין מאמרים בקטגוריה זו",
+    "blog.cat.all": "הכל",
+    "blog.cat.guides": "מדריכים",
+    "blog.cat.taxation": "מיסוי",
+    "blog.cat.marketAnalysis": "ניתוח שוק",
+    "blog.cat.residency": "תושבות",
+    "blog.cat.tips": "טיפים",
 
     // Compare
     "compare.title": "השוואת נכסים",
@@ -966,6 +974,8 @@ const translations: Record<string, Record<string, string>> = {
     "contact.sent": "Message Sent!",
     "contact.sentSub": "Thank you for reaching out. We'll get back to you within 24 hours.",
     "contact.messagePlaceholder": "How can we help you?",
+    "contact.simpleTitle": "Contact Us",
+    "contact.simpleDesc": "For any question or inquiry, we'd love to hear from you.",
 
     // Countries
     "countries.title": "Investment Countries",
@@ -1146,6 +1156,12 @@ const translations: Record<string, Record<string, string>> = {
     "blog.minRead": "min read",
     "blog.readMore": "Read More",
     "blog.noArticles": "No articles in this category",
+    "blog.cat.all": "All",
+    "blog.cat.guides": "Guides",
+    "blog.cat.taxation": "Taxation",
+    "blog.cat.marketAnalysis": "Market Analysis",
+    "blog.cat.residency": "Residency",
+    "blog.cat.tips": "Tips",
 
     // Compare
     "compare.title": "Compare Properties",

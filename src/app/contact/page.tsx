@@ -3,7 +3,7 @@
 import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ContactPage() {
-  const { lang } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
@@ -14,12 +14,10 @@ export default function ContactPage() {
           </svg>
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-3">
-          {lang === "he" ? "יצירת קשר" : "Contact Us"}
+          {t("contact.simpleTitle")}
         </h1>
         <p className="text-gray-500 mb-6 leading-relaxed">
-          {lang === "he"
-            ? "לכל שאלה או פנייה, נשמח לשמוע מכם."
-            : "For any question or inquiry, we'd love to hear from you."}
+          {t("contact.simpleDesc")}
         </p>
         <a
           href="mailto:info@mymanaio.com"

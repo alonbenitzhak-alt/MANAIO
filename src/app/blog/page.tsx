@@ -5,13 +5,13 @@ import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blogData";
 
-const categories = [
-  { he: "הכל", en: "All" },
-  { he: "מדריכים", en: "Guides" },
-  { he: "מיסוי", en: "Taxation" },
-  { he: "ניתוח שוק", en: "Market Analysis" },
-  { he: "תושבות", en: "Residency" },
-  { he: "טיפים", en: "Tips" },
+const categoryKeys = [
+  { key: "all", enValue: "All" },
+  { key: "guides", enValue: "Guides" },
+  { key: "taxation", enValue: "Taxation" },
+  { key: "marketAnalysis", enValue: "Market Analysis" },
+  { key: "residency", enValue: "Residency" },
+  { key: "tips", enValue: "Tips" },
 ];
 
 export default function BlogPage() {
@@ -19,9 +19,9 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const baseLang = lang === "he" ? "he" : "en";
-  const filtered = selectedCategory === "All" || selectedCategory === "הכל"
+  const filtered = selectedCategory === "All"
     ? blogPosts
-    : blogPosts.filter((p) => p.category[baseLang] === selectedCategory);
+    : blogPosts.filter((p) => p.category.en === selectedCategory);
 
   return (
     <>
@@ -36,22 +36,19 @@ export default function BlogPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Category Filter */}
         <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
-          {categories.map((cat) => {
-            const label = lang === "he" ? cat.he : cat.en;
-            return (
-              <button
-                key={cat.en}
-                onClick={() => setSelectedCategory(label)}
-                className={`px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-colors ${
-                  selectedCategory === label
-                    ? "bg-primary-600 text-white"
-                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                {label}
-              </button>
-            );
-          })}
+          {categoryKeys.map((cat) => (
+            <button
+              key={cat.key}
+              onClick={() => setSelectedCategory(cat.enValue)}
+              className={`px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition-colors ${
+                selectedCategory === cat.enValue
+                  ? "bg-primary-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {t(`blog.cat.${cat.key}`)}
+            </button>
+          ))}
         </div>
 
         {/* Blog Grid */}
@@ -61,24 +58,24 @@ export default function BlogPage() {
               <div className="relative overflow-hidden">
                 <img
                   src={post.cover}
-                  alt={lang === "he" ? post.title.he : post.title.en}
+                  alt={post.title[baseLang]}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute top-3 left-3 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-lg">
-                  {lang === "he" ? post.category.he : post.category.en}
+                  {post.category[baseLang]}
                 </span>
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-3 text-xs text-gray-400 mb-3">
-                  <span>{new Date(post.date).toLocaleDateString(lang === "he" ? "he-IL" : "en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                  <span>{new Date(post.date).toLocaleDateString(lang === "he" || lang === "ar" ? "he-IL" : "en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                   <span>·</span>
                   <span>{post.readTime} {t("blog.minRead")}</span>
                 </div>
                 <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
-                  {lang === "he" ? post.title.he : post.title.en}
+                  {post.title[baseLang]}
                 </h2>
                 <p className="text-sm text-gray-500 line-clamp-3 mb-4">
-                  {lang === "he" ? post.excerpt.he : post.excerpt.en}
+                  {post.excerpt[baseLang]}
                 </p>
                 <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-primary-600 hover:text-primary-700">
                   {t("blog.readMore")} →
