@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS properties (
 -- Leads table
 CREATE TABLE IF NOT EXISTS leads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  property_id TEXT NOT NULL,
+  property_id TEXT,
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT NOT NULL,
@@ -78,6 +78,21 @@ CREATE TABLE IF NOT EXISTS leads (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Contact submissions table (persisted regardless of email delivery)
+CREATE TABLE IF NOT EXISTS contact_submissions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Admin can read contact submissions" ON contact_submissions FOR SELECT USING (
+  EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
+);
+CREATE POLICY "Anyone can submit contact form" ON contact_submissions FOR INSERT WITH CHECK (true);
 
 -- Favorites table (DB-backed for logged-in users)
 CREATE TABLE IF NOT EXISTS favorites (

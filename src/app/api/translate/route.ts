@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 export async function POST(req: NextRequest) {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return NextResponse.json({ error: "Translation service not configured" }, { status: 503 });
+  }
+
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
   try {
     const { title, description } = await req.json();
     if (!title || !description) {
@@ -24,11 +28,20 @@ Description: ${description}`,
       ],
     });
 
-    const text = response.content[0].type === "text" ? response.content[0].text : "";
-    const parsed = JSON.parse(text);
+    const raw = response.content[0].type === "text" ? response.content[0].text : "";
+    // Strip markdown code fences if Claude wraps the JSON
+    const text = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
+
+    let parsed: { title_he?: string; description_he?: string };
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      console.error("Translation JSON parse failed. Raw response:", raw);
+      return NextResponse.json({ error: "Translation failed" }, { status: 500 });
+    }
 
     if (!parsed.title_he || !parsed.description_he) {
-      throw new Error("Invalid translation response");
+      return NextResponse.json({ error: "Translation failed" }, { status: 500 });
     }
 
     return NextResponse.json({ title_he: parsed.title_he, description_he: parsed.description_he });

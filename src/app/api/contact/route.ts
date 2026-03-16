@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { sendContactNotification } from "@/lib/email";
 import { validateOrigin } from "@/lib/csrf";
 
@@ -54,12 +55,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Message is required (min 5 characters)" }, { status: 400 });
     }
 
+    const sanitizedName = sanitize(name);
+    const sanitizedEmail = email.trim().toLowerCase();
+    const sanitizedMessage = sanitize(message);
+
+    // Always save to DB so no submission is lost
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (supabaseUrl && supabaseServiceKey) {
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+      await supabase.from("contact_submissions").insert({
+        name: sanitizedName,
+        email: sanitizedEmail,
+        message: sanitizedMessage,
+      });
+    } else {
+      console.warn("contact/route: Supabase not configured — submission not persisted");
+    }
+
+    // Send email notification (best-effort)
     if (process.env.RESEND_API_KEY) {
       await sendContactNotification({
-        name: sanitize(name),
-        email: email.trim().toLowerCase(),
-        message: sanitize(message),
-      });
+        name: sanitizedName,
+        email: sanitizedEmail,
+        message: sanitizedMessage,
+      }).catch((err) => console.error("Contact email error:", err));
     }
 
     return NextResponse.json({ success: true });

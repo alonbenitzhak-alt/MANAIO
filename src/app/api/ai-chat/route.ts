@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
 const SYSTEM_PROMPT = `You are a helpful real estate investment advisor for MANAIO (mymanaio.com) — a platform connecting Israeli investors with international real estate opportunities.
 
 You help users:
@@ -44,6 +42,12 @@ Tone: Professional yet friendly. Always respond in the SAME language the user wr
 Keep responses concise and helpful. If asked for specific properties, direct them to the /properties page. For inquiries, suggest they contact an agent through the platform.`;
 
 export async function POST(req: NextRequest) {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return NextResponse.json({ error: "שירות הצ'אט אינו זמין כרגע" }, { status: 503 });
+  }
+
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
   try {
     const { messages } = await req.json();
     if (!messages || !Array.isArray(messages)) {
