@@ -15,9 +15,9 @@ function PropertiesContent() {
   const [filters, setFilters] = useState({
     country: searchParams.get("country") || "",
     priceRange: searchParams.get("budget") || "",
-    propertyType: "",
-    minRoi: "",
-    minBedrooms: "",
+    propertyType: searchParams.get("type") || "",
+    minRoi: searchParams.get("minRoi") || "",
+    minBedrooms: searchParams.get("minBedrooms") || "",
   });
 
   const filtered = useMemo(() => {

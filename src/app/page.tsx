@@ -10,9 +10,10 @@ import { useLanguage } from "@/lib/LanguageContext";
 
 export default function HomePage() {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
   const { properties } = useProperties();
-  const [search, setSearch] = useState({ country: "", city: "", budget: "" });
+  const [search, setSearch] = useState({ country: "", city: "", budget: "", propertyType: "", minBedrooms: "", minRoi: "" });
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const featured = properties.slice(0, 6);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -20,6 +21,10 @@ export default function HomePage() {
     const params = new URLSearchParams();
     if (search.country) params.set("country", search.country);
     if (search.budget) params.set("budget", search.budget);
+    if (search.city) params.set("city", search.city);
+    if (search.propertyType) params.set("type", search.propertyType);
+    if (search.minBedrooms) params.set("minBedrooms", search.minBedrooms);
+    if (search.minRoi) params.set("minRoi", search.minRoi);
     router.push(`/properties?${params.toString()}`);
   };
 
@@ -117,121 +122,173 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white overflow-hidden">
-        {/* Decorative background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-          }} />
-        </div>
-        {/* Decorative blobs */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600 rounded-full opacity-10 blur-3xl -translate-y-1/2 translate-x-1/3" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-400 rounded-full opacity-10 blur-3xl translate-y-1/2 -translate-x-1/4" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-40 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36 relative">
           <div className="max-w-3xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium text-primary-100 mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm text-primary-100 mb-6">
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              {t("home.hero.badge") || "השקעות נדל\"ן בינלאומיות"}
+              {t("home.hero.badge")}
             </div>
-            <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ fontFamily: "'Fraunces', 'Playfair Display', Georgia, serif" }}>
               {t("home.hero.title")}
             </h1>
-            <p className="text-lg md:text-xl text-primary-200 mb-10 leading-relaxed max-w-2xl">
+            <p className="text-lg text-primary-200 mb-10 leading-relaxed max-w-2xl">
               {t("home.hero.subtitle")}
             </p>
           </div>
 
           {/* Search Bar */}
-          <form
-            onSubmit={handleSearch}
-            className="bg-white rounded-2xl p-4 md:p-5 shadow-2xl shadow-black/30 max-w-4xl grid grid-cols-1 md:grid-cols-4 gap-3"
-          >
-            <div>
-              <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wide">{t("home.search.country")}</label>
-              <select
-                value={search.country}
-                onChange={(e) => setSearch({ ...search, country: e.target.value })}
-                className="w-full text-gray-900 text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50 hover:bg-white transition-colors"
-              >
-                <option value="">{t("home.search.allCountries")}</option>
-                <option value="Greece">Greece</option>
-                <option value="Cyprus">Cyprus</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Portugal">Portugal</option>
-              </select>
+          <form onSubmit={handleSearch} dir={dir} className="bg-white rounded-2xl p-4 md:p-5 shadow-xl shadow-black/25 max-w-4xl">
+            {/* Main row */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.country")}</label>
+                <select
+                  value={search.country}
+                  onChange={(e) => setSearch({ ...search, country: e.target.value })}
+                  className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                >
+                  <option value="">{t("home.search.allCountries")}</option>
+                  <option value="Greece">{t("home.search.country.Greece")}</option>
+                  <option value="Cyprus">{t("home.search.country.Cyprus")}</option>
+                  <option value="Georgia">{t("home.search.country.Georgia")}</option>
+                  <option value="Portugal">{t("home.search.country.Portugal")}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.city")}</label>
+                <input
+                  type="text"
+                  placeholder={t("home.search.anyCity")}
+                  value={search.city}
+                  onChange={(e) => setSearch({ ...search, city: e.target.value })}
+                  className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.budget")}</label>
+                <select
+                  value={search.budget}
+                  onChange={(e) => setSearch({ ...search, budget: e.target.value })}
+                  className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                >
+                  <option value="">{t("home.search.anyBudget")}</option>
+                  <option value="100000">{t("home.search.upTo")} €100,000</option>
+                  <option value="250000">{t("home.search.upTo")} €250,000</option>
+                  <option value="500000">{t("home.search.upTo")} €500,000</option>
+                  <option value="1000000">{t("home.search.upTo")} €1,000,000</option>
+                </select>
+              </div>
+              <div className="flex items-end">
+                <button
+                  type="submit"
+                  className="w-full bg-primary-600 text-white py-2.5 rounded-lg font-semibold text-sm hover:bg-primary-700 transition-colors"
+                >
+                  {t("home.search.button")}
+                </button>
+              </div>
             </div>
+
+            {/* Advanced filters toggle */}
             <div>
-              <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wide">{t("home.search.city")}</label>
-              <input
-                type="text"
-                placeholder={t("home.search.anyCity")}
-                value={search.city}
-                onChange={(e) => setSearch({ ...search, city: e.target.value })}
-                className="w-full text-gray-900 text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50 hover:bg-white transition-colors"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wide">{t("home.search.budget")}</label>
-              <select
-                value={search.budget}
-                onChange={(e) => setSearch({ ...search, budget: e.target.value })}
-                className="w-full text-gray-900 text-sm border border-gray-200 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50 hover:bg-white transition-colors"
-              >
-                <option value="">{t("home.search.anyBudget")}</option>
-                <option value="100000">{t("home.search.upTo")} €100,000</option>
-                <option value="250000">{t("home.search.upTo")} €250,000</option>
-                <option value="500000">{t("home.search.upTo")} €500,000</option>
-                <option value="1000000">{t("home.search.upTo")} €1,000,000</option>
-              </select>
-            </div>
-            <div className="flex items-end">
               <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-2.5 rounded-xl font-bold text-sm hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg shadow-primary-500/25 active:scale-95"
+                type="button"
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                className="text-xs text-primary-600 hover:text-primary-800 font-medium flex items-center gap-1 transition-colors"
               >
-                {t("home.search.button")}
+                <svg className={`w-3.5 h-3.5 transition-transform ${showAdvanced ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+                {showAdvanced ? t("home.search.hideAdvanced") : t("home.search.advanced")}
               </button>
+
+              {showAdvanced && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 pt-3 border-t border-gray-100">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.propertyType")}</label>
+                    <select
+                      value={search.propertyType}
+                      onChange={(e) => setSearch({ ...search, propertyType: e.target.value })}
+                      className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                    >
+                      <option value="">{t("home.search.anyType")}</option>
+                      <option value="Apartment">Apartment</option>
+                      <option value="Villa">Villa</option>
+                      <option value="Studio">Studio</option>
+                      <option value="Condo">Condo</option>
+                      <option value="Commercial">Commercial</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.minBedrooms")}</label>
+                    <select
+                      value={search.minBedrooms}
+                      onChange={(e) => setSearch({ ...search, minBedrooms: e.target.value })}
+                      className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                    >
+                      <option value="">{t("home.search.anyBedrooms")}</option>
+                      <option value="1">1+</option>
+                      <option value="2">2+</option>
+                      <option value="3">3+</option>
+                      <option value="4">4+</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1.5">{t("home.search.minRoi")}</label>
+                    <select
+                      value={search.minRoi}
+                      onChange={(e) => setSearch({ ...search, minRoi: e.target.value })}
+                      className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
+                    >
+                      <option value="">{t("home.search.anyRoi")}</option>
+                      <option value="5">5%+</option>
+                      <option value="8">8%+</option>
+                      <option value="10">10%+</option>
+                      <option value="12">12%+</option>
+                    </select>
+                  </div>
+                </div>
+              )}
             </div>
           </form>
         </div>
       </section>
 
       {/* Stats Banner */}
-      <section className="bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-px">
+      <section className="bg-stone-50 border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 md:grid-cols-4 divide-x divide-stone-200 rtl:divide-x-reverse">
           {stats.map((stat, i) => (
-            <div key={i} className="flex flex-col items-center gap-2 px-6 py-2">
-              <div className="w-10 h-10 bg-primary-50 text-primary-600 rounded-xl flex items-center justify-center mb-1">
-                {stat.icon}
-              </div>
-              <div className="text-3xl font-black text-gray-900">{stat.value}</div>
-              <div className="text-sm text-gray-500 text-center font-medium">{stat.label}</div>
+            <div key={i} className="flex flex-col items-center gap-1 px-6 py-2">
+              <div className="text-primary-600 mb-1">{stat.icon}</div>
+              <div className="text-2xl font-bold text-gray-800" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>{stat.value}</div>
+              <div className="text-xs text-gray-500 text-center">{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* Featured Properties */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-14">
-          <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest mb-3 bg-primary-50 px-4 py-1.5 rounded-full">
-            {t("home.featured.badge") || "נכסים מובחרים"}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-12">
+          <span className="inline-block text-sm text-primary-600 font-medium mb-3 border border-primary-200 bg-primary-50 px-4 py-1 rounded-full">
+            {t("home.featured.badge")}
           </span>
-          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">{t("home.featured.title")}</h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3" style={{ fontFamily: "'Fraunces', 'Playfair Display', Georgia, serif" }}>{t("home.featured.title")}</h2>
+          <p className="text-gray-500 text-base max-w-2xl mx-auto leading-relaxed">
             {t("home.featured.subtitle")}
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featured.map((p) => (
             <PropertyCard key={p.id} property={p} />
           ))}
         </div>
-        <div className="text-center mt-14">
+        <div className="text-center mt-12">
           <Link
             href="/properties"
-            className="inline-flex items-center gap-2.5 bg-gray-900 text-white px-8 py-3.5 rounded-2xl font-bold hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+            className="inline-flex items-center gap-2 bg-gray-900 text-white px-7 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
           >
             {t("home.featured.browseAll")}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -242,32 +299,30 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-gradient-to-br from-gray-50 to-primary-50/30 py-24">
+      <section className="bg-stone-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest mb-3 bg-white px-4 py-1.5 rounded-full shadow-sm border border-primary-100">
-              {t("home.howItWorks.badge") || "איך זה עובד"}
+          <div className="text-center mb-14">
+            <span className="inline-block text-sm text-primary-600 font-medium mb-3 border border-primary-200 bg-white px-4 py-1 rounded-full">
+              {t("home.howItWorks.badge")}
             </span>
-            <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">{t("home.howItWorks.title")}</h2>
-            <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3" style={{ fontFamily: "'Fraunces', 'Playfair Display', Georgia, serif" }}>{t("home.howItWorks.title")}</h2>
+            <p className="text-gray-500 text-base max-w-2xl mx-auto leading-relaxed">
               {t("home.howItWorks.subtitle")}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             {steps.map((step, i) => (
-              <div key={i} className="relative bg-white rounded-3xl p-7 shadow-sm border border-gray-100 hover:shadow-md transition-shadow group">
-                {/* Step number */}
-                <div className="absolute top-5 end-5 w-7 h-7 rounded-full bg-gray-100 text-gray-400 text-xs font-black flex items-center justify-center">
+              <div key={i} className="relative bg-white rounded-xl p-6 border border-stone-200 hover:border-primary-200 transition-colors">
+                <div className="absolute top-4 end-4 w-6 h-6 rounded-full bg-stone-100 text-stone-400 text-xs font-semibold flex items-center justify-center">
                   {i + 1}
                 </div>
-                {/* Icon */}
-                <div className={`w-14 h-14 ${step.bg} ${step.text} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-105 transition-transform`}>
+                <div className={`w-12 h-12 ${step.bg} ${step.text} rounded-xl flex items-center justify-center mb-4`}>
                   {step.icon}
                 </div>
-                <div className={`text-xs font-bold ${step.text} mb-1.5 uppercase tracking-wide`}>
+                <div className={`text-xs font-medium ${step.text} mb-1`}>
                   {t("home.howItWorks.step")} {i + 1}
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg mb-2 leading-snug">{step.title}</h3>
+                <h3 className="font-semibold text-gray-900 text-base mb-2">{step.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
               </div>
             ))}
@@ -276,13 +331,13 @@ export default function HomePage() {
       </section>
 
       {/* Countries Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-14">
-          <span className="inline-block text-xs font-bold text-primary-600 uppercase tracking-widest mb-3 bg-primary-50 px-4 py-1.5 rounded-full">
-            {t("home.countries.badge") || "יעדי השקעה"}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-12">
+          <span className="inline-block text-sm text-primary-600 font-medium mb-3 border border-primary-200 bg-primary-50 px-4 py-1 rounded-full">
+            {t("home.countries.badge")}
           </span>
-          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">{t("home.countries.title")}</h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-3" style={{ fontFamily: "'Fraunces', 'Playfair Display', Georgia, serif" }}>{t("home.countries.title")}</h2>
+          <p className="text-gray-500 text-base max-w-2xl mx-auto leading-relaxed">
             {t("home.countries.subtitle")}
           </p>
         </div>
@@ -291,24 +346,23 @@ export default function HomePage() {
             <Link
               key={c.slug}
               href={`/countries/${c.slug}`}
-              className="group relative h-72 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 hover:-translate-y-1"
+              className="group relative h-64 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
             >
               <img
                 src={c.image}
                 alt={c.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-              {/* Property count badge */}
-              <div className="absolute top-4 start-4">
-                <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full border border-white/30">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+              <div className="absolute top-3 start-3">
+                <span className="bg-black/30 text-white text-xs px-2.5 py-1 rounded-full">
                   {properties.filter((p) => p.country === c.name).length} {t("home.countries.properties")}
                 </span>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <h3 className="text-white font-black text-xl leading-tight">{c.name}</h3>
-                <div className="flex items-center gap-1.5 mt-1.5 text-white/80 text-sm font-medium group-hover:text-white transition-colors">
-                  <span>{t("home.countries.explore") || "לגילוי →"}</span>
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <h3 className="text-white font-semibold text-lg">{c.name}</h3>
+                <div className="text-white/75 text-sm mt-0.5 group-hover:text-white transition-colors">
+                  {t("home.countries.explore")}
                 </div>
               </div>
             </Link>
@@ -317,26 +371,25 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative bg-gradient-to-br from-primary-900 to-primary-700 text-white overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-500 rounded-full opacity-20 blur-3xl -translate-y-1/2 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full opacity-15 blur-3xl translate-y-1/2 -translate-x-1/4" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center relative">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium text-primary-200 mb-6">
+      <section className="relative bg-primary-900 text-white overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-700 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/4" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center relative">
+          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm text-primary-200 mb-6">
             <svg className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
             </svg>
-            {t("home.cta.badge") || "תשואה ממוצעת 12% בשנה"}
+            {t("home.cta.badge")}
           </div>
-          <h2 className="text-3xl md:text-5xl font-black mb-5 leading-tight">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-4 leading-snug" style={{ fontFamily: "'Fraunces', 'Playfair Display', Georgia, serif" }}>
             {t("home.cta.title")}
           </h2>
-          <p className="text-primary-200 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-primary-200 text-base mb-10 max-w-2xl mx-auto leading-relaxed">
             {t("home.cta.subtitle")}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/properties"
-              className="inline-flex items-center justify-center gap-2 bg-white text-primary-800 px-8 py-3.5 rounded-2xl font-bold hover:bg-primary-50 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95"
+              className="inline-flex items-center justify-center gap-2 bg-white text-primary-800 px-7 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
             >
               {t("home.cta.button")}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -345,9 +398,9 @@ export default function HomePage() {
             </Link>
             <Link
               href="/register/agent"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-3.5 rounded-2xl font-semibold hover:bg-white/20 transition-all active:scale-95"
+              className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white px-7 py-3 rounded-lg font-medium hover:bg-white/20 transition-colors"
             >
-              {t("home.cta.agentButton") || "הצטרפו כסוכן"}
+              {t("home.cta.agentButton")}
             </Link>
           </div>
         </div>
