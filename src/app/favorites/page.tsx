@@ -4,6 +4,7 @@ import PropertyCard from "@/components/PropertyCard";
 import { useProperties } from "@/lib/PropertiesContext";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 import Link from "next/link";
 
 export default function FavoritesPage() {
@@ -14,14 +15,14 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-16">
+      <PageHero>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{t("favorites.title")}</h1>
-          <p className="text-primary-100 text-lg">
+          <p className="text-white/80 text-lg">
             {t("favorites.count").replace("{count}", favorites.length.toString()).replace("{noun}", favorites.length === 1 ? t("properties.property") : t("properties.propertiesNoun"))}
           </p>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {favoriteProperties.length === 0 ? (

@@ -7,6 +7,7 @@ import { useProperties } from "@/lib/PropertiesContext";
 import { Property, Lead, Payment, PaymentStatus, PaymentType } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 
 type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance";
 
@@ -1098,7 +1099,7 @@ export default function AdminPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-12">
+      <PageHero py="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{t("admin.title")}</h1>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1108,7 +1109,7 @@ export default function AdminPage() {
             <StatCard label={t("admin.stat.agents")} value={new Set(properties.map((p) => p.agent_email)).size} color="text-purple-600" />
           </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* Tabs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

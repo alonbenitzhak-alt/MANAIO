@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 
 export default function ROICalculator() {
   const { t } = useLanguage();
@@ -57,12 +58,12 @@ export default function ROICalculator() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-14">
+      <PageHero py="py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{t("calculator.title")}</h1>
-          <p className="text-lg text-primary-200 max-w-2xl mx-auto">{t("calculator.subtitle")}</p>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">{t("calculator.subtitle")}</p>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

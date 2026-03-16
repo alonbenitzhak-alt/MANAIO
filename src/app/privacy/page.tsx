@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 
 export default function PrivacyPage() {
   const { lang } = useLanguage();
@@ -8,16 +9,16 @@ export default function PrivacyPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-16">
+      <PageHero>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold">
             {isHe ? "מדיניות פרטיות" : "Privacy Policy"}
           </h1>
-          <p className="text-primary-100 mt-2">
+          <p className="text-white/80 mt-2">
             {isHe ? "עדכון אחרון: מרץ 2026" : "Last updated: March 2026"}
           </p>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="prose prose-gray max-w-none space-y-8">

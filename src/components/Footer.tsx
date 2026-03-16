@@ -3,12 +3,19 @@
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 
+const FOOTER_IMAGE = "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&q=80";
+
 export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <footer className="relative text-gray-300 overflow-hidden">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${FOOTER_IMAGE})` }}
+      />
+      <div className="absolute inset-0 bg-gray-900/88" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">

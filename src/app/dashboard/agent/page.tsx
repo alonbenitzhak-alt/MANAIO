@@ -8,6 +8,7 @@ import { supabase } from "@/lib/supabase";
 import { Property, Lead, LeadStatus, Conversation, Message } from "@/lib/types";
 import LoginForm from "@/components/LoginForm";
 import ChatWindow from "@/components/ChatWindow";
+import PageHero from "@/components/PageHero";
 import Link from "next/link";
 
 type Tab = "properties" | "leads" | "chats" | "stats" | "profile";
@@ -678,30 +679,30 @@ export default function AgentDashboard() {
   return (
     <>
       {/* Header */}
-      <section className="bg-gradient-to-r from-primary-900 to-primary-700 text-white py-10">
+      <PageHero py="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold mb-2">{t("dashboard.agent.title")}</h1>
-          <p className="text-primary-200">{t("dashboard.agent.welcome")}, {profile?.full_name || user.email}</p>
+          <p className="text-white/80">{t("dashboard.agent.welcome")}, {profile?.full_name || user.email}</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             <div className="bg-white/10 rounded-xl p-4 text-center">
               <p className="text-2xl font-bold">{activeProps.length}</p>
-              <p className="text-xs text-primary-200">{t("dashboard.agent.activeProperties")}</p>
+              <p className="text-xs text-white/70">{t("dashboard.agent.activeProperties")}</p>
             </div>
             <div className="bg-white/10 rounded-xl p-4 text-center">
               <p className="text-2xl font-bold">{leads.length}</p>
-              <p className="text-xs text-primary-200">{t("dashboard.agent.totalLeads")}</p>
+              <p className="text-xs text-white/70">{t("dashboard.agent.totalLeads")}</p>
             </div>
             <div className="bg-white/10 rounded-xl p-4 text-center">
               <p className="text-2xl font-bold">{totalViews}</p>
-              <p className="text-xs text-primary-200">{t("dashboard.agent.totalViews")}</p>
+              <p className="text-xs text-white/70">{t("dashboard.agent.totalViews")}</p>
             </div>
             <div className="bg-white/10 rounded-xl p-4 text-center">
               <p className="text-2xl font-bold">{conversionRate}%</p>
-              <p className="text-xs text-primary-200">{t("dashboard.agent.conversion")}</p>
+              <p className="text-xs text-white/70">{t("dashboard.agent.conversion")}</p>
             </div>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Tabs */}

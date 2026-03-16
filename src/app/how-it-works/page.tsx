@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 
 export default function HowItWorksPage() {
   const { t } = useLanguage();
@@ -24,12 +25,12 @@ export default function HowItWorksPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-16">
+      <PageHero>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{t("howItWorks.title")}</h1>
-          <p className="text-primary-100 text-lg">{t("howItWorks.subtitle")}</p>
+          <p className="text-white/80 text-lg">{t("howItWorks.subtitle")}</p>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="space-y-8 mb-20">

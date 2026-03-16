@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
 
 
 const stats = [
@@ -17,12 +18,12 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-20">
+      <PageHero py="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-6">{t("about.title")}</h1>
-          <p className="text-lg text-primary-200 max-w-3xl mx-auto leading-relaxed">{t("about.subtitle")}</p>
+          <p className="text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">{t("about.subtitle")}</p>
         </div>
-      </section>
+      </PageHero>
 
       {/* Stats */}
       <section className="py-12 bg-white border-b border-gray-100">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import PageHero from "@/components/PageHero";
 import Link from "next/link";
 import { blogPosts } from "@/lib/blogData";
 
@@ -26,12 +27,12 @@ export default function BlogPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-primary-800 to-primary-600 text-white py-14">
+      <PageHero py="py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">{t("blog.title")}</h1>
-          <p className="text-lg text-primary-200 max-w-2xl mx-auto">{t("blog.subtitle")}</p>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">{t("blog.subtitle")}</p>
         </div>
-      </section>
+      </PageHero>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Category Filter */}
