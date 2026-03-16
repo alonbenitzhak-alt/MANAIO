@@ -22,6 +22,12 @@ export interface Profile {
 export interface Property {
   id: string;
   title: string;
+  translations?: {
+    [lang: string]: {
+      title: string;
+      description: string;
+    };
+  };
   country: string;
   city: string;
   neighborhood?: string;

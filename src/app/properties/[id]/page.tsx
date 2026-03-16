@@ -22,7 +22,7 @@ export default function PropertyDetailsPage({
   const { properties } = useProperties();
   const property = properties.find((p) => p.id === id);
   const [selectedImage, setSelectedImage] = useState(0);
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { user } = useAuth();
   const [chatOpen, setChatOpen] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
@@ -56,6 +56,9 @@ export default function PropertyDetailsPage({
     notFound();
   }
 
+  const displayTitle = property.translations?.[lang]?.title ?? property.title;
+  const displayDescription = property.translations?.[lang]?.description ?? property.description;
+
   return (
     <>
       <div className="bg-white border-b border-gray-100">
@@ -64,7 +67,7 @@ export default function PropertyDetailsPage({
           <span>/</span>
           <Link href="/properties" className="hover:text-primary-600">{t("detail.properties")}</Link>
           <span>/</span>
-          <span className="text-gray-900 font-medium truncate">{property.title}</span>
+          <span className="text-gray-900 font-medium truncate">{displayTitle}</span>
         </div>
       </div>
 
@@ -73,7 +76,7 @@ export default function PropertyDetailsPage({
           <div className="lg:col-span-2">
             <div className="mb-8">
               <div className="rounded-2xl overflow-hidden h-[400px] md:h-[500px] mb-3">
-                <img src={property.images[selectedImage]} alt={property.title} className="w-full h-full object-cover" />
+                <img src={property.images[selectedImage]} alt={displayTitle} className="w-full h-full object-cover" />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {property.images.map((img, i) => (
@@ -91,7 +94,7 @@ export default function PropertyDetailsPage({
             <div className="mb-8">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{property.title}</h1>
+                  <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{displayTitle}</h1>
                   <div className="flex items-center gap-1 text-gray-500">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -121,7 +124,7 @@ export default function PropertyDetailsPage({
 
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">{t("detail.about")}</h2>
-                <p className="text-gray-600 leading-relaxed">{property.description}</p>
+                <p className="text-gray-600 leading-relaxed">{displayDescription}</p>
               </div>
 
               <div className="bg-gray-50 rounded-2xl p-6 mb-8">
@@ -227,7 +230,7 @@ export default function PropertyDetailsPage({
               )}
 
               <div className="h-64 rounded-2xl overflow-hidden mb-4">
-                <PropertyMap city={property.city} country={property.country} title={property.title} />
+                <PropertyMap city={property.city} country={property.country} title={displayTitle} />
               </div>
             </div>
           </div>
