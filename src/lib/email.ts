@@ -91,7 +91,7 @@ export async function sendWelcomeEmail(user: { email: string; name: string }) {
           <li>לחשב תשואה צפויה</li>
           <li>ליצור קשר עם סוכנים מקצועיים</li>
         </ul>
-        <a href="https://mymanaio.com/properties" style="display: inline-block; padding: 12px 24px; background-color: #1e3a5f; color: white; text-decoration: none; border-radius: 8px; margin-top: 10px;">התחל לגלות נכסים</a>
+        <a href="${SITE_URL}/properties" style="display: inline-block; padding: 12px 24px; background-color: #1e3a5f; color: white; text-decoration: none; border-radius: 8px; margin-top: 10px;">התחל לגלות נכסים</a>
         <p style="color: #666; margin-top: 30px;">בברכה,<br/>צוות MANAIO</p>
       </div>
     `,

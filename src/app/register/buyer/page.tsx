@@ -42,7 +42,7 @@ export default function BuyerRegisterPage() {
       if (error) setError(error);
       else {
         setSuccess(t("auth.checkEmail"));
-        fetch("/api/welcome", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, name: email }) }).catch(() => null);
+        fetch("/api/welcome", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, name: fullName || email }) }).catch(() => null);
       }
     } else {
       const { error } = await signIn(email, password);
