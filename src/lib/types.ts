@@ -98,12 +98,22 @@ export interface Lead {
   updated_at?: string;
 }
 
+export interface CountryDetailSection {
+  title: string;
+  content: string;
+}
+
 export interface Country {
   slug: string;
   name: string;
+  name_he?: string;
   description: string;
+  description_he?: string;
   image: string;
   highlights: string[];
+  highlights_he?: string[];
+  details?: CountryDetailSection[];
+  details_he?: CountryDetailSection[];
   comingSoon?: boolean;
 }
 
