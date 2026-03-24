@@ -5,6 +5,11 @@ export interface Profile {
   email: string;
   role: UserRole;
   full_name: string;
+  first_name?: string;
+  last_name?: string;
+  first_name_en?: string;
+  last_name_en?: string;
+  age?: number;
   phone: string;
   avatar_url?: string;
   company?: string;

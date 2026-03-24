@@ -12,9 +12,13 @@ export default function BuyerRegisterPage() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const [mode, setMode] = useState<"register" | "login">("register");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstNameEn, setFirstNameEn] = useState("");
+  const [lastNameEn, setLastNameEn] = useState("");
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState("");
@@ -39,16 +43,27 @@ export default function BuyerRegisterPage() {
         setLoading(false);
         return;
       }
+      const ageNum = parseInt(age, 10);
+      if (!age || isNaN(ageNum) || ageNum < 18) {
+        setError(t("register.buyer.errorAge"));
+        setLoading(false);
+        return;
+      }
+      const fullName = `${firstName} ${lastName}`.trim();
       const { error } = await signUp(email, password, "buyer");
       if (error) {
         setError(error);
       } else {
-        // Save full_name and phone to profile
         try {
           const { data: { user: currentUser } } = await supabase.auth.getUser();
           if (currentUser) {
             await supabase.from("profiles").update({
               full_name: fullName || null,
+              first_name: firstName || null,
+              last_name: lastName || null,
+              first_name_en: firstNameEn || null,
+              last_name_en: lastNameEn || null,
+              age: ageNum,
               phone: phone || null,
             }).eq("id", currentUser.id);
           }
@@ -126,22 +141,46 @@ export default function BuyerRegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === "register" && (
               <>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.name")}</label>
-                  <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.namePlaceholder")} />
+                {/* First & Last name in native language */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.firstName")} *</label>
+                    <input required type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.firstNamePlaceholder")} />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.lastName")} *</label>
+                    <input required type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.lastNamePlaceholder")} />
+                  </div>
                 </div>
+                {/* First & Last name in English */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.firstNameEn")} *</label>
+                    <input required type="text" value={firstNameEn} onChange={(e) => setFirstNameEn(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.firstNameEnPlaceholder")} dir="ltr" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.lastNameEn")} *</label>
+                    <input required type="text" value={lastNameEn} onChange={(e) => setLastNameEn(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.lastNameEnPlaceholder")} dir="ltr" />
+                  </div>
+                </div>
+                {/* Age */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.phone")}</label>
-                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.phonePlaceholder")} />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.age")} *</label>
+                  <input required type="number" min={18} max={120} value={age} onChange={(e) => setAge(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.agePlaceholder")} />
+                </div>
+                {/* Phone */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.phone")} *</label>
+                  <input required type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.phonePlaceholder")} />
                 </div>
               </>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.email")}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.email")} *</label>
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.emailPlaceholder")} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">{t("auth.password")}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t("auth.password")} *</label>
               <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("auth.passwordPlaceholder")} />
             </div>
 

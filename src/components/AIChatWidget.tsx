@@ -16,9 +16,8 @@ export default function AIChatWidget() {
   const [thinking, setThinking] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Only show for approved agents or admins
-  const isApprovedAgent = profile?.role === "agent" && profile?.approved === true;
-  const canUseChat = isAdmin || isApprovedAgent;
+  // Show for all logged-in users
+  const canUseChat = !!profile;
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
