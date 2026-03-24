@@ -5,13 +5,6 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 
 
-const stats = [
-  { value: "2019", key: "about.stat.founded" },
-  { value: "€50M+", key: "about.stat.investments" },
-  { value: "200+", key: "about.stat.investors" },
-  { value: "4", key: "about.stat.countries" },
-];
-
 export default function AboutPage() {
   const { t } = useLanguage();
 
@@ -24,20 +17,6 @@ export default function AboutPage() {
           <p className="text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">{t("about.subtitle")}</p>
         </div>
       </PageHero>
-
-      {/* Stats */}
-      <section className="py-12 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((s) => (
-              <div key={s.value} className="text-center">
-                <p className="text-3xl md:text-4xl font-bold text-primary-700">{s.value}</p>
-                <p className="text-sm text-gray-500 mt-1">{t(s.key)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Mission */}
       <section className="py-16">

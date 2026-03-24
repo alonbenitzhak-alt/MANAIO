@@ -75,8 +75,15 @@ export default function PropertyDetailsPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="mb-8">
-              <div className="rounded-2xl overflow-hidden h-[400px] md:h-[500px] mb-3">
+              <div className="rounded-2xl overflow-hidden h-[400px] md:h-[500px] mb-3 relative">
                 <img src={property.images[selectedImage]} alt={displayTitle} className="w-full h-full object-cover" />
+                {property.is_demo && (
+                  <div className="absolute top-4 start-4 z-10">
+                    <span className="bg-red-600 text-white text-lg font-bold px-6 py-2 rounded-full shadow-lg">
+                      לדוגמא
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {property.images.map((img, i) => (

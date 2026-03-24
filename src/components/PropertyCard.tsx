@@ -39,6 +39,15 @@ export default function PropertyCard({ property }: { property: Property }) {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
+        {/* Demo badge */}
+        {property.is_demo && (
+          <div className="absolute top-3 start-3 z-10">
+            <span className="bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
+              לדוגמא
+            </span>
+          </div>
+        )}
+
         {/* ROI badge */}
         {property.expected_roi > 0 && (
           <div className="absolute top-3 end-3">
