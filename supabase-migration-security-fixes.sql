@@ -1,4 +1,4 @@
--- Migration: Security & data integrity fixes
+-- Migration: Security & data integrity fixes (v2)
 -- Run this in Supabase SQL Editor on existing databases
 
 -- 1. Add ip_address to leads table (used for rate limiting and audit)
@@ -15,3 +15,8 @@ DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
 CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE
   USING (auth.uid() = id)
   WITH CHECK (auth.uid() = id);
+
+-- 4. Fix notifications INSERT policy — prevent clients from creating notifications for other users
+--    (service role key bypasses RLS, so server-side operations are unaffected)
+DROP POLICY IF EXISTS "System can insert notifications" ON notifications;
+CREATE POLICY "System can insert notifications" ON notifications FOR INSERT WITH CHECK (user_id = auth.uid());

@@ -260,7 +260,8 @@ CREATE POLICY "Agents can see their followers" ON favorite_agents FOR SELECT USI
 
 CREATE POLICY "Users can view own notifications" ON notifications FOR SELECT USING (user_id = auth.uid());
 CREATE POLICY "Users can update own notifications" ON notifications FOR UPDATE USING (user_id = auth.uid());
-CREATE POLICY "System can insert notifications" ON notifications FOR INSERT WITH CHECK (true);
+-- Service role key (used server-side) bypasses RLS — client users can only notify themselves
+CREATE POLICY "System can insert notifications" ON notifications FOR INSERT WITH CHECK (user_id = auth.uid());
 
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_properties_country ON properties(country);

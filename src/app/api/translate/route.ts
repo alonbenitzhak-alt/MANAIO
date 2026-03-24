@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { validateOrigin } from "@/lib/csrf";
+
+const MAX_TITLE_LEN = 500;
+const MAX_DESC_LEN = 5000;
 
 export async function POST(req: NextRequest) {
+  const originError = validateOrigin(req);
+  if (originError) return originError;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: "Translation service not configured" }, { status: 503 });
   }
@@ -10,8 +17,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const { title, description } = await req.json();
-    if (!title || !description) {
+    if (!title || typeof title !== "string" || !description || typeof description !== "string") {
       return NextResponse.json({ error: "Missing title or description" }, { status: 400 });
+    }
+    if (title.length > MAX_TITLE_LEN || description.length > MAX_DESC_LEN) {
+      return NextResponse.json({ error: "Input too long" }, { status: 400 });
     }
 
     const response = await client.messages.create({

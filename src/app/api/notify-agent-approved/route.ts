@@ -1,16 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { validateOrigin } from "@/lib/csrf";
 
 function escapeHtml(str: string): string {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 const FROM_EMAIL = process.env.FROM_EMAIL || "MANAIO <noreply@mymanaio.com>";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mymanaio.com";
 
 export async function POST(req: NextRequest) {
+  const originError = validateOrigin(req);
+  if (originError) return originError;
+
   try {
     const { email, name, approved } = await req.json();
+    if (!email || typeof email !== "string") return NextResponse.json({ ok: true });
+    if (!name || typeof name !== "string") return NextResponse.json({ ok: true });
     const key = process.env.RESEND_API_KEY;
     if (!key) return NextResponse.json({ ok: true });
 

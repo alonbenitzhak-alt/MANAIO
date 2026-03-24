@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { validateOrigin } from "@/lib/csrf";
 
 const SYSTEM_PROMPT = `You are a helpful real estate investment advisor for MANAIO (mymanaio.com) — a platform connecting Israeli investors with international real estate opportunities.
 
@@ -42,6 +43,9 @@ Tone: Professional yet friendly. Always respond in the SAME language the user wr
 Keep responses concise and helpful. If asked for specific properties, direct them to the /properties page. For inquiries, suggest they contact an agent through the platform.`;
 
 export async function POST(req: NextRequest) {
+  const originError = validateOrigin(req);
+  if (originError) return originError;
+
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: "שירות הצ'אט אינו זמין כרגע" }, { status: 503 });
   }
@@ -53,15 +57,26 @@ export async function POST(req: NextRequest) {
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
+    // Limit conversation length and message size to prevent abuse
+    if (messages.length > 50) {
+      return NextResponse.json({ error: "Too many messages" }, { status: 400 });
+    }
+    const sanitized = messages
+      .filter((m) => m && typeof m.role === "string" && typeof m.content === "string")
+      .slice(-20) // only last 20 messages
+      .map((m: { role: string; content: string }) => ({
+        role: m.role as "user" | "assistant",
+        content: m.content.slice(0, 2000),
+      }));
+    if (sanitized.length === 0) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
 
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
-      messages: messages.map((m: { role: string; content: string }) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      })),
+      messages: sanitized,
     });
 
     const text = response.content[0].type === "text" ? response.content[0].text : "";
