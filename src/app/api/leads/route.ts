@@ -9,21 +9,8 @@ if (!supabaseServiceKey) {
   console.error("SUPABASE_SERVICE_ROLE_KEY is not set — leads API will not function");
 }
 
-// Simple in-memory rate limiter (per IP, 5 leads per minute)
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 5;
-const RATE_WINDOW_MS = 60_000;
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return false;
-  }
-  entry.count++;
-  return entry.count > RATE_LIMIT;
-}
+const RATE_WINDOW_SEC = 60;
 
 // Validation helpers
 function isValidEmail(email: string): boolean {
@@ -38,20 +25,28 @@ export async function POST(request: NextRequest) {
   const originError = validateOrigin(request);
   if (originError) return originError;
 
-  // Rate limiting
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-    || request.headers.get("x-real-ip")
-    || "unknown";
+  if (!supabaseServiceKey) {
+    return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
+  }
 
-  if (isRateLimited(ip)) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown";
+
+  // DB-based rate limiting (works across serverless instances)
+  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+  const windowStart = new Date(Date.now() - RATE_WINDOW_SEC * 1000).toISOString();
+  const { count } = await supabaseAdmin
+    .from("leads")
+    .select("id", { count: "exact", head: true })
+    .eq("ip_address", ip)
+    .gte("created_at", windowStart);
+  if ((count ?? 0) >= RATE_LIMIT) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
       { status: 429 }
     );
-  }
-
-  if (!supabaseServiceKey) {
-    return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
   }
 
   try {
@@ -81,7 +76,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Investment budget is required" }, { status: 400 });
     }
 
-    const supabase = createClient(supabaseUrl, supabaseServiceKey!);
+    const supabase = supabaseAdmin;
 
     const sanitizedName = sanitize(name);
     const sanitizedEmail = email.trim().toLowerCase();
@@ -99,6 +94,7 @@ export async function POST(request: NextRequest) {
       message: sanitizedMessage,
       buyer_id: buyer_id || null,
       agent_id: agent_id || null,
+      ip_address: ip,
       status: "sent",
     }).select().single();
 
