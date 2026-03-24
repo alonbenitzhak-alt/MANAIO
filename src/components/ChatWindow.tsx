@@ -66,6 +66,7 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
       .subscribe();
 
     return () => {
+      channel.unsubscribe();
       supabase.removeChannel(channel);
     };
   }, [conversationId, user]);

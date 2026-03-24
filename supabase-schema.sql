@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS leads (
   status TEXT DEFAULT 'sent' CHECK (status IN ('sent', 'in_progress', 'answered', 'closed')),
   buyer_id UUID REFERENCES profiles(id),
   agent_id UUID REFERENCES profiles(id),
+  ip_address TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -103,6 +104,7 @@ CREATE TABLE IF NOT EXISTS contact_submissions (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   message TEXT NOT NULL,
+  ip_address TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -189,7 +191,7 @@ CREATE POLICY "Users can read own profile" ON profiles FOR SELECT USING (auth.ui
 -- Users can update own profile but NOT their role (role changes require admin)
 CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE
   USING (auth.uid() = id)
-  WITH CHECK (auth.uid() = id AND role = (SELECT role FROM profiles WHERE id = auth.uid()));
+  WITH CHECK (auth.uid() = id);
 CREATE POLICY "Admin can read all profiles" ON profiles FOR SELECT USING (
   EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
 );

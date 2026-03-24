@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Property } from "@/lib/types";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -31,10 +32,12 @@ export default function PropertyCard({ property }: { property: Property }) {
     <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 border border-gray-100 group hover:-translate-y-1">
       {/* Image */}
       <div className="relative h-52 overflow-hidden">
-        <img
+        <Image
           src={property.images[0]}
           alt={displayTitle}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover group-hover:scale-110 transition-transform duration-700"
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

@@ -62,6 +62,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid agent_id" }, { status: 400 });
     }
 
+    // Validate agent_id actually belongs to the property (prevent lead hijacking)
+    if (property_id && agent_id) {
+      const { data: propertyRow } = await supabaseAdmin
+        .from("properties")
+        .select("agent_id")
+        .eq("id", property_id)
+        .single();
+      if (propertyRow && propertyRow.agent_id !== agent_id) {
+        return NextResponse.json({ error: "Invalid agent_id for this property" }, { status: 400 });
+      }
+    }
+
     // Validate required fields
     if (!name || typeof name !== "string" || name.trim().length < 2) {
       return NextResponse.json({ error: "Name is required (min 2 characters)" }, { status: 400 });

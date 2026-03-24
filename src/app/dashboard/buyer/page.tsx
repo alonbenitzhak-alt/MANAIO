@@ -48,6 +48,7 @@ export default function BuyerDashboard() {
   const [notifPrice, setNotifPrice] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [reminderSent, setReminderSent] = useState<string | null>(null);
 
   useEffect(() => {
     if (profile) {
@@ -140,12 +141,12 @@ export default function BuyerDashboard() {
   };
 
   const handleSendReminder = async (leadId: string) => {
-    // For now, just update the lead's updated_at to signal a reminder
     await supabase
       .from("leads")
       .update({ updated_at: new Date().toISOString() })
       .eq("id", leadId);
-    alert(t("dashboard.buyer.reminderSent"));
+    setReminderSent(leadId);
+    setTimeout(() => setReminderSent(null), 3000);
   };
 
   const tabs = [
@@ -327,12 +328,18 @@ export default function BuyerDashboard() {
                         {t(`status.${lead.status || "sent"}`)}
                       </span>
                       {(lead.status === "sent" || lead.status === "in_progress") && (
-                        <button
-                          onClick={() => handleSendReminder(lead.id!)}
-                          className="text-xs font-medium text-primary-600 hover:text-primary-700 border border-primary-200 px-3 py-1 rounded-lg hover:bg-primary-50 transition-colors"
-                        >
-                          {t("dashboard.buyer.sendReminder")}
-                        </button>
+                        reminderSent === lead.id ? (
+                          <span className="text-xs font-medium text-green-600 border border-green-200 px-3 py-1 rounded-lg bg-green-50">
+                            {t("dashboard.buyer.reminderSent")}
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => handleSendReminder(lead.id!)}
+                            className="text-xs font-medium text-primary-600 hover:text-primary-700 border border-primary-200 px-3 py-1 rounded-lg hover:bg-primary-50 transition-colors"
+                          >
+                            {t("dashboard.buyer.sendReminder")}
+                          </button>
+                        )
                       )}
                     </div>
                   </div>
