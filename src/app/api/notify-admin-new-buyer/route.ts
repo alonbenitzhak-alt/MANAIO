@@ -17,14 +17,21 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://mymanaio.com";
 
 export async function POST(req: NextRequest) {
   const originError = validateOrigin(req);
-  if (originError) return originError;
+  if (originError) {
+    console.error("[notify-admin-new-buyer] Origin blocked:", req.headers.get("origin"));
+    return originError;
+  }
 
   try {
     const { email, name } = await req.json();
     const key = process.env.RESEND_API_KEY;
-    if (!key || !ADMIN_EMAIL) return NextResponse.json({ ok: true });
+    if (!key || !ADMIN_EMAIL) {
+      console.error("[notify-admin-new-buyer] Missing env: RESEND_API_KEY=", !!key, "ADMIN_EMAIL=", !!ADMIN_EMAIL);
+      return NextResponse.json({ ok: true });
+    }
 
     const resend = new Resend(key);
+    console.log("[notify-admin-new-buyer] Sending to:", ADMIN_EMAIL, "from:", FROM_EMAIL);
     await resend.emails.send({
       from: FROM_EMAIL,
       to: ADMIN_EMAIL,
@@ -41,8 +48,10 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+    console.log("[notify-admin-new-buyer] Email sent successfully");
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("[notify-admin-new-buyer] Error:", err);
     return NextResponse.json({ ok: true });
   }
 }
