@@ -17,11 +17,10 @@ export const metadata: Metadata = {
     template: "%s | MANAIO",
   },
   description:
-    "פלטפורמת ההשקעות המובילה לנדל\"ן בחו\"ל. השקיעו בנכסים ביוון, קפריסין, גאורגיה ופורטוגל עם ליווי מומחים, מחשבון תשואה ותמחור שקוף.",
+    "פלטפורמת ההשקעות המובילה לנדל\"ן בחו\"ל. השקיעו בנכסים ביוון וקפריסין עם ליווי מומחים, מחשבון תשואה ותמחור שקוף.",
   keywords: [
     "השקעות נדל\"ן", "נדל\"ן בחו\"ל", "השקעות ביוון", "דירה בקפריסין",
-    "נדל\"ן גאורגיה", "נדל\"ן פורטוגל", "השקעות נדל\"ן לישראלים",
-    "תשואה על נדל\"ן", "real estate investment", "MANAIO",
+    "השקעות נדל\"ן לישראלים", "תשואה על נדל\"ן", "real estate investment", "MANAIO",
   ],
   metadataBase: new URL(SITE_URL),
   openGraph: {
@@ -31,7 +30,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "MANAIO",
     title: "MANAIO - השקעות נדל\"ן בחו\"ל למשקיעים ישראלים",
-    description: "פלטפורמת ההשקעות המובילה לנדל\"ן בחו\"ל. נכסים ביוון, קפריסין, גאורגיה ופורטוגל.",
+    description: "פלטפורמת ההשקעות המובילה לנדל\"ן בחו\"ל. נכסים ביוון וקפריסין.",
     images: [
       {
         url: "/og-image.png",
@@ -98,7 +97,7 @@ export default function RootLayout({
                 height: 345,
               },
               image: `${SITE_URL}/logo.svg`,
-              areaServed: ["Greece", "Cyprus", "Georgia", "Portugal"],
+              areaServed: ["Greece", "Cyprus"],
               serviceType: "Real Estate Investment Platform",
             }),
           }}

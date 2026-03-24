@@ -97,8 +97,8 @@ function PropertyForm({
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("detail.country")}</label>
           <select value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className={inp + " bg-white"}>
-            <option value="Greece">{t("footer.greece")}</option><option value="Cyprus">{t("footer.cyprus")}</option>
-            <option value="Georgia">{t("footer.georgia")}</option><option value="Portugal">{t("footer.portugal")}</option>
+            <option value="Greece">{t("footer.greece")}</option>
+            <option value="Cyprus">{t("footer.cyprus")}</option>
           </select>
         </div>
         <div>

@@ -104,7 +104,7 @@ export default function OGImage() {
             marginTop: 40,
           }}
         >
-          {["Greece", "Cyprus", "Georgia", "Portugal"].map((country) => (
+          {["Greece", "Cyprus"].map((country) => (
             <div
               key={country}
               style={{

@@ -77,8 +77,6 @@ function PropertiesContent() {
             <option value="">{t("properties.filter.allCountries")}</option>
             <option value="Greece">{t("footer.greece")}</option>
             <option value="Cyprus">{t("footer.cyprus")}</option>
-            <option value="Georgia">{t("footer.georgia")}</option>
-            <option value="Portugal">{t("footer.portugal")}</option>
           </select>
         </div>
         <div>
