@@ -3,6 +3,7 @@
 import { use, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Image from "next/image";
 import { useProperties } from "@/lib/PropertiesContext";
 import { useAuth } from "@/lib/AuthContext";
 import LeadForm from "@/components/LeadForm";
@@ -27,8 +28,10 @@ export default function PropertyDetailsPage({
   const [chatOpen, setChatOpen] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [chatLoading, setChatLoading] = useState(false);
+  const [chatError, setChatError] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
+  const [loginPrompt, setLoginPrompt] = useState(false);
 
   useEffect(() => {
     if (!property) return;
@@ -76,7 +79,7 @@ export default function PropertyDetailsPage({
           <div className="lg:col-span-2">
             <div className="mb-8">
               <div className="rounded-2xl overflow-hidden h-[400px] md:h-[500px] mb-3 relative">
-                <img src={property.images[selectedImage]} alt={displayTitle} className="w-full h-full object-cover" />
+                <Image src={property.images[selectedImage]} alt={displayTitle} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
                 {property.is_demo && (
                   <div className="absolute top-4 start-4 z-10">
                     <span className="bg-red-600 text-white text-lg font-bold px-6 py-2 rounded-full shadow-lg">
@@ -92,7 +95,7 @@ export default function PropertyDetailsPage({
                     onClick={() => setSelectedImage(i)}
                     className={`rounded-xl overflow-hidden h-24 md:h-28 border-2 transition-all ${i === selectedImage ? "border-primary-500 ring-2 ring-primary-200" : "border-transparent hover:border-gray-300"}`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <Image src={img} alt="" fill className="object-cover" sizes="33vw" />
                   </button>
                 ))}
               </div>
@@ -150,7 +153,8 @@ export default function PropertyDetailsPage({
                     <button
                       onClick={async () => {
                         if (!user) {
-                          alert(t("chat.loginRequired"));
+                          setLoginPrompt(true);
+                          setTimeout(() => setLoginPrompt(false), 3000);
                           return;
                         }
                         if (!property.agent_id) return;
@@ -177,46 +181,67 @@ export default function PropertyDetailsPage({
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                       }`}
                     >
-                      <svg className="w-4 h-4" fill={isFollowing ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                      </svg>
+                      {followLoading ? (
+                        <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill={isFollowing ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                      )}
                       {isFollowing ? t("agent.following") : t("agent.follow")}
                     </button>
                   <button
                     onClick={async () => {
                       if (!user) {
-                        alert(t("chat.loginRequired"));
+                        setLoginPrompt(true);
+                        setTimeout(() => setLoginPrompt(false), 3000);
                         return;
                       }
                       if (!property.agent_id) return;
                       setChatLoading(true);
-                      // Find or create conversation
-                      const { data: existing } = await supabase
-                        .from("conversations")
-                        .select("id")
-                        .eq("property_id", property.id)
-                        .eq("buyer_id", user.id)
-                        .eq("agent_id", property.agent_id)
-                        .single();
-                      if (existing) {
-                        setConversationId(existing.id);
-                      } else {
-                        const { data: created } = await supabase
+                      setChatError(false);
+                      try {
+                        const { data: existing } = await supabase
                           .from("conversations")
-                          .insert({ property_id: property.id, buyer_id: user.id, agent_id: property.agent_id })
                           .select("id")
+                          .eq("property_id", property.id)
+                          .eq("buyer_id", user.id)
+                          .eq("agent_id", property.agent_id)
                           .single();
-                        if (created) setConversationId(created.id);
+                        if (existing) {
+                          setConversationId(existing.id);
+                        } else {
+                          const { data: created, error } = await supabase
+                            .from("conversations")
+                            .insert({ property_id: property.id, buyer_id: user.id, agent_id: property.agent_id })
+                            .select("id")
+                            .single();
+                          if (error || !created) throw new Error("Failed to create conversation");
+                          setConversationId(created.id);
+                        }
+                        setChatOpen(true);
+                      } catch {
+                        setChatError(true);
+                      } finally {
+                        setChatLoading(false);
                       }
-                      setChatLoading(false);
-                      setChatOpen(true);
                     }}
                     disabled={chatLoading}
                     className="bg-primary-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors inline-flex items-center gap-2 disabled:opacity-50"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
+                    {chatLoading ? (
+                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                    )}
                     {chatLoading ? t("auth.pleaseWait") : t("chat.sendMessage")}
                   </button>
                   {property.agent_whatsapp && (
@@ -235,6 +260,19 @@ export default function PropertyDetailsPage({
                   </div>
                 </div>
               </div>
+
+              {/* Login prompt banner */}
+              {loginPrompt && (
+                <div className="mt-3 px-4 py-2.5 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800 text-center">
+                  {t("chat.loginRequired")}
+                </div>
+              )}
+              {/* Chat error banner */}
+              {chatError && (
+                <div className="mt-3 px-4 py-2.5 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 text-center">
+                  {t("chat.errorOpen")}
+                </div>
+              )}
 
               {/* Chat Modal */}
               {chatOpen && conversationId && (
