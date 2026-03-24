@@ -74,13 +74,71 @@ export default function PartnershipPage() {
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              {isHe ? "5. עמלות ותגמול" : "5. Fees and Compensation"}
+              {isHe ? "5. לידים, עמלות ותגמול" : "5. Leads, Fees and Compensation"}
             </h2>
+
+            <h3 className="text-base font-semibold text-gray-800 mt-4 mb-2">
+              {isHe ? "5.1 לידים — ללא עלות" : "5.1 Leads — At No Cost"}
+            </h3>
             <p>
               {isHe
-                ? "פרטי העמלות וסכמת התגמול יפורטו במסמך נפרד שיסוכם עם כל סוכן בנפרד בהתאם לתנאים הספציפיים."
-                : "Commission details and compensation structure will be detailed in a separate document to be agreed with each agent individually according to specific conditions."}
+                ? "החברה מעבירה לסוכן לידים (פניות רוכשים פוטנציאליים) ללא כל תשלום מראש. הסוכן אינו משלם עבור קבלת ליד, ואינו מחויב בדמי מינוי, עמלת פרסום או כל תשלום אחר בגין עצם הפניה."
+                : "The Company forwards leads (inquiries from potential buyers) to the Agent at no upfront cost. The Agent pays nothing to receive a lead and is not subject to subscription fees, listing fees, or any other payment for the referral itself."}
             </p>
+            <ul className="list-disc ps-5 space-y-1 mt-2 text-sm">
+              <li>
+                {isHe
+                  ? "לידים מועברים ישירות למייל ו/או וואטסאפ של הסוכן בזמן אמת."
+                  : "Leads are delivered directly to the Agent's email and/or WhatsApp in real time."}
+              </li>
+              <li>
+                {isHe
+                  ? "הסוכן מתחייב להשיב לכל ליד תוך 24 שעות לכל היותר."
+                  : "The Agent commits to responding to every lead within a maximum of 24 hours."}
+              </li>
+              <li>
+                {isHe
+                  ? "לידים שלא טופלו תוך 48 שעות עשויים להועבר לסוכן אחר לפי שיקול דעת החברה."
+                  : "Leads not handled within 48 hours may be reassigned to another agent at the Company's discretion."}
+              </li>
+            </ul>
+
+            <h3 className="text-base font-semibold text-gray-800 mt-4 mb-2">
+              {isHe ? "5.2 עמלת הצלחה — 10% מעמלת המתווך" : "5.2 Success Fee — 10% of Agent Commission"}
+            </h3>
+            <p>
+              {isHe
+                ? "במקרה של סגירת עסקה שמקורה בליד שהועבר על ידי MANAIO, תגבה החברה עמלת הצלחה בשיעור של 10% (עשרה אחוזים) מתוך עמלת התיווך שגבה הסוכן מהלקוח — ולא מהרוכש."
+                : "In the event of a deal closing that originated from a lead forwarded by MANAIO, the Company will charge a success fee of 10% (ten percent) of the brokerage commission received by the Agent from the client — and not from the buyer."}
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-3 text-sm text-blue-800">
+              <strong>{isHe ? "דוגמה מספרית:" : "Numerical example:"}</strong>{" "}
+              {isHe
+                ? "נכס נמכר ב-€200,000. עמלת הסוכן היא 3% = €6,000. עמלת MANAIO: 10% מ-€6,000 = €600 בלבד. הסוכן שומר על €5,400."
+                : "A property sells for €200,000. The agent's commission is 3% = €6,000. MANAIO's fee: 10% of €6,000 = €600 only. The agent retains €5,400."}
+            </div>
+            <ul className="list-disc ps-5 space-y-1 mt-3 text-sm">
+              <li>
+                {isHe
+                  ? "העמלה משולמת לחברה תוך 14 יום מיום קבלת התשלום המלא מהלקוח."
+                  : "The fee is paid to the Company within 14 days of receiving full payment from the client."}
+              </li>
+              <li>
+                {isHe
+                  ? "הסוכן מחויב לדווח לחברה על כל עסקה שנסגרה שמקורה בליד מ-MANAIO."
+                  : "The Agent is obligated to report to the Company every closed deal that originated from a MANAIO lead."}
+              </li>
+              <li>
+                {isHe
+                  ? "אי-דיווח על עסקה שנסגרה מהווה הפרה יסודית של הסכם זה."
+                  : "Failure to report a closed deal constitutes a material breach of this agreement."}
+              </li>
+              <li>
+                {isHe
+                  ? "אין עמלה על עסקאות שלא נסגרו, ללא קשר למספר הלידים שנמסרו."
+                  : "No fee is charged on deals that did not close, regardless of the number of leads delivered."}
+              </li>
+            </ul>
           </section>
 
           <section>

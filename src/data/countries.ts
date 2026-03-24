@@ -31,4 +31,19 @@ export const countries: Country[] = [
       "Year-round Mediterranean climate",
     ],
   },
+  {
+    slug: "bulgaria",
+    name: "Bulgaria",
+    description:
+      "Bulgaria is one of Europe's most compelling real estate investment opportunities, combining EU membership with the continent's lowest flat tax rates — just 10% on personal income and corporate profits. Property prices remain among the most affordable in the EU, yet yields in key markets are strong: Sofia's growing tech and business district delivers 6–8% gross rental yields, while ski resorts like Bansko and Borovets attract millions of winter tourists and generate exceptional short-term rental income. The Black Sea coast — Varna and Burgas — offers a thriving summer tourism market with significant appreciation potential. Bulgaria operates under transparent EU-aligned property laws with no restrictions on foreign ownership, no inheritance tax for first-degree relatives, and a fast, low-cost transaction process. For Israeli investors, Bulgaria combines European legal security, a booming tourism economy, and entry prices that are 3–5 times lower than Western Europe — making it an outstanding gateway for first-time and experienced investors alike.",
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=500&fit=crop",
+    highlights: [
+      "Lowest flat tax in the EU — 10% income & corporate tax",
+      "Property prices 3–5x lower than Western Europe",
+      "Strong rental yields: 6–8% in Sofia, higher in ski & beach markets",
+      "Full EU membership — transparent property laws for foreigners",
+      "Thriving ski (Bansko) and Black Sea coast (Varna) tourism markets",
+    ],
+  },
 ];
