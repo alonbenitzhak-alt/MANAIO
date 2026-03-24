@@ -74,6 +74,7 @@ export default function Navbar() {
     { href: "/calculator", label: t("nav.calculator") },
     { href: "/blog", label: t("nav.blog") },
     { href: "/about", label: t("nav.about") },
+    { href: "/agents", label: lang === "he" ? "לסוכנים" : "For Agents" },
   ];
 
   return (
