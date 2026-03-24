@@ -46,16 +46,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/countries/greece" className="hover:text-white transition-colors">{t("footer.greece")}</Link></li>
               <li><Link href="/countries/cyprus" className="hover:text-white transition-colors">{t("footer.cyprus")}</Link></li>
-              <li>
-                <span className="text-gray-500 cursor-default">
-                  {t("footer.georgia")} <span className="text-xs text-gold-500">({t("footer.soon")})</span>
-                </span>
-              </li>
-              <li>
-                <span className="text-gray-500 cursor-default">
-                  {t("footer.portugal")} <span className="text-xs text-gold-500">({t("footer.soon")})</span>
-                </span>
-              </li>
             </ul>
           </div>
 

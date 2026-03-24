@@ -9,10 +9,6 @@ const cityCoords: Record<string, [number, number]> = {
   "Thessaloniki, Greece": [40.6401, 22.9444],
   "Limassol, Cyprus": [34.7071, 33.0226],
   "Paphos, Cyprus": [34.7754, 32.4218],
-  "Tbilisi, Georgia": [41.7151, 44.8271],
-  "Batumi, Georgia": [41.6168, 41.6367],
-  "Lisbon, Portugal": [38.7223, -9.1393],
-  "Porto, Portugal": [41.1579, -8.6291],
 };
 
 interface PropertyMapProps {

@@ -9,8 +9,6 @@ import { useLanguage } from "@/lib/LanguageContext";
 const COUNTRY_HE: Record<string, string> = {
   Greece: "יוון",
   Cyprus: "קפריסין",
-  Georgia: "גאורגיה",
-  Portugal: "פורטוגל",
 };
 
 function buildWhatsAppUrl(phone: string, title: string, city: string, country: string) {

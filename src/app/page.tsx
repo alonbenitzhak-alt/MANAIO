@@ -141,8 +141,8 @@ export default function HomePage() {
                   className="w-full text-gray-900 text-sm border border-gray-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-primary-500 outline-none bg-gray-50"
                 >
                   <option value="">{t("home.search.allCountries")}</option>
-                  <option value="Georgia">{t("home.search.country.Georgia")}</option>
-                  <option value="Portugal">{t("home.search.country.Portugal")}</option>
+                  <option value="Greece">{t("home.search.country.Greece")}</option>
+                  <option value="Cyprus">{t("home.search.country.Cyprus")}</option>
                 </select>
               </div>
               <div>

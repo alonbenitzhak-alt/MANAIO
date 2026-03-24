@@ -60,7 +60,7 @@ function AgentPropertyForm({
   const { t, lang } = useLanguage();
   const [form, setForm] = useState({
     title: property?.title || "",
-    country: property?.country || "Portugal",
+    country: property?.country || "Greece",
     city: property?.city || "",
     neighborhood: property?.neighborhood || "",
     price: property?.price || 0,
@@ -201,8 +201,8 @@ function AgentPropertyForm({
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">{t("dashboard.agent.country")}</label>
             <select value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} className={selectCls}>
-              <option value="Georgia">Georgia</option>
-              <option value="Portugal">Portugal</option>
+              <option value="Greece">Greece</option>
+              <option value="Cyprus">Cyprus</option>
             </select>
           </div>
           <div>
