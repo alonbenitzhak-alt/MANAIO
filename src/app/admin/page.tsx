@@ -307,18 +307,23 @@ function LeadsTab() {
   const [loading, setLoading] = useState(true);
   const { properties } = useProperties();
   const { t, lang } = useLanguage();
+  const { session } = useAuth();
 
   useEffect(() => {
     const fetchLeads = async () => {
-      const { data, error } = await supabase
-        .from("leads")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (!error && data) setLeads(data);
+      const token = session?.access_token;
+      if (!token) { setLoading(false); return; }
+      const res = await fetch("/api/admin/leads", {
+        headers: { authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        setLeads(json.leads || []);
+      }
       setLoading(false);
     };
     fetchLeads();
-  }, []);
+  }, [session]);
 
   const getPropertyTitle = (id: string | null) => {
     if (!id) return t("admin.generalInquiry");
@@ -484,15 +489,20 @@ function PendingAgentsTab() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const { t, lang } = useLanguage();
+  const { session } = useAuth();
+
+  const getAuthHeaders = () => ({
+    "Content-Type": "application/json",
+    authorization: `Bearer ${session?.access_token || ""}`,
+  });
 
   const fetchAgents = async () => {
-    const { data } = await supabase
-      .from("profiles")
-      .select("id, email, full_name, phone, company, license_url, id_url, partnership_signed, created_at")
-      .eq("role", "agent")
-      .or("approved.is.null,approved.eq.false")
-      .order("created_at", { ascending: false });
-    if (data) setAgents(data);
+    if (!session?.access_token) { setLoading(false); return; }
+    const res = await fetch("/api/admin/pending-agents", { headers: getAuthHeaders() });
+    if (res.ok) {
+      const json = await res.json();
+      setAgents(json.agents || []);
+    }
     setLoading(false);
   };
 
@@ -518,12 +528,16 @@ function PendingAgentsTab() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, []);
+  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleApprove = async (id: string) => {
     setActionLoading(id);
-    await supabase.from("profiles").update({ approved: true }).eq("id", id);
     const agent = agents.find(a => a.id === id);
+    await fetch("/api/admin/pending-agents", {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ id, action: "approve" }),
+    });
     if (agent) {
       fetch("/api/notify-agent-approved", {
         method: "POST",
@@ -539,7 +553,11 @@ function PendingAgentsTab() {
     if (!confirm(t("admin.rejectConfirm"))) return;
     setActionLoading(id);
     const agent = agents.find(a => a.id === id);
-    await supabase.from("profiles").update({ approved: false, role: "buyer" }).eq("id", id);
+    await fetch("/api/admin/pending-agents", {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ id, action: "reject" }),
+    });
     if (agent) {
       fetch("/api/notify-agent-approved", {
         method: "POST",

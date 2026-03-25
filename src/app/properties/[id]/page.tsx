@@ -23,7 +23,7 @@ export default function PropertyDetailsPage({
   const [selectedImage, setSelectedImage] = useState(0);
   const { t, lang } = useLanguage();
 
-  const adminWhatsapp = process.env.NEXT_PUBLIC_ADMIN_WHATSAPP;
+  const adminWhatsapp = process.env.NEXT_PUBLIC_ADMIN_WHATSAPP || "972586836555";
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || process.env.NEXT_PUBLIC_SITE_URL;
 
   useEffect(() => {
