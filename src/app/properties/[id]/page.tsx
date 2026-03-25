@@ -73,7 +73,7 @@ export default function PropertyDetailsPage({
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`rounded-xl overflow-hidden h-24 md:h-28 border-2 transition-all ${i === selectedImage ? "border-primary-500 ring-2 ring-primary-200" : "border-transparent hover:border-gray-300"}`}
+                    className={`relative rounded-xl overflow-hidden h-24 md:h-28 border-2 transition-all ${i === selectedImage ? "border-primary-500 ring-2 ring-primary-200" : "border-transparent hover:border-gray-300"}`}
                   >
                     <Image src={img} alt="" fill className="object-cover" sizes="33vw" />
                   </button>
