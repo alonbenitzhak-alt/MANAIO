@@ -195,26 +195,26 @@ export default function AgentRegisterPage() {
                 <>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.name")}</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.name")} *</label>
                       <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.namePlaceholder")} />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.phone")}</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.phone")} *</label>
                       <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.phonePlaceholder")} />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t("register.agent.companyName")}
+                      {t("register.agent.companyName")} *
                     </label>
-                    <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("register.agent.companyNamePlaceholder")} />
+                    <input type="text" required value={company} onChange={(e) => setCompany(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("register.agent.companyNamePlaceholder")} />
                   </div>
 
                   {/* Document uploads */}
                   <div className="grid grid-cols-1 gap-3">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {t("register.agent.brokerLicense")}
+                        {t("register.agent.brokerLicense")} *
                       </label>
                       <input
                         type="file"
@@ -229,7 +229,7 @@ export default function AgentRegisterPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        {t("register.agent.idCard")}
+                        {t("register.agent.idCard")} *
                       </label>
                       <input
                         type="file"
@@ -247,11 +247,11 @@ export default function AgentRegisterPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.email")}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t("form.email")} *</label>
                 <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("form.emailPlaceholder")} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t("auth.password")}</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t("auth.password")} *</label>
                 <input type="password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none" placeholder={t("auth.passwordPlaceholder")} />
               </div>
 
