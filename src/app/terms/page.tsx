@@ -53,7 +53,7 @@ export default function TermsPage() {
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
                   <li>סוכנים מתחייבים לפרסם מידע מדויק ועדכני על נכסים</li>
                   <li>סוכנים נושאים באחריות הבלעדית לתוכן שהם מפרסמים</li>
-                  <li>סוכנים מתחייבים להגיב לפניות משקיעים תוך זמן סביר</li>
+                  <li>פניות משקיעים מנוהלות על ידי צוות MANAIO ומועברות לסוכן לפי שיקול דעת MANAIO</li>
                   <li>פרסום מידע מטעה או כוזב עלול לגרום לסגירת החשבון</li>
                 </ul>
               </section>
@@ -145,7 +145,7 @@ export default function TermsPage() {
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
                   <li>Agents commit to publishing accurate and current property information</li>
                   <li>Agents bear sole responsibility for the content they publish</li>
-                  <li>Agents commit to responding to investor inquiries within a reasonable time</li>
+                  <li>Investor inquiries are managed by the MANAIO team and forwarded to agents at MANAIO's discretion</li>
                   <li>Publishing misleading or false information may result in account closure</li>
                 </ul>
               </section>

@@ -57,7 +57,7 @@ export default function PrivacyPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">4. שיתוף מידע</h2>
                 <p className="text-gray-600 leading-relaxed mb-3">אנו משתפים מידע אישי רק במקרים הבאים:</p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li><strong>סוכני נדל&quot;ן:</strong> כאשר אתם שולחים פנייה על נכס, פרטי הקשר שלכם מועברים לסוכן הרלוונטי</li>
+                  <li><strong>צוות MANAIO:</strong> כאשר אתם שולחים פנייה על נכס, הפרטים מועברים לצוות MANAIO בלבד לטיפול ישיר</li>
                   <li><strong>ספקי שירות:</strong> שירותי אחסון (Supabase/Vercel), ניתוח נתונים</li>
                   <li><strong>דרישה חוקית:</strong> כאשר אנו מחויבים לכך על פי דין</li>
                 </ul>
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Information Sharing</h2>
                 <p className="text-gray-600 leading-relaxed mb-3">We share personal information only in the following cases:</p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li><strong>Real estate agents:</strong> When you submit an inquiry about a property, your contact details are shared with the relevant agent</li>
+                  <li><strong>MANAIO team:</strong> When you submit an inquiry about a property, your details are passed exclusively to the MANAIO team for direct handling</li>
                   <li><strong>Service providers:</strong> Hosting (Supabase/Vercel), analytics</li>
                   <li><strong>Legal requirements:</strong> When required by law</li>
                 </ul>
