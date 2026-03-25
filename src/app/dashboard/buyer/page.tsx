@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useFavorites } from "@/lib/FavoritesContext";
+import { useProperties } from "@/lib/PropertiesContext";
 import { supabase } from "@/lib/supabase";
 import { Lead, LeadStatus } from "@/lib/types";
 import Link from "next/link";
