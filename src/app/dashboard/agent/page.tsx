@@ -375,7 +375,14 @@ function PendingApprovalScreen({
         </div>
         <div className="text-sm text-amber-600 bg-amber-100 rounded-xl px-4 py-3 inline-block">
           {t("dashboard.agent.questions")}{" "}
-          <a href="mailto:agents@mymanaio.com" className="font-semibold underline">agents@mymanaio.com</a>
+          <a
+            href={`https://wa.me/972586836555?text=${encodeURIComponent("שלום, אני סוכן ממתין לאישור ב-MANAIO ויש לי שאלה")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold underline"
+          >
+            WhatsApp
+          </a>
         </div>
       </div>
     </div>

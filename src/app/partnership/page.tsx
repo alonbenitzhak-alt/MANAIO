@@ -110,10 +110,14 @@ export default function PartnershipPage() {
               {isHe ? "8. יצירת קשר" : "8. Contact"}
             </h2>
             <p>
-              {isHe ? "לשאלות בנוגע להסכם זה:" : "For questions regarding this agreement:"}
-              {" "}
-              <a href="mailto:agents@mymanaio.com" className="text-primary-600 font-semibold hover:underline">
-                agents@mymanaio.com
+              {isHe ? "לשאלות בנוגע להסכם זה, ניתן לפנות אלינו דרך " : "For questions regarding this agreement, reach us via "}
+              <a
+                href={`https://wa.me/972586836555?text=${encodeURIComponent("שלום, יש לי שאלה בנוגע להסכם השותפות של MANAIO")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-600 font-semibold hover:underline"
+              >
+                WhatsApp
               </a>
             </p>
           </section>

@@ -174,7 +174,8 @@ const elTranslations: Record<string, string> = {
   "contact.sentSub": "Σας ευχαριστούμε για την επικοινωνία. Θα σας απαντήσουμε εντός 24 ωρών.",
   "contact.messagePlaceholder": "Πώς μπορούμε να σας βοηθήσουμε;",
   "contact.simpleTitle": "Επικοινωνία",
-  "contact.simpleDesc": "Για οποιαδήποτε ερώτηση, θα χαρούμε να σας ακούσουμε.",
+  "contact.simpleDesc": "Για οποιαδήποτε ερώτηση, επικοινωνήστε μαζί μας μέσω WhatsApp.",
+  "contact.whatsapp": "Στείλτε μας WhatsApp",
   // Countries
   "countries.title": "Χώρες Επένδυσης",
   "countries.subtitle": "Εξερευνήστε ευκαιρίες ακινήτων σε προσεκτικά επιλεγμένες αγορές",
@@ -863,7 +864,8 @@ const ruTranslations: Record<string, string> = {
   "contact.sentSub": "Спасибо за обращение. Мы ответим вам в течение 24 часов.",
   "contact.messagePlaceholder": "Чем мы можем вам помочь?",
   "contact.simpleTitle": "Связаться с нами",
-  "contact.simpleDesc": "По любому вопросу мы будем рады услышать вас.",
+  "contact.simpleDesc": "По любому вопросу свяжитесь с нами напрямую через WhatsApp.",
+  "contact.whatsapp": "Написать в WhatsApp",
   // Countries
   "countries.title": "Страны для инвестиций",
   "countries.subtitle": "Откройте возможности недвижимости на тщательно отобранных рынках",
@@ -1552,7 +1554,8 @@ const arTranslations: Record<string, string> = {
   "contact.sentSub": "شكراً على تواصلك. سنرد عليك خلال 24 ساعة.",
   "contact.messagePlaceholder": "كيف يمكننا مساعدتك؟",
   "contact.simpleTitle": "اتصل بنا",
-  "contact.simpleDesc": "لأي سؤال أو استفسار، يسعدنا سماعك.",
+  "contact.simpleDesc": "لأي سؤال أو استفسار، تواصل معنا مباشرة عبر WhatsApp.",
+  "contact.whatsapp": "راسلنا على WhatsApp",
   // Countries
   "countries.title": "دول الاستثمار",
   "countries.subtitle": "استكشف فرص العقارات في أسواق مختارة بعناية",
@@ -2238,7 +2241,8 @@ const translations: Record<string, Record<string, string>> = {
     "contact.sentSub": "תודה שפניתם אלינו. נחזור אליכם תוך 24 שעות.",
     "contact.messagePlaceholder": "איך נוכל לעזור לכם?",
     "contact.simpleTitle": "יצירת קשר",
-    "contact.simpleDesc": "לכל שאלה או פנייה, נשמח לשמוע מכם.",
+    "contact.simpleDesc": "לכל שאלה או פנייה, ניתן לפנות אלינו ישירות דרך וואצאפ.",
+    "contact.whatsapp": "שלחו לנו וואצאפ",
 
     // Countries
     "countries.title": "מדינות השקעה",
@@ -2985,7 +2989,8 @@ const translations: Record<string, Record<string, string>> = {
     "contact.sentSub": "Thank you for reaching out. We'll get back to you within 24 hours.",
     "contact.messagePlaceholder": "How can we help you?",
     "contact.simpleTitle": "Contact Us",
-    "contact.simpleDesc": "For any question or inquiry, we'd love to hear from you.",
+    "contact.simpleDesc": "For any question or inquiry, reach us directly via WhatsApp.",
+    "contact.whatsapp": "Send us a WhatsApp",
 
     // Countries
     "countries.title": "Investment Countries",
