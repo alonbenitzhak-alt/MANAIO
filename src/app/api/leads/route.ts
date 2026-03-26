@@ -106,13 +106,17 @@ export async function POST(request: NextRequest) {
       message: sanitizedMessage,
       buyer_id: buyer_id || null,
       agent_id: agent_id || null,
-      ip_address: ip,
       status: "sent",
     }).select().single();
 
     if (error) {
       console.error("Lead insert error:", error);
       return NextResponse.json({ error: "Failed to submit lead" }, { status: 500 });
+    }
+
+    // Store ip_address separately — non-critical, column may not exist in all environments
+    if (ip !== "unknown") {
+      await supabase.from("leads").update({ ip_address: ip }).eq("id", lead.id).catch(() => null);
     }
 
     // Notify admin by email
