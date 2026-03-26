@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
             <h2 style="color: #1e3a5f;">שלום ${escapeHtml(name)},</h2>
             <p>לצערנו, לא הצלחנו לאשר את בקשת ההצטרפות שלכם כסוכן בשלב זה.</p>
             <p>לפרטים נוספים או לשאלות, אנא פנו אלינו:</p>
-            <a href="mailto:agents@mymanaio.com" style="color: #1e3a5f; font-weight: bold;">agents@mymanaio.com</a>
+            <span style="color: #1e3a5f; font-weight: bold;">agents [at] mymanaio [dot] com</span>
             <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">בברכה, צוות MANAIO</p>
           </div>
         `,

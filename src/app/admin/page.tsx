@@ -525,6 +525,21 @@ function PendingAgentsTab() {
           }
         }
       )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "profiles", filter: "role=eq.agent" },
+        (payload) => {
+          const updated = payload.new as PendingAgent;
+          if (!updated.approved) {
+            setAgents((prev) => {
+              if (prev.find((a) => a.id === updated.id)) {
+                return prev.map((a) => a.id === updated.id ? { ...a, ...updated } : a);
+              }
+              return [updated, ...prev];
+            });
+          }
+        }
+      )
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
