@@ -157,7 +157,7 @@ const elTranslations: Record<string, string> = {
   "form.submitting": "Υποβολή...",
   "form.error": "Κάτι πήγε στραβά. Δοκιμάστε ξανά.",
   "form.thankYou": "Ευχαριστούμε!",
-  "form.thankYouSub": "Το αίτημά σας ελήφθη. Ένας τοπικός κτηματομεσίτης θα επικοινωνήσει μαζί σας σύντομα.",
+  "form.thankYouSub": "Το μήνυμά σας εστάλη στην ομάδα μας και βρίσκεται υπό επεξεργασία.",
   // Contact
   "contact.title": "Επικοινωνία",
   "contact.subtitle": "Έχετε απορία; Χαρούμε να σας ακούσουμε",
@@ -858,7 +858,7 @@ const ruTranslations: Record<string, string> = {
   "form.submitting": "Отправка...",
   "form.error": "Что-то пошло не так. Попробуйте ещё раз.",
   "form.thankYou": "Спасибо!",
-  "form.thankYouSub": "Ваш запрос получен. Местный агент по недвижимости свяжется с вами в ближайшее время.",
+  "form.thankYouSub": "Ваше сообщение отправлено нашей команде и находится в обработке.",
   // Contact
   "contact.title": "Контакты",
   "contact.subtitle": "Есть вопрос? Мы рады вам помочь",
@@ -1559,7 +1559,7 @@ const arTranslations: Record<string, string> = {
   "form.submitting": "جاري الإرسال...",
   "form.error": "حدث خطأ ما. حاول مرة أخرى.",
   "form.thankYou": "شكراً!",
-  "form.thankYouSub": "تم استلام استفسارك. سيتواصل معك وكيل عقارات محلي قريباً.",
+  "form.thankYouSub": "تم إرسال رسالتك إلى فريقنا وهي قيد المعالجة.",
   // Contact
   "contact.title": "اتصل بنا",
   "contact.subtitle": "هل لديك سؤال؟ يسعدنا مساعدتك",
@@ -2255,7 +2255,7 @@ const translations: Record<string, Record<string, string>> = {
     "form.connectorDisclaimer": "MANAIO היא פלטפורמת חיבור בלבד – כל עסקה מתבצעת ישירות מול הסוכן",
     "form.submitting": "שולח...",
     "form.thankYou": "תודה רבה!",
-    "form.thankYouSub": "הפנייה שלכם התקבלה. סוכן נדל\"ן מקומי ייצור איתכם קשר בקרוב.",
+    "form.thankYouSub": "הודעתך נשלחה לצוותנו ונמצאת בטיפול.",
     "form.error": "משהו השתבש. אנא נסו שוב.",
 
     // Contact
@@ -3014,7 +3014,7 @@ const translations: Record<string, Record<string, string>> = {
     "form.connectorDisclaimer": "MANAIO is a connection platform only – all transactions are conducted directly with the agent",
     "form.submitting": "Submitting...",
     "form.thankYou": "Thank You!",
-    "form.thankYouSub": "Your inquiry has been received. A local real estate agent will contact you shortly.",
+    "form.thankYouSub": "Your message has been sent to our team and is being handled.",
     "form.error": "Something went wrong. Please try again.",
 
     // Contact
