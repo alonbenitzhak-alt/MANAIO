@@ -113,4 +113,125 @@ export const blogPosts: BlogPostData[] = [
     readTime: 7,
     author: "מערכת MANAIO",
   },
+  {
+    id: "2",
+    slug: "buying-property-cyprus-guide",
+    title: {
+      he: "המדריך המלא לרכישת נכס בקפריסין — שלב אחר שלב",
+      en: "The Complete Guide to Buying Property in Cyprus — Step by Step",
+    },
+    excerpt: {
+      he: "קפריסין היא אחת היעדים הנדל\"ניים הקרובים והנוחים ביותר למשקיעים ישראלים — 40 דקות טיסה, סביבה אנגלופונית ומשפט מבוסס common law. הנה כל מה שצריך לדעת לפני שרוכשים.",
+      en: "Cyprus is one of the most accessible real estate destinations for Israeli investors — a 40-minute flight, an English-speaking environment, and a legal system rooted in common law. Here's everything you need to know before buying.",
+    },
+    content: {
+      he: `<p>קפריסין מושכת משקיעים ישראלים בעיקר בשל הקרבה הגיאוגרפית, השפה האנגלית כשפת עסקים, ומערכת משפטית המבוססת על ה-common law הבריטי — מה שמקל על הבנת הנהלים בהשוואה למדינות אירופאיות אחרות. לימסול ופאפוס הן הערים המובילות לרכישה, עם שוק שכירות פעיל ועלייה עקבית במחירים בשנים האחרונות.</p>
+
+<h2>שלב 1: מציאת עורך דין מקומי</h2>
+<p>בקפריסין, <strong>מינוי עורך דין לפני כל פעולה</strong> הוא הצעד הראשון — לא אחרי. עורך הדין מבצע בדיקת שטר הבעלות (Title Deed), בודק שאין שעבודים, מיסים שלא שולמו, צווי בנייה בלתי חוקיים, והגבלות תכנון. בקפריסין ישנם נכסים רבים שעדיין אין להם שטר בעלות סופי — עורך הדין יזהיר אתכם מראש. עלות: בדרך כלל כ-1% ממחיר הנכס.</p>
+
+<h2>שלב 2: הסכם הזמנה ומקדמה</h2>
+<p>לאחר שמצאתם נכס, חותמים על <strong>הסכם הזמנה (Reservation Agreement)</strong> ומשלמים מקדמה סמלית — בדרך כלל בין €2,000 ל-€5,000 — כדי להוציא את הנכס מהשוק בזמן שמתבצעת בדיקת הנאותות. הסכם זה אינו מחייב לרכישה, אך המקדמה לרוב אינה מוחזרת אם הקונה נסוג ללא עילה.</p>
+
+<h2>שלב 3: בדיקת נאותות</h2>
+<p>עורך הדין בודק את הנכס ברשם המקרקעין של קפריסין (Land Registry). הבדיקה כוללת: בעלות ושרשרת בעלות היסטורית, שעבודים ומשכנתאות, היתרי בנייה, ותאימות לתכנית המתאר. אם הנכס הוא <strong>דירה חדשה מקבלן</strong> — בדקו שהקבלן רשום ומורשה וכי הפרויקט קיבל את כל האישורים הנדרשים.</p>
+
+<h2>שלב 4: חוזה מכר (Sale and Purchase Agreement)</h2>
+<p>לאחר השלמת הבדיקות, חותמים על <strong>חוזה מכר מפורט</strong> הכולל את מחיר הנכס, לוח התשלומים, מועד המסירה ותנאי הביטול. חוזה זה מוגש לרשם המקרקעין תוך 60 יום — רישום זה מגן על הקונה מפני מכירה כפולה או שעבוד עתידי של הנכס על ידי המוכר.</p>
+
+<h2>שלב 5: מס בולים (Stamp Duty)</h2>
+<p>בתוך 30 יום מחתימת החוזה, יש לשלם <strong>מס בולים</strong>:
+<ul>
+<li>0.15% על החלק עד €170,860</li>
+<li>0.20% על החלק שמעל €170,860</li>
+</ul>
+מדובר בסכום נמוך יחסית — על נכס של €300,000 למשל, מס הבולים יעמוד על כ-€515.</p>
+
+<h2>שלב 6: אישור מועצת השרים (לאזרחים שאינם מהאיחוד האירופי)</h2>
+<p>אזרחים שאינם מהאיחוד האירופי — כולל ישראלים — נדרשים לקבל <strong>אישור מועצת השרים</strong> לרכישת נכס למגורים בקפריסין. בפועל, מדובר בהליך פורמלי שמאושר כמעט תמיד לנכסי מגורים. ההליך מתבצע דרך עורך הדין שלכם ולוקח בדרך כלל 2–4 חודשים. בתקופת הביניים, הרכישה מתקדמת כרגיל.</p>
+
+<h2>שלב 7: העברת בעלות ורישום שטר</h2>
+<p>לאחר קבלת כל האישורים ותשלום מלוא התמורה, מתבצעת <strong>העברת שטר הבעלות (Title Deed Transfer)</strong> ברשם המקרקעין. בשלב זה משולמת עמלת ההעברה. חשוב לדעת: <strong>נכסים חדשים שנרכשו עם מע"מ פטורים מעמלת ההעברה</strong> — זו הטבה משמעותית שכדאי לבדוק עם עורך הדין.</p>
+
+<h2>עלויות שיש לקחת בחשבון</h2>
+<ul>
+<li><strong>מע"מ על נכסים חדשים:</strong> 19% — אך ניתן לקבל שיעור מופחת של 5% לנכס מגורים ראשוני עד שטח של 200 מ"ר (עם תנאים)</li>
+<li><strong>עמלת העברה (נכסי יד שנייה):</strong> 3% עד €85,430 | 5% עד €170,860 | 8% מעל</li>
+<li><strong>מס בולים:</strong> 0.15%–0.20% (ראו שלב 5)</li>
+<li><strong>שכר עורך דין:</strong> כ-1%</li>
+<li><strong>עמלת תיווך:</strong> בדרך כלל 3%–5% (משולמת לרוב על ידי המוכר/הקבלן, אך מומלץ לוודא)</li>
+</ul>
+
+<h2>תושבות קבע קפריסאית דרך השקעה</h2>
+<p>השקעה של <strong>€300,000 ומעלה בנכס חדש</strong> מאפשרת לקבל <strong>תושבות קבע קפריסאית</strong>. התוכנית דורשת בנוסף להוכיח הכנסה קבועה מחוץ לקפריסין — לפחות €30,000 לשנה + €5,000 לכל תלוי נוסף. התושבות ניתנת לכל החיים, אינה דורשת שהייה מינימלית, ומעניקה גישה חופשית לשירותי בריאות וחינוך בקפריסין.</p>
+<p>בניגוד לתוכנית האזרחות שבוטלה ב-2020, תוכנית התושבות הקבע פעילה ומייצרת — ומהווה אחד הגורמים המרכזיים שמניעים ביקוש ישראלי לנכסים בלימסול ופאפוס.</p>
+
+<h2>הבדל חשוב: קפריסין היוונית לעומת צפון קפריסין</h2>
+<p>כל האמור לעיל מתייחס ל<strong>רפובליקה של קפריסין</strong> (הדרום) — מדינה חברה באיחוד האירופי עם מערכת משפטית יציבה. <strong>צפון קפריסין</strong> הוא אזור שאינו מוכר בינלאומית, עם סיכונים משפטיים משמעותיים הנוגעים לבעלות על קרקע. משקיעים מומלץ שלא לרכוש נכסים בצפון קפריסין ללא ייעוץ משפטי מעמיק במיוחד.</p>
+
+<h2>טיפים מהשטח</h2>
+<ul>
+<li>בדקו שלנכס יש <strong>שטר בעלות סופי</strong> (Title Deed) — חלק מהנכסים בקפריסין עדיין ממתינים לרישום, מה שמגביל את יכולת המשכון והמכירה</li>
+<li>אם הנכס חדש — בקשו לראות את <strong>היתר הבנייה</strong> ואת <strong>תעודת האכלוס</strong> (Certificate of Final Approval)</li>
+<li>עמלת ההעברה הופחתה ב-50% בעסקאות ללא מע"מ — שאלו את עורך הדין האם ההנחה חלה בעסקה הספציפית שלכם</li>
+<li>לימסול ופאפוס מציעות שוק שכירות פעיל לאורך כל השנה, בעוד שערים קטנות יותר תלויות יותר בעונת הקיץ</li>
+</ul>`,
+      en: `<p>Cyprus attracts Israeli investors primarily due to its geographical proximity, English as the language of business, and a legal system rooted in British common law — making the process far more familiar than most European countries. Limassol and Paphos lead the market, with active rental demand and consistent price appreciation in recent years.</p>
+
+<h2>Step 1: Appoint a Local Lawyer First</h2>
+<p>In Cyprus, <strong>appointing a lawyer before anything else</strong> is the starting point — not an afterthought. Your lawyer will search the Title Deed, check for mortgages, unpaid taxes, illegal construction, and planning restrictions. Many properties in Cyprus still lack a final Title Deed — your lawyer will flag this upfront. Cost: typically around 1% of the purchase price.</p>
+
+<h2>Step 2: Reservation Agreement and Deposit</h2>
+<p>Once you've found a property, you sign a <strong>Reservation Agreement</strong> and pay a token deposit — usually between €2,000 and €5,000 — to take the property off the market while due diligence is completed. This agreement is not a binding commitment to purchase, but the deposit is generally non-refundable if the buyer walks away without cause.</p>
+
+<h2>Step 3: Due Diligence</h2>
+<p>Your lawyer searches the Cyprus Land Registry to verify ownership history, mortgages, building permits, and compliance with the local development plan. For <strong>new-build apartments</strong>, check that the developer is registered and licensed and that all required planning and building permits are in place.</p>
+
+<h2>Step 4: Sale and Purchase Agreement</h2>
+<p>After due diligence is complete, you sign a detailed <strong>Sale and Purchase Agreement (SPA)</strong> covering the purchase price, payment schedule, completion date, and cancellation terms. This contract is submitted to the Land Registry within 60 days — a critical step that protects the buyer against double-selling or the seller mortgaging the property after signing.</p>
+
+<h2>Step 5: Stamp Duty</h2>
+<p>Within 30 days of signing the SPA, stamp duty must be paid:
+<ul>
+<li>0.15% on the portion up to €170,860</li>
+<li>0.20% on the portion above €170,860</li>
+</ul>
+This is a relatively modest cost — on a €300,000 property, for example, stamp duty comes to approximately €515.</p>
+
+<h2>Step 6: Council of Ministers Approval (Non-EU Buyers)</h2>
+<p>Non-EU citizens — including Israelis — are required to obtain <strong>Council of Ministers approval</strong> to purchase residential property in Cyprus. In practice, this is a routine formality for residential purchases and is almost always granted. Your lawyer handles the application, which typically takes 2–4 months. The transaction proceeds in parallel during this period.</p>
+
+<h2>Step 7: Title Deed Transfer and Registration</h2>
+<p>Once all approvals are in place and full payment has been made, the <strong>Title Deed is transferred</strong> at the Land Registry. Transfer fees are paid at this stage. Importantly: <strong>new properties purchased with VAT are exempt from transfer fees</strong> — a significant saving worth confirming with your lawyer.</p>
+
+<h2>Costs to Budget For</h2>
+<ul>
+<li><strong>VAT on new properties:</strong> 19% — but a reduced rate of 5% applies to a primary residence up to 200 sqm (conditions apply)</li>
+<li><strong>Transfer fees (resale properties):</strong> 3% up to €85,430 | 5% up to €170,860 | 8% above</li>
+<li><strong>Stamp duty:</strong> 0.15%–0.20% (see Step 5)</li>
+<li><strong>Legal fees:</strong> approximately 1%</li>
+<li><strong>Agency commission:</strong> typically 3%–5% (usually paid by the seller/developer, but confirm in advance)</li>
+</ul>
+
+<h2>Cyprus Permanent Residency by Investment</h2>
+<p>An investment of <strong>€300,000 or more in a new property</strong> qualifies you for <strong>Cyprus Permanent Residency</strong>. The program also requires proof of stable income from outside Cyprus — at least €30,000 per year, plus €5,000 per additional dependent. The residency is granted for life, requires no minimum stay, and provides access to Cyprus's healthcare and education systems.</p>
+<p>Unlike the citizenship-by-investment program cancelled in 2020, the Permanent Residency program remains active and is one of the primary drivers of Israeli demand for properties in Limassol and Paphos.</p>
+
+<h2>Important Distinction: Republic of Cyprus vs. Northern Cyprus</h2>
+<p>Everything above refers to the <strong>Republic of Cyprus</strong> (the south) — a full EU member with a stable legal framework. <strong>Northern Cyprus</strong> is an internationally unrecognized territory with significant legal risks related to land ownership. Investors are strongly advised against purchasing in Northern Cyprus without exceptionally thorough legal counsel.</p>
+
+<h2>Practical Tips</h2>
+<ul>
+<li>Confirm the property has a <strong>final Title Deed</strong> — many properties in Cyprus are still awaiting registration, which limits your ability to mortgage or resell</li>
+<li>For new builds, ask to see the <strong>building permit</strong> and the <strong>Certificate of Final Approval</strong></li>
+<li>Transfer fees are reduced by 50% on resale transactions not subject to VAT — ask your lawyer whether this discount applies to your specific deal</li>
+<li>Limassol and Paphos offer active year-round rental markets, while smaller towns tend to be more seasonal</li>
+</ul>`,
+    },
+    category: { he: "מדריכים", en: "Guides" },
+    cover: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=630&fit=crop",
+    date: "2025-03-17",
+    readTime: 8,
+    author: "מערכת MANAIO",
+  },
 ];
