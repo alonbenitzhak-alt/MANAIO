@@ -63,7 +63,7 @@ export default function PropertyDetailsPage({
                 {property.is_demo && (
                   <div className="absolute top-4 start-4 z-10">
                     <span className="bg-red-600 text-white text-lg font-bold px-6 py-2 rounded-full shadow-lg">
-                      לדוגמא
+                      {t("property.demo")}
                     </span>
                   </div>
                 )}
@@ -131,7 +131,7 @@ export default function PropertyDetailsPage({
                 <div className="flex flex-wrap gap-2">
                   {adminWhatsapp && (
                     <a
-                      href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(`שלום, אני מתעניין/ת בנכס: ${displayTitle}`)}`}
+                      href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(`${t("property.whatsappMessage")} ${displayTitle}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#25D366] hover:bg-[#1ebe5d] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors inline-flex items-center gap-2"
@@ -144,7 +144,7 @@ export default function PropertyDetailsPage({
                   )}
                   {adminEmail && (
                     <a
-                      href={`mailto:${adminEmail}?subject=${encodeURIComponent(`פנייה לגבי נכס: ${displayTitle}`)}`}
+                      href={`mailto:${adminEmail}?subject=${encodeURIComponent(`${t("property.emailSubject")} ${displayTitle}`)}`}
                       className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors inline-flex items-center gap-2"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@ export default function PropertyDetailsPage({
       {/* Floating WhatsApp button */}
       {adminWhatsapp && (
         <a
-          href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(`שלום, אני מתעניין/ת בנכס: ${displayTitle}`)}`}
+          href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(`${t("property.whatsappMessage")} ${displayTitle}`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5d] text-white rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center"

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -10,6 +11,7 @@ interface ChatMessage {
 
 export default function AIChatWidget() {
   const { profile, isAdmin, loading } = useAuth();
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -47,7 +49,7 @@ export default function AIChatWidget() {
         setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
       }
     } catch {
-      setMessages((prev) => [...prev, { role: "assistant", content: "מצטער, אירעה שגיאה. נסה שוב." }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: t("ai.chat.error") }]);
     } finally {
       setThinking(false);
     }
@@ -66,8 +68,8 @@ export default function AIChatWidget() {
                 </svg>
               </div>
               <div>
-                <p className="text-white font-semibold text-sm">יועץ MANAIO AI</p>
-                <p className="text-primary-200 text-xs">מומחה השקעות נדל&quot;ן</p>
+                <p className="text-white font-semibold text-sm">{t("ai.chat.title")}</p>
+                <p className="text-primary-200 text-xs">{t("ai.chat.subtitle")}</p>
               </div>
             </div>
             <button onClick={() => setOpen(false)} className="text-white/70 hover:text-white">
@@ -86,8 +88,8 @@ export default function AIChatWidget() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
                 </div>
-                <p className="text-sm font-medium text-gray-700">שאל אותי כל שאלה</p>
-                <p className="text-xs text-gray-400 mt-1">השקעות נדל&quot;ן, תשואות, שווקים</p>
+                <p className="text-sm font-medium text-gray-700">{t("ai.chat.askTitle")}</p>
+                <p className="text-xs text-gray-400 mt-1">{t("ai.chat.askSubtitle")}</p>
               </div>
             )}
             {messages.map((msg, i) => (
@@ -121,7 +123,7 @@ export default function AIChatWidget() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="שאל שאלה על השקעות נדל&quot;ן..."
+              placeholder={t("ai.chat.placeholder")}
               className="flex-1 px-3 py-2 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none"
               disabled={thinking}
             />
@@ -139,7 +141,7 @@ export default function AIChatWidget() {
       <button
         onClick={() => setOpen((v) => !v)}
         className="w-14 h-14 bg-gradient-to-br from-primary-700 to-primary-500 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white"
-        title="יועץ AI"
+        title={t("ai.chat.buttonTitle")}
       >
         {open ? (
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

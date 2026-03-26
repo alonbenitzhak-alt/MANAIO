@@ -6,11 +6,12 @@ import { Property } from "@/lib/types";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useLanguage } from "@/lib/LanguageContext";
 
-const COUNTRY_HE: Record<string, string> = {
-  Greece: "יוון",
-  Cyprus: "קפריסין",
+const COUNTRY_KEY: Record<string, string> = {
+  Greece: "footer.greece",
+  Cyprus: "footer.cyprus",
+  Georgia: "footer.georgia",
+  Portugal: "footer.portugal",
 };
-
 
 export default function PropertyCard({ property }: { property: Property }) {
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -18,8 +19,8 @@ export default function PropertyCard({ property }: { property: Property }) {
   const favorited = isFavorite(property.id);
   const displayTitle = property.translations?.[lang]?.title ?? (lang === "he" ? property.title_he : undefined) ?? property.title;
 
-  const countryHe = COUNTRY_HE[property.country] ?? property.country;
-  const locationLabel = `${property.city}, ${countryHe}`;
+  const countryLabel = COUNTRY_KEY[property.country] ? t(COUNTRY_KEY[property.country]) : property.country;
+  const locationLabel = `${property.city}, ${countryLabel}`;
 
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 border border-gray-100 group hover:-translate-y-1">
@@ -39,7 +40,7 @@ export default function PropertyCard({ property }: { property: Property }) {
         {property.is_demo && (
           <div className="absolute top-3 start-3 z-10">
             <span className="bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg">
-              לדוגמא
+              {t("property.demo")}
             </span>
           </div>
         )}
@@ -51,7 +52,7 @@ export default function PropertyCard({ property }: { property: Property }) {
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
-              {property.expected_roi}% תשואה ממוצעת
+              {property.expected_roi}% {t("property.avgRoi")}
             </span>
           </div>
         )}

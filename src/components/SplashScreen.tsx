@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
+  const { t } = useLanguage();
   const [phase, setPhase] = useState<"logo" | "slogan" | "fadeOut">("logo");
 
   useEffect(() => {
@@ -47,8 +49,8 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             : "opacity-0 translate-y-6"
         }`}
       >
-        <p className="text-3xl sm:text-4xl font-bold text-gray-800 tracking-wide" dir="rtl">
-          הבית הישראלי לנדל&quot;ן בחו&quot;ל
+        <p className="text-3xl sm:text-4xl font-bold text-gray-800 tracking-wide">
+          {t("splash.tagline")}
         </p>
       </div>
 
