@@ -111,7 +111,7 @@ export default function AgentsLandingPage() {
               <div className="text-sm text-gray-400">{t("agents.deal.free.desc")}</div>
             </div>
             <div className="bg-primary-600 text-white rounded-2xl p-8 shadow-xl shadow-primary-200 scale-105">
-              <div className="text-4xl font-black mb-2">10%</div>
+              <div className="text-4xl font-black mb-2">{t("agents.deal.commission.value")}</div>
               <div className="font-bold mb-2">{t("agents.deal.commission.label")}</div>
               <div className="text-primary-200 text-sm">{t("agents.deal.commission.desc")}</div>
               <div className="mt-4 bg-white/20 rounded-lg px-3 py-2 text-xs font-bold">
@@ -119,7 +119,7 @@ export default function AgentsLandingPage() {
               </div>
             </div>
             <div className="bg-white rounded-2xl border border-gray-200 p-8">
-              <div className="text-4xl font-black text-gray-900 mb-2">∞</div>
+              <div className="text-4xl font-black text-gray-900 mb-2">{t("agents.deal.unlimited.value")}</div>
               <div className="font-bold text-gray-700 mb-2">{t("agents.deal.unlimited.label")}</div>
               <div className="text-sm text-gray-400">{t("agents.deal.unlimited.desc")}</div>
             </div>
