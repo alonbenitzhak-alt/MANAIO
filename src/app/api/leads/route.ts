@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
 
     // Store ip_address separately — non-critical, column may not exist in all environments
     if (ip !== "unknown") {
-      await supabase.from("leads").update({ ip_address: ip }).eq("id", lead.id).catch(() => null);
+      try { await supabase.from("leads").update({ ip_address: ip }).eq("id", lead.id); } catch {}
     }
 
     // Notify admin by email
