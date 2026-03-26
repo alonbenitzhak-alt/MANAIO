@@ -279,12 +279,12 @@ export default function AgentsLandingPage() {
           <img src="/logo.svg" alt="MANAIO" className="h-8 w-auto opacity-60" />
         </div>
         <div className="flex justify-center gap-6 mb-4">
-          <Link href="/terms" className="hover:text-white transition-colors">תנאי שימוש</Link>
-          <Link href="/privacy" className="hover:text-white transition-colors">פרטיות</Link>
-          <Link href="/partnership" className="hover:text-white transition-colors">הסכם שותפות</Link>
-          <Link href="/contact" className="hover:text-white transition-colors">צור קשר</Link>
+          <Link href="/terms" className="hover:text-white transition-colors">{t("footer.terms")}</Link>
+          <Link href="/privacy" className="hover:text-white transition-colors">{t("footer.privacy")}</Link>
+          <Link href="/partnership" className="hover:text-white transition-colors">{t("admin.partnershipAgreement")}</Link>
+          <Link href="/contact" className="hover:text-white transition-colors">{t("footer.contact")}</Link>
         </div>
-        <p>© {new Date().getFullYear()} MANAIO. כל הזכויות שמורות.</p>
+        <p>© {new Date().getFullYear()} MANAIO. {t("footer.rights")}</p>
       </footer>
     </div>
   );
