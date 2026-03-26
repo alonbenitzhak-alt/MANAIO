@@ -108,7 +108,7 @@ export const blogPosts: BlogPostData[] = [
 </ul>`,
     },
     category: { he: "מדריכים", en: "Guides" },
-    cover: "/089d4a86-ea48-4853-908a-b7264cc4de77.jpg",
+    cover: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&h=630&fit=crop",
     date: "2025-03-10",
     readTime: 7,
     author: "מערכת MANAIO",
