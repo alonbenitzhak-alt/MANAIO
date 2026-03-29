@@ -24,7 +24,7 @@ export const blogPosts: BlogPostData[] = [
       en: "Greece has become one of the most sought-after real estate destinations for Israeli investors. But what does the process actually look like, what are the real costs, and what should you check before signing?",
     },
     content: {
-      he: `<p>יוון מושכת משקיעים ישראלים כבר כמה שנים טובות — שילוב של מחירים תחרותיים, ביקוש שכירות גבוה מתיירים, ותוכנית ה-Golden Visa שפתחה דלתות לתושבי קבע. אבל רכישת נכס במדינה זרה מחייבת הכנה. הנה מה שצריך לדעת.</p>
+      he: `<p>יוון מושכת משקיעים ישראלים כבר כמה שנים טובות — שילוב של מחירים תחרותיים, ביקוש שכירות גבוה מתיירים, ותוכנית ה-Golden Visa שפתחה דלתות לתושבי קבע. אבל רכישת נכס במדינה זרה דורשת הכנה. הנה מה שצריך לדעת.</p>
 
 <h2>שלב 1: קבלת מספר מס יווני (AFM)</h2>
 <p>לפני הכל — ועוד לפני שסוגרים על נכס — צריך להשיג <strong>AFM</strong> (Arithmos Forologikou Mitroou), מספר הזיהוי הפיסקלי היווני. זה המקבילה ל"תעודת זהות מס" שלכם בעיני הרשויות היווניות. בלי AFM אי אפשר לחתום על חוזה, לפתוח חשבון בנק, או לרשום נכס.</p>
@@ -56,7 +56,7 @@ export const blogPosts: BlogPostData[] = [
 <p>בסך הכל, צפו להוסיף <strong>7%–9%</strong> על גבי מחיר הנכס כעלויות עסקה.</p>
 
 <h2>ויזת הזהב היוונית</h2>
-<p>השקעה של <strong>800,000 אירו ומעלה</strong> באזורים כמו אתונה, תסלוניקי, מיקונוס וסנטוריני — או <strong>400,000 אירו</strong> ביתר חלקי יוון — מזכה בתושבות קבע יוונית (ויזת זהב). התושבות מאפשרת מגורים חופשיים ביוון ונסיעה חופשית בכל מדינות שנגן. היא לא דורשת שהייה מינימלית.</p>
+<p>השקעה של <strong>800,000 אירו ומעלה</strong> באזורים כמו אתונה, תסלוניקה, מיקונוס וסנטוריני — או <strong>400,000 אירו</strong> ביתר חלקי יוון — מזכה בתושבות קבע יוונית (ויזת זהב). התושבות מאפשרת מגורים חופשיים ביוון ונסיעה חופשית בכל מדינות שנגן, ללא דרישת שהייה מינימלית.</p>
 
 <h2>טיפים מהשטח</h2>
 <ul>
@@ -111,7 +111,7 @@ export const blogPosts: BlogPostData[] = [
     cover: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=1200&h=630&fit=crop",
     date: "2025-03-10",
     readTime: 7,
-    author: "מערכת MANAIO",
+    author: "צוות MANAIO",
   },
   {
     id: "2",
@@ -232,6 +232,6 @@ This is a relatively modest cost — on a €300,000 property, for example, stam
     cover: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&h=630&fit=crop",
     date: "2025-03-17",
     readTime: 8,
-    author: "מערכת MANAIO",
+    author: "צוות MANAIO",
   },
 ];

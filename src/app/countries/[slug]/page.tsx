@@ -12,7 +12,31 @@ export default function CountryPage() {
   const slug = params.slug as string;
   const country = countries.find((c) => c.slug === slug);
   const { properties } = useProperties();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localName = (c: NonNullable<typeof country>) => {
+    if (lang === "he") return c.name_he || c.name;
+    if (lang === "el") return c.name_el || c.name;
+    if (lang === "ru") return c.name_ru || c.name;
+    if (lang === "ar") return c.name_ar || c.name;
+    return c.name;
+  };
+
+  const localDescription = (c: NonNullable<typeof country>) => {
+    if (lang === "he") return c.description_he || c.description;
+    if (lang === "el") return c.description_el || c.description;
+    if (lang === "ru") return c.description_ru || c.description;
+    if (lang === "ar") return c.description_ar || c.description;
+    return c.description;
+  };
+
+  const localHighlights = (c: NonNullable<typeof country>) => {
+    if (lang === "he") return c.highlights_he || c.highlights;
+    if (lang === "el") return c.highlights_el || c.highlights;
+    if (lang === "ru") return c.highlights_ru || c.highlights;
+    if (lang === "ar") return c.highlights_ar || c.highlights;
+    return c.highlights;
+  };
 
   if (!country) {
     return (
@@ -33,7 +57,7 @@ export default function CountryPage() {
             <div className="inline-block bg-gold-500 text-white text-sm font-bold px-4 py-1.5 rounded-full mb-3">
               {t("countries.comingSoon")}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{country.name}</h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">{localName(country)}</h1>
           </div>
         </section>
         <div className="max-w-2xl mx-auto px-4 py-20 text-center">
@@ -43,7 +67,7 @@ export default function CountryPage() {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-3">
-            {t("countries.propertiesComingSoon").replace("{name}", country.name)}
+            {t("countries.propertiesComingSoon").replace("{name}", localName(country))}
           </h2>
           <p className="text-gray-500 leading-relaxed mb-8">
             {t("countries.stayTuned")}
@@ -65,7 +89,7 @@ export default function CountryPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-2">
-            {t("countries.investIn")} {country.name}
+            {t("countries.investIn")} {localName(country)}
           </h1>
           <p className="text-white/80 text-lg">
             {countryProperties.length} {countryProperties.length === 1 ? t("properties.property") : t("properties.propertiesNoun")} {t("countries.available")}
@@ -76,10 +100,10 @@ export default function CountryPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-2xl border border-gray-200 p-8 mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">{t("countries.investmentOverview")}</h2>
-          <p className="text-gray-600 leading-relaxed mb-6">{country.description}</p>
+          <p className="text-gray-600 leading-relaxed mb-6">{localDescription(country)}</p>
           <h3 className="font-bold text-gray-900 mb-3">{t("countries.keyHighlights")}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {country.highlights.map((h, i) => (
+            {localHighlights(country).map((h, i) => (
               <div key={i} className="flex items-center gap-3 bg-primary-50 rounded-xl px-4 py-3">
                 <svg className="w-5 h-5 text-primary-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -91,12 +115,12 @@ export default function CountryPage() {
         </div>
 
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          {t("countries.propertiesIn")} {country.name}
+          {t("countries.propertiesIn")} {localName(country)}
         </h2>
 
         {countryProperties.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-2xl border border-gray-200">
-            <p className="text-gray-500 text-lg">{t("countries.noProperties").replace("{name}", country.name)}</p>
+            <p className="text-gray-500 text-lg">{t("countries.noProperties").replace("{name}", localName(country))}</p>
             <p className="text-gray-400 text-sm mt-1">{t("countries.checkBack")}</p>
           </div>
         ) : (
