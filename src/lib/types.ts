@@ -110,6 +110,8 @@ export interface ContactSubmission {
   admin_reply?: string;
   replied_at?: string;
   ip_address?: string;
+  conversation_id?: string;
+  lead_status?: "open" | "closed" | null;
   created_at: string;
 }
 
