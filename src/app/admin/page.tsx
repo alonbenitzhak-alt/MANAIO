@@ -1102,13 +1102,19 @@ function ContactsTab() {
 
     let conversationId = s.conversation_id;
     if (!conversationId) {
-      const { data: conv } = await supabase.from("conversations").insert({
-        buyer_id: s.user_id,
-        agent_id: user.id,
-      }).select().single();
-      if (!conv) { setChatLoading(null); return; }
-      conversationId = conv.id;
-      await supabase.from("contact_submissions").update({ conversation_id: conversationId }).eq("id", s.id);
+      const token = await getToken();
+      const res = await fetch("/api/admin/create-conversation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+        body: JSON.stringify({ buyer_id: s.user_id, submission_id: s.id }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.conversationId) {
+        console.error("Failed to create conversation:", data.error);
+        setChatLoading(null);
+        return;
+      }
+      conversationId = data.conversationId;
       await fetchSubmissions();
     }
     setChatLoading(null);

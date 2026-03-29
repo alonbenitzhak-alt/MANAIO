@@ -6,6 +6,7 @@ import { blogPosts } from "@/lib/blogData";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import sanitizeHtml from "sanitize-html";
+import ShareButtons from "@/components/ShareButtons";
 
 const ALLOWED_TAGS = ["h2", "h3", "p", "strong", "em", "ul", "ol", "li", "a", "br"];
 const ALLOWED_ATTRS: sanitizeHtml.IOptions["allowedAttributes"] = {
@@ -41,12 +42,18 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Meta */}
-        <div className="flex items-center gap-4 text-sm text-gray-400 mb-8 border-b border-gray-100 pb-6">
-          <span>{new Date(post.date).toLocaleDateString(lang === "he" ? "he-IL" : "en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
-          <span>·</span>
-          <span>{post.readTime} {t("blog.minRead")}</span>
-          <span>·</span>
-          <span>{post.author}</span>
+        <div className="flex items-center justify-between gap-4 mb-8 border-b border-gray-100 pb-6 flex-wrap">
+          <div className="flex items-center gap-4 text-sm text-gray-400">
+            <span>{new Date(post.date).toLocaleDateString(lang === "he" ? "he-IL" : "en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+            <span>·</span>
+            <span>{post.readTime} {t("blog.minRead")}</span>
+            <span>·</span>
+            <span>{post.author}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-400">{t("share.label")}</span>
+            <ShareButtons title={lang === "he" ? post.title.he : post.title.en} />
+          </div>
         </div>
 
         {/* Content */}
