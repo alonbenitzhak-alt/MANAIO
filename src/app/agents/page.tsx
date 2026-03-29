@@ -14,11 +14,11 @@ export default function AgentsLandingPage() {
 
   const benefits = [
     { color: "bg-blue-100 text-blue-700", label: "IL", titleKey: "agents.benefit1.title", descKey: "agents.benefit1.desc" },
-    { color: "bg-violet-100 text-violet-700", label: "AI", titleKey: "agents.benefit2.title", descKey: "agents.benefit2.desc" },
-    { color: "bg-primary-100 text-primary-700", label: "CRM", titleKey: "agents.benefit3.title", descKey: "agents.benefit3.desc" },
+    { color: "bg-violet-100 text-violet-700", label: "LD", titleKey: "agents.benefit2.title", descKey: "agents.benefit2.desc" },
+    { color: "bg-primary-100 text-primary-700", label: "PRO", titleKey: "agents.benefit3.title", descKey: "agents.benefit3.desc" },
     { color: "bg-green-100 text-green-700", label: "ROI", titleKey: "agents.benefit4.title", descKey: "agents.benefit4.desc" },
     { color: "bg-amber-100 text-amber-700", label: "INT", titleKey: "agents.benefit5.title", descKey: "agents.benefit5.desc" },
-    { color: "bg-emerald-100 text-emerald-700", label: "WA", titleKey: "agents.benefit6.title", descKey: "agents.benefit6.desc" },
+    { color: "bg-emerald-100 text-emerald-700", label: "₪0", titleKey: "agents.benefit6.title", descKey: "agents.benefit6.desc" },
   ];
 
   const steps = [

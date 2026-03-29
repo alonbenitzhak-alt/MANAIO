@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useProperties } from "@/lib/PropertiesContext";
 import LeadForm from "@/components/LeadForm";
+import ShareButtons from "@/components/ShareButtons";
 import { useLanguage } from "@/lib/LanguageContext";
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
@@ -126,6 +127,12 @@ export default function PropertyDetailsPage({
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">{t("detail.about")}</h2>
                 <p className="text-gray-600 leading-relaxed">{displayDescription}</p>
+              </div>
+
+              {/* Share */}
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-sm text-gray-500 shrink-0">{t("share.label")}</span>
+                <ShareButtons title={displayTitle} />
               </div>
 
               <div className="bg-gray-50 rounded-2xl p-6 mb-8">
