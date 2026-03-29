@@ -6,12 +6,13 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useProperties } from "@/lib/PropertiesContext";
 import { supabase } from "@/lib/supabase";
-import { Lead, LeadStatus } from "@/lib/types";
+import { Lead, LeadStatus, Conversation } from "@/lib/types";
 import Link from "next/link";
 import LoginForm from "@/components/LoginForm";
 import PageHero from "@/components/PageHero";
+import ChatWindow from "@/components/ChatWindow";
 
-type Tab = "favorites" | "leads" | "account";
+type Tab = "favorites" | "leads" | "messages" | "account";
 
 
 const statusColors: Record<LeadStatus, string> = {
@@ -30,6 +31,8 @@ export default function BuyerDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("favorites");
   const [leads, setLeads] = useState<Lead[]>([]);
   const [leadsLoading, setLeadsLoading] = useState(true);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
 
   // Account form
   const [name, setName] = useState("");
@@ -60,8 +63,16 @@ export default function BuyerDashboard() {
       if (data) setLeads(data);
       setLeadsLoading(false);
     };
+    const fetchConversations = async () => {
+      const { data } = await supabase
+        .from("conversations")
+        .select("*")
+        .eq("buyer_id", user.id)
+        .order("created_at", { ascending: false });
+      if (data) setConversations(data as Conversation[]);
+    };
     fetchLeads();
-
+    fetchConversations();
   }, [user]);
 
   if (loading) {
@@ -114,6 +125,7 @@ export default function BuyerDashboard() {
   const tabs = [
     { key: "favorites" as Tab, label: t("dashboard.buyer.favorites"), icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" },
     { key: "leads" as Tab, label: t("dashboard.buyer.myRequests"), icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" },
+    { key: "messages" as Tab, label: t("dashboard.buyer.messages"), icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" },
     { key: "account" as Tab, label: t("dashboard.buyer.account"), icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
   ];
 
@@ -258,6 +270,60 @@ export default function BuyerDashboard() {
                   </div>
                 </div>
               ))}
+            </div>
+          )
+        )}
+
+        {/* Messages Tab */}
+        {activeTab === "messages" && (
+          conversations.length === 0 ? (
+            <div className="text-center py-20">
+              <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t("dashboard.buyer.noMessages")}</h3>
+              <p className="text-gray-500">{t("dashboard.buyer.noMessagesSub")}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Conversation list */}
+              <div className="space-y-3">
+                {conversations.map((conv) => (
+                  <button
+                    key={conv.id}
+                    onClick={() => setActiveConversation(conv)}
+                    className={`w-full text-left bg-white rounded-2xl border p-4 transition-all hover:border-primary-300 ${activeConversation?.id === conv.id ? "border-primary-400 ring-1 ring-primary-200" : "border-gray-200"}`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold text-sm shrink-0">
+                        M
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-gray-900 text-sm">{t("dashboard.buyer.adminSupport")}</p>
+                        <p className="text-xs text-gray-400">{new Date(conv.created_at).toLocaleDateString(lang === "he" ? "he-IL" : "en-US")}</p>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Chat window */}
+              <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden" style={{ height: "500px" }}>
+                {activeConversation ? (
+                  <ChatWindow
+                    conversationId={activeConversation.id}
+                    otherName={t("dashboard.buyer.adminSupport")}
+                    onClose={() => setActiveConversation(null)}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+                    <svg className="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                    <p className="text-sm">{t("chat.noChats")}</p>
+                  </div>
+                )}
+              </div>
             </div>
           )
         )}

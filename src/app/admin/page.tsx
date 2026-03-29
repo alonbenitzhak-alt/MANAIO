@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import LoginForm from "@/components/LoginForm";
+import ChatWindow from "@/components/ChatWindow";
 import { useProperties } from "@/lib/PropertiesContext";
 import { Property, Lead, Payment, PaymentStatus, PaymentType, ContactSubmission } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
@@ -1075,12 +1076,12 @@ const SUBJECT_LABELS: Record<string, string> = {
 };
 
 function ContactsTab() {
+  const { user } = useAuth();
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [subTab, setSubTab] = useState<"agents" | "buyers" | "closed">("agents");
-  const [replyText, setReplyText] = useState<Record<string, string>>({});
-  const [replyLoading, setReplyLoading] = useState<Record<string, boolean>>({});
-  const [expanded, setExpanded] = useState<string | null>(null);
+  const [openChat, setOpenChat] = useState<{ conversationId: string; name: string } | null>(null);
+  const [chatLoading, setChatLoading] = useState<string | null>(null);
 
   const fetchSubmissions = async () => {
     const { data } = await supabase.from("contact_submissions").select("*").order("created_at", { ascending: false });
@@ -1093,28 +1094,36 @@ function ContactsTab() {
   const openAgents = submissions.filter(s => s.status === "open" && s.user_role === "agent");
   const openBuyers = submissions.filter(s => s.status === "open" && s.user_role !== "agent");
   const closed = submissions.filter(s => s.status === "closed");
-
   const current = subTab === "agents" ? openAgents : subTab === "buyers" ? openBuyers : closed;
+
+  const handleOpenChat = async (s: ContactSubmission) => {
+    if (!user || !s.user_id) return;
+    setChatLoading(s.id);
+
+    let conversationId = s.conversation_id;
+    if (!conversationId) {
+      const { data: conv } = await supabase.from("conversations").insert({
+        buyer_id: s.user_id,
+        agent_id: user.id,
+      }).select().single();
+      if (!conv) { setChatLoading(null); return; }
+      conversationId = conv.id;
+      await supabase.from("contact_submissions").update({ conversation_id: conversationId }).eq("id", s.id);
+      await fetchSubmissions();
+    }
+    setChatLoading(null);
+    setOpenChat({ conversationId, name: s.name });
+  };
+
+  const handleLeadStatus = async (s: ContactSubmission, status: "open" | "closed" | null) => {
+    const newStatus = s.lead_status === status ? null : status;
+    await supabase.from("contact_submissions").update({ lead_status: newStatus }).eq("id", s.id);
+    await fetchSubmissions();
+  };
 
   const getToken = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     return session?.access_token || "";
-  };
-
-  const handleReply = async (s: ContactSubmission) => {
-    const reply = replyText[s.id] || "";
-    if (!reply.trim()) return;
-    setReplyLoading(r => ({ ...r, [s.id]: true }));
-    const token = await getToken();
-    await fetch("/api/admin/contact-reply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-      body: JSON.stringify({ submission_id: s.id, reply }),
-    });
-    await fetchSubmissions();
-    setReplyText(r => ({ ...r, [s.id]: "" }));
-    setReplyLoading(r => ({ ...r, [s.id]: false }));
-    setExpanded(null);
   };
 
   const handleToggleClose = async (s: ContactSubmission) => {
@@ -1131,73 +1140,95 @@ function ContactsTab() {
   if (loading) return <div className="text-center py-12 text-gray-400">טוען פניות...</div>;
 
   return (
-    <div>
-      <div className="flex gap-2 mb-6">
-        {([["agents", `סוכנים (${openAgents.length})`], ["buyers", `משקיעים (${openBuyers.length})`], ["closed", `סגורות (${closed.length})`]] as const).map(([key, label]) => (
-          <button key={key} onClick={() => setSubTab(key)}
-            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${subTab === key ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
-            {label}
-          </button>
-        ))}
-      </div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Left — list */}
+      <div>
+        <div className="flex gap-2 mb-4">
+          {([["agents", `סוכנים (${openAgents.length})`], ["buyers", `משקיעים (${openBuyers.length})`], ["closed", `סגורות (${closed.length})`]] as const).map(([key, label]) => (
+            <button key={key} onClick={() => setSubTab(key)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${subTab === key ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+              {label}
+            </button>
+          ))}
+        </div>
 
-      {current.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">אין פניות</div>
-      ) : (
-        <div className="space-y-4">
-          {current.map(s => (
-            <div key={s.id} className={`bg-white rounded-2xl border ${s.status === "open" ? "border-gray-200" : "border-gray-100"} overflow-hidden`}>
-              <div className="p-5 flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className="font-semibold text-gray-900">{s.name}</span>
-                    <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
-                      {SUBJECT_LABELS[s.subject || ""] || s.subject || "כללי"}
-                    </span>
-                    {s.user_role === "agent" && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">סוכן</span>}
-                    <span className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString("he-IL")}</span>
-                  </div>
-                  <p className="text-sm text-gray-500">{s.email}</p>
-                  <p className="text-sm text-gray-700 mt-2 line-clamp-2">{s.message}</p>
-                  {s.admin_reply && (
-                    <div className="mt-2 text-xs text-green-700 bg-green-50 px-3 py-2 rounded-lg">
-                      <strong>תשובתך:</strong> {s.admin_reply}
+        {current.length === 0 ? (
+          <div className="text-center py-16 text-gray-400">אין פניות</div>
+        ) : (
+          <div className="space-y-3">
+            {current.map(s => (
+              <div key={s.id}
+                onClick={() => setOpenChat(s.conversation_id ? { conversationId: s.conversation_id, name: s.name } : null)}
+                className={`bg-white rounded-2xl border p-4 cursor-pointer transition-all hover:border-primary-300 ${openChat?.conversationId === s.conversation_id ? "border-primary-400 ring-1 ring-primary-200" : "border-gray-200"}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                      <span className="font-semibold text-gray-900 text-sm">{s.name}</span>
+                      {s.user_role === "agent" && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">סוכן</span>}
+                      {s.lead_status === "open" && <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">ליד פתוח</span>}
+                      {s.lead_status === "closed" && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">ליד סגור</span>}
                     </div>
-                  )}
+                    <p className="text-xs text-gray-400">{SUBJECT_LABELS[s.subject || ""] || "כללי"} · {new Date(s.created_at).toLocaleDateString("he-IL")}</p>
+                    <p className="text-sm text-gray-600 mt-1.5 line-clamp-2">{s.message}</p>
+                  </div>
+                  <div className="flex flex-col gap-1.5 shrink-0">
+                    <button onClick={e => { e.stopPropagation(); handleToggleClose(s); }}
+                      title={s.status === "open" ? "סגור פנייה" : "פתח מחדש"}
+                      className={`w-7 h-7 rounded-full flex items-center justify-center border transition-colors ${s.status === "closed" ? "bg-green-100 border-green-300 text-green-600" : "border-gray-300 text-gray-400 hover:border-green-400 hover:text-green-500"}`}>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </button>
+                    <button onClick={e => { e.stopPropagation(); handleOpenChat(s); }} disabled={chatLoading === s.id}
+                      title="פתח צ'אט"
+                      className="w-7 h-7 rounded-full flex items-center justify-center border border-primary-300 text-primary-600 hover:bg-primary-50 transition-colors disabled:opacity-50">
+                      {chatLoading === s.id ? (
+                        <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                        </svg>
+                      ) : (
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <button onClick={() => handleToggleClose(s)}
-                    title={s.status === "open" ? "סמן כטופל" : "פתח מחדש"}
-                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors border ${s.status === "closed" ? "bg-green-100 border-green-300 text-green-600" : "border-gray-300 text-gray-400 hover:border-green-400 hover:text-green-500"}`}>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
+                {/* Lead status buttons */}
+                <div className="flex gap-2 mt-3 pt-3 border-t border-gray-50" onClick={e => e.stopPropagation()}>
+                  <button onClick={() => handleLeadStatus(s, "open")}
+                    className={`text-xs px-3 py-1 rounded-lg font-medium transition-colors ${s.lead_status === "open" ? "bg-amber-500 text-white" : "bg-gray-100 text-gray-500 hover:bg-amber-100 hover:text-amber-700"}`}>
+                    ליד פתוח
                   </button>
-                  <button onClick={() => setExpanded(expanded === s.id ? null : s.id)}
-                    className="text-sm text-primary-600 hover:underline font-medium">
-                    {expanded === s.id ? "סגור" : "הגב"}
+                  <button onClick={() => handleLeadStatus(s, "closed")}
+                    className={`text-xs px-3 py-1 rounded-lg font-medium transition-colors ${s.lead_status === "closed" ? "bg-green-500 text-white" : "bg-gray-100 text-gray-500 hover:bg-green-100 hover:text-green-700"}`}>
+                    ליד סגור
                   </button>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-              {expanded === s.id && (
-                <div className="border-t border-gray-100 p-5 bg-gray-50">
-                  <p className="text-sm font-medium text-gray-700 mb-2">הודעה מלאה:</p>
-                  <p className="text-sm text-gray-600 mb-4 whitespace-pre-wrap">{s.message}</p>
-                  <p className="text-sm font-medium text-gray-700 mb-2">תשובה (תישלח למייל + תסגור פנייה):</p>
-                  <textarea rows={4} value={replyText[s.id] || ""} onChange={e => setReplyText(r => ({ ...r, [s.id]: e.target.value }))}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none resize-none mb-3"
-                    placeholder="כתוב תשובה..." />
-                  <button onClick={() => handleReply(s)} disabled={replyLoading[s.id]}
-                    className="bg-primary-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50">
-                    {replyLoading[s.id] ? "שולח..." : "שלח תשובה"}
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Right — chat window */}
+      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden" style={{ height: "600px" }}>
+        {openChat ? (
+          <ChatWindow
+            conversationId={openChat.conversationId}
+            otherName={openChat.name}
+            onClose={() => setOpenChat(null)}
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
+            <svg className="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p className="text-sm">לחץ על כפתור הצ'אט בפנייה כדי לפתוח שיחה</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

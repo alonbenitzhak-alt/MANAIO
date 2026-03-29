@@ -402,6 +402,10 @@ const elTranslations: Record<string, string> = {
   "dashboard.buyer.listings": "καταχωρήσεις",
   "dashboard.buyer.unfollow": "Διακοπή Παρακολούθησης",
   "dashboard.buyer.reminderSent": "Υπενθύμιση στάλθηκε στον συνεργάτη",
+  "dashboard.buyer.messages": "Μηνύματα",
+  "dashboard.buyer.noMessages": "Δεν υπάρχουν μηνύματα ακόμα",
+  "dashboard.buyer.noMessagesSub": "Όταν στείλετε αίτημα και ο διαχειριστής ανοίξει συνομιλία, θα εμφανιστεί εδώ",
+  "dashboard.buyer.adminSupport": "Υποστήριξη MANAIO",
   // Agent Dashboard
   "dashboard.agent.title": "Πίνακας Συνεργάτη",
   "dashboard.agent.welcome": "Καλώς ήρθατε",
@@ -1106,6 +1110,10 @@ const ruTranslations: Record<string, string> = {
   "dashboard.buyer.listings": "объявлений",
   "dashboard.buyer.unfollow": "Отписаться",
   "dashboard.buyer.reminderSent": "Напоминание отправлено агенту",
+  "dashboard.buyer.messages": "Сообщения",
+  "dashboard.buyer.noMessages": "Сообщений пока нет",
+  "dashboard.buyer.noMessagesSub": "Когда вы отправите заявку и администратор откроет чат, он появится здесь",
+  "dashboard.buyer.adminSupport": "Поддержка MANAIO",
   // Agent Dashboard
   "dashboard.agent.title": "Кабинет агента",
   "dashboard.agent.welcome": "Добро пожаловать",
@@ -1810,6 +1818,10 @@ const arTranslations: Record<string, string> = {
   "dashboard.buyer.listings": "قوائم",
   "dashboard.buyer.unfollow": "إلغاء المتابعة",
   "dashboard.buyer.reminderSent": "تم إرسال تذكير للوكيل",
+  "dashboard.buyer.messages": "الرسائل",
+  "dashboard.buyer.noMessages": "لا توجد رسائل بعد",
+  "dashboard.buyer.noMessagesSub": "عند إرسال استفسار وفتح المسؤول محادثة، ستظهر هنا",
+  "dashboard.buyer.adminSupport": "دعم MANAIO",
   // Agent Dashboard
   "dashboard.agent.title": "لوحة الوكيل",
   "dashboard.agent.welcome": "مرحباً",
@@ -2562,6 +2574,10 @@ const translations: Record<string, Record<string, string>> = {
 
     // Dashboard extras
     "dashboard.buyer.reminderSent": "תזכורת נשלחה לסוכן",
+    "dashboard.buyer.messages": "הודעות",
+    "dashboard.buyer.noMessages": "אין הודעות עדיין",
+    "dashboard.buyer.noMessagesSub": "כאשר תשלח פנייה ואדמין יפתח שיחה, היא תופיע כאן",
+    "dashboard.buyer.adminSupport": "תמיכת MANAIO",
 
     // Chat
     "chat.agent": "סוכן",
@@ -3324,6 +3340,10 @@ const translations: Record<string, Record<string, string>> = {
 
     // Dashboard extras
     "dashboard.buyer.reminderSent": "Reminder sent to agent",
+    "dashboard.buyer.messages": "Messages",
+    "dashboard.buyer.noMessages": "No messages yet",
+    "dashboard.buyer.noMessagesSub": "When you submit an inquiry and admin opens a chat, it will appear here",
+    "dashboard.buyer.adminSupport": "MANAIO Support",
 
     // Chat extras
     "chat.agent": "Agent",
