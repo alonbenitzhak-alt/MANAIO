@@ -1112,6 +1112,7 @@ function ContactsTab() {
       await fetchSubmissions();
     }
     setChatLoading(null);
+    if (!conversationId) return;
     setOpenChat({ conversationId, name: s.name });
   };
 
