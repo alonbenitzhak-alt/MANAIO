@@ -25,13 +25,13 @@ export default function PropertyDetailsPage({
 
   const adminWhatsapp = process.env.NEXT_PUBLIC_ADMIN_WHATSAPP || "972586836555";
 
-  const buildWhatsappMessage = () => {
-    const currencySymbol = property.currency === "USD" ? "$" : property.currency === "GBP" ? "£" : property.currency === "ILS" ? "₪" : "€";
+  const buildWhatsappMessage = (prop: NonNullable<typeof property>) => {
+    const currencySymbol = prop.currency === "USD" ? "$" : prop.currency === "GBP" ? "£" : prop.currency === "ILS" ? "₪" : "€";
     const lines = [
       `${t("property.whatsappMessage")} ${displayTitle}`,
-      `📍 ${property.city}, ${property.country}`,
-      `💰 ${currencySymbol}${property.price.toLocaleString()}`,
-      `🛏 ${property.bedrooms} | 📈 ROI ${property.expected_roi}%`,
+      `📍 ${prop.city}, ${prop.country}`,
+      `💰 ${currencySymbol}${prop.price.toLocaleString()}`,
+      `🛏 ${prop.bedrooms} | 📈 ROI ${prop.expected_roi}%`,
     ];
     return lines.join("\n");
   };
@@ -141,7 +141,7 @@ export default function PropertyDetailsPage({
                 <div className="flex flex-wrap gap-2">
                   {adminWhatsapp && (
                     <a
-                      href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(buildWhatsappMessage())}`}
+                      href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(buildWhatsappMessage(property))}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="bg-[#25D366] hover:bg-[#1ebe5d] text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors inline-flex items-center gap-2"
@@ -172,7 +172,7 @@ export default function PropertyDetailsPage({
       {/* Floating WhatsApp button */}
       {adminWhatsapp && (
         <a
-          href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(buildWhatsappMessage())}`}
+          href={`https://wa.me/${adminWhatsapp.replace(/\s+/g, "").replace(/^\+/, "")}?text=${encodeURIComponent(buildWhatsappMessage(property))}`}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-[#25D366] hover:bg-[#1ebe5d] text-white rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center"
