@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useFavorites } from "@/lib/FavoritesContext";
@@ -28,7 +29,9 @@ export default function BuyerDashboard() {
   const { t, lang } = useLanguage();
   const { favorites, toggleFavorite } = useFavorites();
   const { properties } = useProperties();
-  const [activeTab, setActiveTab] = useState<Tab>("favorites");
+  const searchParams = useSearchParams();
+  const initialTab = (searchParams.get("tab") as Tab) || "favorites";
+  const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [leads, setLeads] = useState<Lead[]>([]);
   const [leadsLoading, setLeadsLoading] = useState(true);
   const [conversations, setConversations] = useState<Conversation[]>([]);

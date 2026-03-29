@@ -14,6 +14,7 @@ export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotifs, setShowNotifs] = useState(false);
+  const [unreadMessages, setUnreadMessages] = useState(0);
   const notifRef = useRef<HTMLDivElement>(null);
   const { user, signOut, isAdmin, isAgent } = useAuth();
   const { favorites } = useFavorites();
@@ -44,6 +45,36 @@ export default function Navbar() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchUnreadMessages = async () => {
+      // Get conversations where user is buyer or agent
+      const { data: convs } = await supabase
+        .from("conversations")
+        .select("id")
+        .or(`buyer_id.eq.${user.id},agent_id.eq.${user.id}`);
+      if (!convs || convs.length === 0) { setUnreadMessages(0); return; }
+      const convIds = convs.map((c) => c.id);
+      const { count } = await supabase
+        .from("messages")
+        .select("id", { count: "exact", head: true })
+        .in("conversation_id", convIds)
+        .neq("sender_id", user.id)
+        .eq("read", false);
+      setUnreadMessages(count || 0);
+    };
+
+    fetchUnreadMessages();
+
+    const msgChannel = supabase
+      .channel(`unread-messages:${user.id}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "messages" }, fetchUnreadMessages)
+      .subscribe();
+
+    return () => { supabase.removeChannel(msgChannel); };
   }, [user]);
 
   useEffect(() => {
@@ -123,6 +154,25 @@ export default function Navbar() {
                   </span>
                 )}
               </Link>
+
+              {/* Unread Messages Badge */}
+              {user && (
+                <Link
+                  href={`${dashboardHref}?tab=messages`}
+                  className="relative text-gray-600 hover:text-primary-600 transition-colors"
+                  aria-label={t("dashboard.buyer.messages")}
+                  title={t("dashboard.buyer.messages")}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                  {unreadMessages > 0 && (
+                    <span className="absolute -top-2 -right-2 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                      {unreadMessages > 9 ? "9+" : unreadMessages}
+                    </span>
+                  )}
+                </Link>
+              )}
 
               {/* Notifications Bell */}
               {user && (
