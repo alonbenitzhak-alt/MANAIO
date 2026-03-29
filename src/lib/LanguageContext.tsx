@@ -156,6 +156,8 @@ const elTranslations: Record<string, string> = {
   "form.connectorDisclaimer": "Η MANAIO είναι πλατφόρμα σύνδεσης μόνο – όλες οι συναλλαγές γίνονται απευθείας με τον πράκτορα",
   "form.submitting": "Υποβολή...",
   "form.error": "Κάτι πήγε στραβά. Δοκιμάστε ξανά.",
+  "form.loginToSubmit": "Συνδεθείτε ή εγγραφείτε για αποστολή αιτήματος",
+  "form.autoFilled": "Αυτόματη συμπλήρωση",
   "form.thankYou": "Ευχαριστούμε!",
   "form.thankYouSub": "Το μήνυμά σας εστάλη στην ομάδα μας και βρίσκεται υπό επεξεργασία.",
   // Contact
@@ -864,6 +866,8 @@ const ruTranslations: Record<string, string> = {
   "form.connectorDisclaimer": "MANAIO — только платформа для связи. Все сделки проводятся напрямую с агентом",
   "form.submitting": "Отправка...",
   "form.error": "Что-то пошло не так. Попробуйте ещё раз.",
+  "form.loginToSubmit": "Войдите или зарегистрируйтесь для отправки заявки",
+  "form.autoFilled": "Заполнено автоматически",
   "form.thankYou": "Спасибо!",
   "form.thankYouSub": "Ваше сообщение отправлено нашей команде и находится в обработке.",
   // Contact
@@ -1572,6 +1576,8 @@ const arTranslations: Record<string, string> = {
   "form.connectorDisclaimer": "MANAIO منصة تواصل فقط – جميع المعاملات تتم مباشرة مع الوكيل",
   "form.submitting": "جاري الإرسال...",
   "form.error": "حدث خطأ ما. حاول مرة أخرى.",
+  "form.loginToSubmit": "سجل الدخول أو أنشئ حساباً لإرسال الطلب",
+  "form.autoFilled": "تعبئة تلقائية",
   "form.thankYou": "شكراً!",
   "form.thankYouSub": "تم إرسال رسالتك إلى فريقنا وهي قيد المعالجة.",
   // Contact
@@ -2278,6 +2284,8 @@ const translations: Record<string, Record<string, string>> = {
     "form.thankYou": "תודה רבה!",
     "form.thankYouSub": "הודעתך נשלחה לצוותנו ונמצאת בטיפול.",
     "form.error": "משהו השתבש. אנא נסו שוב.",
+    "form.loginToSubmit": "התחברו או הירשמו כדי לשלוח בקשה",
+    "form.autoFilled": "ממלא אוטומטית",
 
     // Contact
     "contact.title": "צור קשר",
@@ -3044,6 +3052,8 @@ const translations: Record<string, Record<string, string>> = {
     "form.thankYou": "Thank You!",
     "form.thankYouSub": "Your message has been sent to our team and is being handled.",
     "form.error": "Something went wrong. Please try again.",
+    "form.loginToSubmit": "Sign in or register to submit a request",
+    "form.autoFilled": "Auto-filled",
 
     // Contact
     "contact.title": "Contact Us",

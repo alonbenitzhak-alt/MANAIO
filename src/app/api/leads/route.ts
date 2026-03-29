@@ -49,9 +49,30 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // Optional auth — if Bearer token provided, pull name/email from profile
+  let profileName: string | null = null;
+  let profileEmail: string | null = null;
+  const token = request.headers.get("authorization")?.replace("Bearer ", "");
+  if (token) {
+    const { data: { user: authUser } } = await supabaseAdmin.auth.getUser(token);
+    if (authUser) {
+      const { data: prof } = await supabaseAdmin
+        .from("profiles")
+        .select("full_name, email")
+        .eq("id", authUser.id)
+        .single();
+      profileName = prof?.full_name || authUser.email || null;
+      profileEmail = prof?.email || authUser.email || null;
+    }
+  }
+
   try {
     const body = await request.json();
-    const { property_id, name, email, phone, investment_budget, message, buyer_id, agent_id } = body;
+    const { property_id, name: bodyName, email: bodyEmail, phone, investment_budget, message, buyer_id, agent_id } = body;
+
+    // Use profile data if available (authenticated), else fall back to body
+    const name = profileName || bodyName;
+    const email = profileEmail || bodyEmail;
 
     // Validate buyer_id is a valid UUID if provided (prevent injection of arbitrary IDs)
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
