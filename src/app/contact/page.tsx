@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { useAuth } from "@/lib/AuthContext";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 const SUBJECTS = [
@@ -27,9 +28,13 @@ export default function ContactPage() {
     setStatus("loading");
     setErrorMsg("");
     try {
+      const { data: { session } } = await supabase.auth.getSession();
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(session?.access_token ? { "Authorization": `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({ subject: form.subject, message: form.message }),
       });
       const data = await res.json();

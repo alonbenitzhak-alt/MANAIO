@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { sendContactNotification } from "@/lib/email";
 import { validateOrigin } from "@/lib/csrf";
 
@@ -20,22 +19,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Service unavailable" }, { status: 503 });
   }
 
-  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+  // Verify authenticated user via Bearer token (same pattern as other API routes)
+  const token = request.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
 
-  // Require authenticated user
-  const authHeader = request.headers.get("authorization") || request.headers.get("x-supabase-auth");
-  const cookieHeader = request.headers.get("cookie") || "";
-  const supabaseUserClient = createSupabaseClient(
-    supabaseUrl,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
-    { global: { headers: { cookie: cookieHeader, ...(authHeader ? { authorization: authHeader } : {}) } } }
-  );
-  const { data: { user } } = await supabaseUserClient.auth.getUser();
+  const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
+  const { data: { user } } = await supabaseAdmin.auth.getUser(token);
   if (!user) {
     return NextResponse.json({ error: "Authentication required" }, { status: 401 });
   }
 
-  // Fetch user profile for name, email, role
+  // Fetch user profile
   const { data: profile } = await supabaseAdmin
     .from("profiles")
     .select("full_name, email, role")
@@ -91,7 +87,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "שגיאה בשמירת הפנייה" }, { status: 500 });
     }
 
-    // Notify admin by email
     if (process.env.RESEND_API_KEY) {
       sendContactNotification({
         name: userName,

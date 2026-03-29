@@ -19,13 +19,10 @@ export async function POST(request: NextRequest) {
 
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-  // Verify caller is admin
-  const cookieHeader = request.headers.get("cookie") || "";
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-  const userClient = createClient(supabaseUrl, anonKey, {
-    global: { headers: { cookie: cookieHeader } },
-  });
-  const { data: { user } } = await userClient.auth.getUser();
+  // Verify caller is admin via Bearer token
+  const token = request.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const { data: { user } } = await supabase.auth.getUser(token);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
@@ -56,7 +53,6 @@ export async function POST(request: NextRequest) {
     await supabase.from("contact_submissions").update({
       admin_reply: sanitizedReply,
       replied_at: new Date().toISOString(),
-      ...(close ? { status: "closed" } : {}),
     }).eq("id", submission_id);
 
     // Send reply email to user
@@ -87,12 +83,9 @@ export async function PATCH(request: NextRequest) {
 
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-  const cookieHeader = request.headers.get("cookie") || "";
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-  const userClient = createClient(supabaseUrl, anonKey, {
-    global: { headers: { cookie: cookieHeader } },
-  });
-  const { data: { user } } = await userClient.auth.getUser();
+  const token = request.headers.get("authorization")?.replace("Bearer ", "");
+  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const { data: { user } } = await supabase.auth.getUser(token);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();

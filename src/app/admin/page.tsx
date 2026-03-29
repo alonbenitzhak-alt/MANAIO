@@ -1096,14 +1096,20 @@ function ContactsTab() {
 
   const current = subTab === "agents" ? openAgents : subTab === "buyers" ? openBuyers : closed;
 
+  const getToken = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    return session?.access_token || "";
+  };
+
   const handleReply = async (s: ContactSubmission) => {
     const reply = replyText[s.id] || "";
     if (!reply.trim()) return;
     setReplyLoading(r => ({ ...r, [s.id]: true }));
+    const token = await getToken();
     await fetch("/api/admin/contact-reply", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ submission_id: s.id, reply, close: true }),
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify({ submission_id: s.id, reply }),
     });
     await fetchSubmissions();
     setReplyText(r => ({ ...r, [s.id]: "" }));
@@ -1113,9 +1119,10 @@ function ContactsTab() {
 
   const handleToggleClose = async (s: ContactSubmission) => {
     const newStatus = s.status === "open" ? "closed" : "open";
+    const token = await getToken();
     await fetch("/api/admin/contact-reply", {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({ submission_id: s.id, status: newStatus }),
     });
     await fetchSubmissions();
