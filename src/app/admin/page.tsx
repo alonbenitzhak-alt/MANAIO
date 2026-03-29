@@ -4,12 +4,12 @@ import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import LoginForm from "@/components/LoginForm";
 import { useProperties } from "@/lib/PropertiesContext";
-import { Property, Lead, Payment, PaymentStatus, PaymentType } from "@/lib/types";
+import { Property, Lead, Payment, PaymentStatus, PaymentType, ContactSubmission } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/lib/LanguageContext";
 import PageHero from "@/components/PageHero";
 
-type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance";
+type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance" | "contacts";
 
 const ADMIN_PROPERTY_TYPES = ["Apartment", "Land", "Detached House", "Villa", "Maisonette", "Apartment Complex"];
 const CURRENCIES = ["EUR", "USD", "GBP", "ILS"] as const;
@@ -1068,6 +1068,133 @@ function FinanceTab() {
   );
 }
 
+/* ─────────────── Contacts Tab ─────────────── */
+const SUBJECT_LABELS: Record<string, string> = {
+  general: "שאלה כללית", property: "שאלה על נכס", agent: "הצטרפות כסוכן",
+  investment: "ייעוץ השקעות", technical: "תקלה טכנית", other: "אחר",
+};
+
+function ContactsTab() {
+  const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [subTab, setSubTab] = useState<"agents" | "buyers" | "closed">("agents");
+  const [replyText, setReplyText] = useState<Record<string, string>>({});
+  const [replyLoading, setReplyLoading] = useState<Record<string, boolean>>({});
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const fetchSubmissions = async () => {
+    const { data } = await supabase.from("contact_submissions").select("*").order("created_at", { ascending: false });
+    if (data) setSubmissions(data as ContactSubmission[]);
+    setLoading(false);
+  };
+
+  useEffect(() => { fetchSubmissions(); }, []);
+
+  const openAgents = submissions.filter(s => s.status === "open" && s.user_role === "agent");
+  const openBuyers = submissions.filter(s => s.status === "open" && s.user_role !== "agent");
+  const closed = submissions.filter(s => s.status === "closed");
+
+  const current = subTab === "agents" ? openAgents : subTab === "buyers" ? openBuyers : closed;
+
+  const handleReply = async (s: ContactSubmission) => {
+    const reply = replyText[s.id] || "";
+    if (!reply.trim()) return;
+    setReplyLoading(r => ({ ...r, [s.id]: true }));
+    await fetch("/api/admin/contact-reply", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ submission_id: s.id, reply, close: true }),
+    });
+    await fetchSubmissions();
+    setReplyText(r => ({ ...r, [s.id]: "" }));
+    setReplyLoading(r => ({ ...r, [s.id]: false }));
+    setExpanded(null);
+  };
+
+  const handleToggleClose = async (s: ContactSubmission) => {
+    const newStatus = s.status === "open" ? "closed" : "open";
+    await fetch("/api/admin/contact-reply", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ submission_id: s.id, status: newStatus }),
+    });
+    await fetchSubmissions();
+  };
+
+  if (loading) return <div className="text-center py-12 text-gray-400">טוען פניות...</div>;
+
+  return (
+    <div>
+      <div className="flex gap-2 mb-6">
+        {([["agents", `סוכנים (${openAgents.length})`], ["buyers", `משקיעים (${openBuyers.length})`], ["closed", `סגורות (${closed.length})`]] as const).map(([key, label]) => (
+          <button key={key} onClick={() => setSubTab(key)}
+            className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors ${subTab === key ? "bg-primary-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {current.length === 0 ? (
+        <div className="text-center py-16 text-gray-400">אין פניות</div>
+      ) : (
+        <div className="space-y-4">
+          {current.map(s => (
+            <div key={s.id} className={`bg-white rounded-2xl border ${s.status === "open" ? "border-gray-200" : "border-gray-100"} overflow-hidden`}>
+              <div className="p-5 flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="font-semibold text-gray-900">{s.name}</span>
+                    <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
+                      {SUBJECT_LABELS[s.subject || ""] || s.subject || "כללי"}
+                    </span>
+                    {s.user_role === "agent" && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">סוכן</span>}
+                    <span className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString("he-IL")}</span>
+                  </div>
+                  <p className="text-sm text-gray-500">{s.email}</p>
+                  <p className="text-sm text-gray-700 mt-2 line-clamp-2">{s.message}</p>
+                  {s.admin_reply && (
+                    <div className="mt-2 text-xs text-green-700 bg-green-50 px-3 py-2 rounded-lg">
+                      <strong>תשובתך:</strong> {s.admin_reply}
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button onClick={() => handleToggleClose(s)}
+                    title={s.status === "open" ? "סמן כטופל" : "פתח מחדש"}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors border ${s.status === "closed" ? "bg-green-100 border-green-300 text-green-600" : "border-gray-300 text-gray-400 hover:border-green-400 hover:text-green-500"}`}>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </button>
+                  <button onClick={() => setExpanded(expanded === s.id ? null : s.id)}
+                    className="text-sm text-primary-600 hover:underline font-medium">
+                    {expanded === s.id ? "סגור" : "הגב"}
+                  </button>
+                </div>
+              </div>
+
+              {expanded === s.id && (
+                <div className="border-t border-gray-100 p-5 bg-gray-50">
+                  <p className="text-sm font-medium text-gray-700 mb-2">הודעה מלאה:</p>
+                  <p className="text-sm text-gray-600 mb-4 whitespace-pre-wrap">{s.message}</p>
+                  <p className="text-sm font-medium text-gray-700 mb-2">תשובה (תישלח למייל + תסגור פנייה):</p>
+                  <textarea rows={4} value={replyText[s.id] || ""} onChange={e => setReplyText(r => ({ ...r, [s.id]: e.target.value }))}
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none resize-none mb-3"
+                    placeholder="כתוב תשובה..." />
+                  <button onClick={() => handleReply(s)} disabled={replyLoading[s.id]}
+                    className="bg-primary-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50">
+                    {replyLoading[s.id] ? "שולח..." : "שלח תשובה"}
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─────────────── Admin Page ─────────────── */
 const TAB_DEFS: { key: Tab; tKey: string; icon: string }[] = [
   { key: "pending_agents", tKey: "admin.tab.pendingAgents", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
@@ -1077,6 +1204,7 @@ const TAB_DEFS: { key: Tab; tKey: string; icon: string }[] = [
   { key: "agents", tKey: "admin.tab.agents", icon: "M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" },
   { key: "users", tKey: "admin.tab.users", icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" },
   { key: "finance", tKey: "admin.tab.finance", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+  { key: "contacts", tKey: "admin.tab.contacts", icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" },
 ];
 
 export default function AdminPage() {
@@ -1168,6 +1296,7 @@ export default function AdminPage() {
         {activeTab === "agents" && <AgentsTab />}
         {activeTab === "users" && <UsersTab />}
         {activeTab === "finance" && <FinanceTab />}
+        {activeTab === "contacts" && <ContactsTab />}
       </div>
     </>
   );

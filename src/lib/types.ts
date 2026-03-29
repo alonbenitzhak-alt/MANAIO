@@ -98,6 +98,21 @@ export interface Lead {
   updated_at?: string;
 }
 
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  subject?: string;
+  status: "open" | "closed";
+  user_id?: string;
+  user_role?: string;
+  admin_reply?: string;
+  replied_at?: string;
+  ip_address?: string;
+  created_at: string;
+}
+
 export interface CountryDetailSection {
   title: string;
   content: string;
