@@ -63,12 +63,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
     // Limit conversation length and message size to prevent abuse
-    if (messages.length > 50) {
+    const userMessageCount = messages.filter((m: { role: string }) => m.role === "user").length;
+    if (userMessageCount > 10) {
+      return NextResponse.json({ error: "Question limit reached" }, { status: 400 });
+    }
+    if (messages.length > 21) {
       return NextResponse.json({ error: "Too many messages" }, { status: 400 });
     }
     const sanitized = messages
       .filter((m) => m && typeof m.role === "string" && typeof m.content === "string")
-      .slice(-20) // only last 20 messages
+      .slice(-21) // only last 21 messages (10 user + 10 assistant + 1 in flight)
       .map((m: { role: string; content: string }) => ({
         role: m.role as "user" | "assistant",
         content: m.content.slice(0, 2000),

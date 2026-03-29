@@ -4,23 +4,75 @@ export const countries: Country[] = [
   {
     slug: "greece",
     name: "Greece",
+    name_he: "יוון",
+    name_el: "Ελλάδα",
+    name_ru: "Греция",
+    name_ar: "اليونان",
     description:
-      "Greece offers Israeli investors a gateway to the European Union through its Golden Visa program. As of 2024, the minimum investment is €800,000 in high-demand areas (Athens, Thessaloniki, Mykonos, Santorini) and €400,000 in other regions. With over 30 million tourists annually, Greece provides strong short-term rental yields, particularly in Athens and the islands. The country boasts a stable legal framework for foreign property ownership, competitive property prices compared to Western Europe, and a Mediterranean lifestyle that appeals to a global audience. Recent economic recovery has driven steady property value appreciation, making Greece one of the top investment destinations in Southern Europe.",
+      "Greece offers Israeli investors a gateway to the European Union through its Golden Visa program. As of 2024, the minimum investment is €800,000 in high-demand areas (Athens, Thessaloniki, Mykonos, Santorini) and €400,000 in other regions. With over 30 million tourists annually, Greece provides strong short-term rental yields, particularly in Athens and the islands. The country boasts a stable legal framework for foreign property ownership, competitive property prices compared to Western Europe, and a Mediterranean lifestyle that appeals to a global audience.",
+    description_he:
+      "יוון מציעה למשקיעים ישראלים שער כניסה לאיחוד האירופי דרך תוכנית ויזת הזהב. נכון ל-2024, ההשקעה המינימלית עומדת על 800,000 אירו באזורים מבוקשים (אתונה, תסלוניקה, מיקונוס, סנטוריני) ו-400,000 אירו בשאר חלקי המדינה. עם למעלה מ-30 מיליון תיירים בשנה, יוון מציעה תשואות שכירות גבוהות — בעיקר באתונה ובאיים. המדינה מתאפיינת במסגרת משפטית יציבה לרכישה זרה, מחירי נדל\"ן תחרותיים ביחס למערב אירופה, ואיכות חיים ים-תיכונית שמושכת קונים מכל רחבי העולם.",
+    description_el:
+      "Η Ελλάδα προσφέρει στους Ισραηλινούς επενδυτές πρόσβαση στην Ευρωπαϊκή Ένωση μέσω του προγράμματος Golden Visa. Από το 2024, η ελάχιστη επένδυση είναι €800.000 σε περιοχές υψηλής ζήτησης (Αθήνα, Θεσσαλονίκη, Μύκονος, Σαντορίνη) και €400.000 σε άλλες περιοχές. Με πάνω από 30 εκατομμύρια τουρίστες ετησίως, η Ελλάδα παρέχει ισχυρές αποδόσεις ενοικίασης, ιδιαίτερα στην Αθήνα και τα νησιά.",
+    description_ru:
+      "Греция открывает израильским инвесторам путь в Европейский союз через программу «Золотая виза». С 2024 года минимальные инвестиции составляют €800 000 в востребованных районах (Афины, Салоники, Миконос, Санторини) и €400 000 в других регионах. Благодаря более чем 30 миллионам туристов в год Греция обеспечивает высокую доходность от аренды — особенно в Афинах и на островах.",
+    description_ar:
+      "تتيح اليونان للمستثمرين الإسرائيليين بوابة دخول إلى الاتحاد الأوروبي من خلال برنامج التأشيرة الذهبية. اعتباراً من عام 2024، يبلغ الحد الأدنى للاستثمار 800,000 يورو في المناطق عالية الطلب (أثينا، تسالونيكي، ميكونوس، سانتوريني) و400,000 يورو في المناطق الأخرى. مع أكثر من 30 مليون سائح سنوياً، توفر اليونان عوائد إيجارية قوية.",
     image:
       "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800&h=500&fit=crop",
     highlights: [
       "EU Golden Visa: €800K (Athens/islands) or €400K (other regions)",
       "Over 30 million tourists annually",
-      "Strong rental yields (7-9% average)",
+      "Strong rental yields (7–9% average)",
       "Stable legal framework for foreign buyers",
       "Strategic Mediterranean location",
+    ],
+    highlights_he: [
+      "ויזת זהב אירופאית: 800K€ (אתונה/איים) או 400K€ (שאר המדינה)",
+      "למעלה מ-30 מיליון תיירים בשנה",
+      "תשואות שכירות גבוהות (7–9% בממוצע)",
+      "מסגרת משפטית יציבה לרוכשים זרים",
+      "מיקום אסטרטגי בלב הים התיכון",
+    ],
+    highlights_el: [
+      "Golden Visa ΕΕ: €800K (Αθήνα/νησιά) ή €400K (άλλες περιοχές)",
+      "Πάνω από 30 εκατ. τουρίστες ετησίως",
+      "Ισχυρές αποδόσεις ενοικίασης (7–9% κατά μέσο όρο)",
+      "Σταθερό νομικό πλαίσιο για ξένους αγοραστές",
+      "Στρατηγική μεσογειακή τοποθεσία",
+    ],
+    highlights_ru: [
+      "Золотая виза ЕС: €800K (Афины/острова) или €400K (другие регионы)",
+      "Более 30 млн туристов ежегодно",
+      "Высокая доходность аренды (7–9% в среднем)",
+      "Стабильная правовая система для иностранных покупателей",
+      "Стратегическое средиземноморское расположение",
+    ],
+    highlights_ar: [
+      "التأشيرة الذهبية الأوروبية: 800K€ (أثينا/الجزر) أو 400K€ (مناطق أخرى)",
+      "أكثر من 30 مليون سائح سنوياً",
+      "عوائد إيجارية قوية (7–9% بالمتوسط)",
+      "إطار قانوني مستقر للمشترين الأجانب",
+      "موقع استراتيجي في قلب البحر الأبيض المتوسط",
     ],
   },
   {
     slug: "cyprus",
     name: "Cyprus",
+    name_he: "קפריסין",
+    name_el: "Κύπρος",
+    name_ru: "Кипр",
+    name_ar: "قبرص",
     description:
-      "Cyprus is a premier investment destination for Israeli investors, offering geographical proximity, cultural familiarity, and an English-speaking business environment. The island nation provides a permanent residency program through property investment and has one of the lowest corporate tax rates in the EU at 12.5%. Cyprus features a booming real estate market, particularly in Limassol and Paphos, with strong demand from international buyers and retirees. The country's modern infrastructure, excellent healthcare system, and year-round sunshine make it an attractive location for both investment and lifestyle purposes.",
+      "Cyprus is a premier investment destination for Israeli investors, offering geographical proximity, cultural familiarity, and an English-speaking business environment. The island provides a permanent residency program through property investment and has one of the lowest corporate tax rates in the EU at 12.5%. Cyprus features a booming real estate market, particularly in Limassol and Paphos, with strong demand from international buyers.",
+    description_he:
+      "קפריסין היא אחד היעדים המועדפים ביותר על משקיעים ישראלים — 40 דקות טיסה, סביבה עסקית אנגלופונית ומערכת משפטית המבוססת על ה-common law הבריטי. האי מציע תושבות קבע דרך השקעה בנדל\"ן ושיעור מס חברות מהנמוכים באיחוד האירופי — 12.5%. שוק הנדל\"ן בלימסול ופאפוס פורח עם ביקוש גבוה מקונים בינלאומיים.",
+    description_el:
+      "Η Κύπρος είναι ο κορυφαίος επενδυτικός προορισμός για Ισραηλινούς επενδυτές, προσφέροντας γεωγραφική εγγύτητα, πολιτιστική οικειότητα και αγγλόφωνο επιχειρηματικό περιβάλλον. Το νησί παρέχει πρόγραμμα μόνιμης κατοικίας μέσω επένδυσης σε ακίνητα και έχει έναν από τους χαμηλότερους συντελεστές εταιρικού φόρου στην ΕΕ — 12,5%.",
+    description_ru:
+      "Кипр — один из главных направлений для израильских инвесторов: географическая близость, знакомая культурная среда и англоязычный деловой климат. Остров предлагает постоянный вид на жительство через инвестиции в недвижимость, а также один из самых низких ставок корпоративного налога в ЕС — 12,5%. Рынок недвижимости в Лимасоле и Пафосе активно растёт.",
+    description_ar:
+      "قبرص هي وجهة استثمارية رائدة للمستثمرين الإسرائيليين، إذ تتميز بقربها الجغرافي وبيئة أعمال ناطقة بالإنجليزية ونظام قانوني مبني على القانون البريطاني. تتيح الجزيرة الحصول على إقامة دائمة من خلال الاستثمار العقاري، وتمتلك من أدنى معدلات ضريبة الشركات في الاتحاد الأوروبي — 12.5%.",
     image:
       "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&h=500&fit=crop",
     highlights: [
@@ -29,6 +81,34 @@ export const countries: Country[] = [
       "12.5% corporate tax rate",
       "English-speaking business environment",
       "Year-round Mediterranean climate",
+    ],
+    highlights_he: [
+      "קרובה לישראל — 40 דקות טיסה בלבד",
+      "תושבות קבע אירופאית דרך השקעה",
+      "מס חברות 12.5% — מהנמוכים באיחוד האירופי",
+      "סביבה עסקית אנגלופונית",
+      "אקלים ים-תיכוני לאורך כל השנה",
+    ],
+    highlights_el: [
+      "Κοντά στο Ισραήλ — μόλις 40 λεπτά πτήση",
+      "Ευρωπαϊκή μόνιμη κατοικία μέσω επένδυσης",
+      "Εταιρικός φόρος 12,5% — από τους χαμηλότερους στην ΕΕ",
+      "Αγγλόφωνο επιχειρηματικό περιβάλλον",
+      "Μεσογειακό κλίμα όλο τον χρόνο",
+    ],
+    highlights_ru: [
+      "Близко к Израилю — всего 40 минут лёта",
+      "Постоянный вид на жительство в ЕС через инвестиции",
+      "Корпоративный налог 12,5% — один из низших в ЕС",
+      "Англоязычная деловая среда",
+      "Средиземноморский климат круглый год",
+    ],
+    highlights_ar: [
+      "قريبة من إسرائيل — 40 دقيقة طيران فقط",
+      "إقامة دائمة أوروبية من خلال الاستثمار",
+      "ضريبة الشركات 12.5% — من أدنى المعدلات في الاتحاد الأوروبي",
+      "بيئة أعمال ناطقة بالإنجليزية",
+      "مناخ متوسطي على مدار السنة",
     ],
   },
 ];
