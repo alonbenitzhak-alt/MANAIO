@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
 import { sendAdminChatNotification } from "@/lib/email";
+import type { Conversation } from "@/lib/types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -10,12 +10,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    // Import supabase dynamically to avoid issues during build
+    const { supabase } = await import("@/lib/supabase");
+
     // Get conversation details
     const { data: conversation } = await supabase
       .from("conversations")
-      .select("*, sender:profiles!messages.sender_id(email, full_name, role), recipient:profiles!conversations.agent_id(email, full_name)")
+      .select("*")
       .eq("id", conversationId)
-      .single();
+      .single() as { data: Conversation | null };
 
     if (!conversation) {
       return NextResponse.json({ error: "Conversation not found" }, { status: 404 });
