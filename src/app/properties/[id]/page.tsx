@@ -129,40 +129,27 @@ export default function PropertyDetailsPage({
 
                 <div className="space-y-6 text-gray-700 leading-relaxed">
                   <p>
-                    This property is located in a well-established neighborhood with excellent amenities and strong community character.
-                    {property.country === "Greece" && " The area offers the perfect blend of Mediterranean charm and modern convenience, with everything you need within walking distance or a short drive."}
-                    {property.country === "Cyprus" && " Known for its vibrant atmosphere and welcoming community, this neighborhood combines island lifestyle with urban accessibility."}
-                    {property.country === "Portugal" && " This charming area captures the essence of Portuguese living—culturally rich, walkable, and increasingly popular among international residents."}
-                    {property.country === "Georgia" && " A dynamic neighborhood that's rapidly developing, offering a unique mix of traditional culture and modern infrastructure."}
+                    {t(`detail.neighborhood.${property.country.toLowerCase()}.about`)}
                   </p>
 
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">{t("detail.gettingAround")}</h3>
                     <p>
-                      {property.country === "Greece" && "The neighborhood benefits from excellent public transportation with metro and bus connections. Most daily destinations are easily accessible, and the area is also very pedestrian-friendly with plenty of cafés and shops along the streets."}
-                      {property.country === "Cyprus" && "While public transport exists via bus network, having a car provides flexibility. The area is well-connected to main roads, and popular destinations are typically 15-30 minutes away by vehicle."}
-                      {property.country === "Portugal" && "Excellent public transport options including metro, bus, and cycling infrastructure make it easy to navigate. The neighborhood is highly walkable with many destinations within comfortable walking distance."}
-                      {property.country === "Georgia" && "The area is served by developing public transport options. Most residents find it convenient to use cars or taxis, though the metro system is expanding."}
+                      {t(`detail.neighborhood.${property.country.toLowerCase()}.gettingAround`)}
                     </p>
                   </div>
 
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">{t("detail.servicesAmenities")}</h3>
                     <p>
-                      {property.country === "Greece" && "You'll find modern hospitals, private clinics, and pharmacies throughout the area. The neighborhood also boasts international schools, shopping centers, and a diverse dining scene ranging from traditional tavernas to contemporary restaurants."}
-                      {property.country === "Cyprus" && "Both private and public healthcare facilities are conveniently located. The area has good shopping options and a growing restaurant scene. Several international schools serve the expatriate community."}
-                      {property.country === "Portugal" && "Portugal's excellent healthcare system is readily accessible here. The area features diverse restaurants, local markets, and shops. Many international schools are available for families."}
-                      {property.country === "Georgia" && "Modern private clinics serve the area well. Shopping and dining options are expanding rapidly. The neighborhood is increasingly attracting international businesses and professionals."}
+                      {t(`detail.neighborhood.${property.country.toLowerCase()}.servicesAmenities`)}
                     </p>
                   </div>
 
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-2">{t("detail.lifestyleCulture")}</h3>
                     <p>
-                      {property.country === "Greece" && "The neighborhood has a strong social fabric with regular community activities, outdoor spaces, and cultural events. Summer evenings are particularly vibrant with locals and visitors enjoying the local scene."}
-                      {property.country === "Cyprus" && "Community-oriented with regular events and activities. The relaxed Mediterranean lifestyle is evident in daily life, with plenty of outdoor gathering spaces."}
-                      {property.country === "Portugal" && "A culturally vibrant area with galleries, museums, and local markets. The Portuguese tradition of community life is strong, with locals gathering in squares and cafés."}
-                      {property.country === "Georgia" && "An increasingly cosmopolitan neighborhood with a mix of local Georgian culture and international influence. The area is known for hospitality and emerging nightlife."}
+                      {t(`detail.neighborhood.${property.country.toLowerCase()}.lifestyleCulture`)}
                     </p>
                   </div>
 

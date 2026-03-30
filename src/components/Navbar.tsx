@@ -105,6 +105,7 @@ export default function Navbar() {
     { href: "/calculator", label: t("nav.calculator") },
     { href: "/blog", label: t("nav.blog") },
     { href: "/about", label: t("nav.about") },
+    { href: "/contact", label: t("nav.contact") },
   ];
 
   return (

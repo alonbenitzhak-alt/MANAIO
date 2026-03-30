@@ -141,6 +141,28 @@ const elTranslations: Record<string, string> = {
   "detail.gettingAround": "Μετακίνηση",
   "detail.servicesAmenities": "Υπηρεσίες & Ανέσεις",
   "detail.lifestyleCulture": "Τρόπος Ζωής & Πολιτισμός",
+
+  // Neighborhood content by country
+  "detail.neighborhood.greece.about": "Αυτό το ακίνητο βρίσκεται σε μια καλά εγκατεστημένη γειτονιά με εξαιρετικές υπηρεσίες και ισχυρό κοινοτικό χαρακτήρα. Το εμβαδόν προσφέρει την τέλεια μίξη μεσογειακής γοητείας και σύγχρονης ευκολίας, με ό,τι χρειάζεσαι σε απόσταση περιπάτου ή σύντομης διαδρομής.",
+  "detail.neighborhood.greece.gettingAround": "Η γειτονιά ωφελείται από εξαιρετικές δημόσιες συγκοινωνίες με συνδέσεις μετρό και λεωφορείου. Οι περισσότεροι καθημερινοί προορισμοί είναι εύκολα προσβάσιμοι, και το εμβαδόν είναι επίσης πολύ φιλικό για τους πεζούς με πολλά καφέ και καταστήματα στους δρόμους.",
+  "detail.neighborhood.greece.servicesAmenities": "Θα βρείτε σύγχρονα νοσοκομεία, ιδιωτικές κλινικές και φαρμακεία σε όλο το εμβαδόν. Η γειτονιά διαθέτει επίσης διεθνή σχολεία, εμπορικά κέντρα και ποικίλη σκηνή φαγητού που κυmaiolate από παραδοσιακές ταβέρνες έως σύγχρονα εστιατόρια.",
+  "detail.neighborhood.greece.lifestyleCulture": "Η γειτονιά έχει ισχυρή κοινωνική δομή με τακτικές κοινοτικές δραστηριότητες, εξωτερικούς χώρους και πολιτιστικά γεγονότα. Τα καλοκαιρινά βράδια είναι ιδιαίτερα τολμηρά με κατοίκους και επισκέπτες να απολαμβάνουν την τοπική σκηνή.",
+
+  "detail.neighborhood.cyprus.about": "Γνωστή για την έντονη ατμόσφαιρα και τη φιλόξενη κοινότητα, αυτή η γειτονιά συνδυάζει τον νησιωτικό τρόπο ζωής με αστική προσβασιμότητα. Ιδανική για όσους αναζητούν ένα μέρος που ισορροπεί τη γνήσια ζωή με όλα τα σύγχρονα ανέσεις.",
+  "detail.neighborhood.cyprus.gettingAround": "Ενώ υπάρχει δημόσια συγκοινωνία μέσω δικτύου λεωφορείων, η κατοχή αυτοκινήτου παρέχει ευελιξία. Το εμβαδόν συνδέεται καλά με κύριες δρόμους, και δημοφιλείς προορισμοί είναι συνήθως 15-30 λεπτά μακριά με όχημα.",
+  "detail.neighborhood.cyprus.servicesAmenities": "Τόσο ιδιωτικές όσο και δημόσιες υπηρεσίες υγείας βρίσκονται σε βολική τοποθεσία. Το εμβαδόν έχει καλές επιλογές αγορών και μια αναπτυσσόμενη σκηνή εστιατορίων. Αρκετά διεθνή σχολεία εξυπηρετούν την εξωτερική κοινότητα.",
+  "detail.neighborhood.cyprus.lifestyleCulture": "Κοινοτικά προσανατολισμένη με τακτικά γεγονότα και δραστηριότητες. Ο χαλαρός μεσογειακός τρόπος ζωής είναι ξεκάθαρος στην καθημερινή ζωή, με πολλούς εξωτερικούς χώρους συγκέντρωσης.",
+
+  "detail.neighborhood.portugal.about": "Αυτή η γοητευτική περιοχή συλλαμβάνει την ουσία του Πορτογάλικου τρόπου ζωής—πολιτιστικά πλούσια, περπάτητη και όλο και πιο δημοφιλής μεταξύ διεθνών κατοίκων. Είναι ο τέλειος συνδυασμός παράδοσης και σύγχρονης ευκολίας.",
+  "detail.neighborhood.portugal.gettingAround": "Εξαιρετικές επιλογές δημόσιας συγκοινωνίας συμπεριλαμβανομένων του μετρό, λεωφορείου και ποδηλατικής υποδομής κάνουν την πλοήγηση εύκολη. Η γειτονιά είναι πολύ περπάτητη με πολλούς προορισμούς σε άνετη απόσταση περιπάτου.",
+  "detail.neighborhood.portugal.servicesAmenities": "Το εξαιρετικό σύστημα υγείας της Πορτογαλίας είναι εύκολα προσβάσιμο εδώ. Το εμβαδόν διαθέτει ποικίλα εστιατόρια, τοπικές αγορές και καταστήματα. Πολλά διεθνή σχολεία είναι διαθέσιμα για οικογένειες.",
+  "detail.neighborhood.portugal.lifestyleCulture": "Μια πολιτιστικά ζωντανή περιοχή με γκαλερί, μουσεία και τοπικές αγορές. Η Πορτογάλικη παράδοση της κοινοτικής ζωής είναι ισχυρή, με κατοίκους να συγκεντρώνονται σε πλατείες και καφέ.",
+
+  "detail.neighborhood.georgia.about": "Μια δυναμική γειτονιά που αναπτύσσεται γρήγορα, προσφέροντας ένα μοναδικό μίγμα παραδοσιακής κουλτούρας και σύγχρονης υποδομής. Μπορείτε να αισθανθείτε τις δυνατότητες και την ενέργεια του εμβαδού.",
+  "detail.neighborhood.georgia.gettingAround": "Το εμβαδόν εξυπηρετείται από αναπτυσσόμενες δημόσιες επιλογές συγκοινωνίας. Οι περισσότεροι κάτοικοι θεωρούν βολικό να χρησιμοποιούν αυτοκίνητα ή ταξί, αν και το σύστημα μετρό διευρύνεται.",
+  "detail.neighborhood.georgia.servicesAmenities": "Σύγχρονες ιδιωτικές κλινικές εξυπηρετούν καλά το εμβαδόν. Οι επιλογές αγορών και φαγητού διευρύνονται γρήγορα. Η γειτονιά έλκει όλο και περισσότερες διεθνείς επιχειρήσεις και επαγγελματίες.",
+  "detail.neighborhood.georgia.lifestyleCulture": "Μια όλο και πιο κοσμοπολίτικη γειτονιά με ένα μίγμα τοπικής Γιουργιανής κουλτούρας και διεθνούς επιρροής. Το εμβαδόν είναι γνωστό για τη φιλοξενία και την αναδυόμενη νυχτερινή ζωή.",
+
   // Form
   "form.name": "Όνομα",
   "form.namePlaceholder": "Πλήρες όνομα",
@@ -874,6 +896,28 @@ const ruTranslations: Record<string, string> = {
   "detail.gettingAround": "Передвижение",
   "detail.servicesAmenities": "Услуги и удобства",
   "detail.lifestyleCulture": "Образ жизни и культура",
+
+  // Neighborhood content by country
+  "detail.neighborhood.greece.about": "Это имущество расположено в хорошо зарекомендовавшем себе районе с отличными удобствами и сильным чувством общности. Район предлагает идеальное сочетание средиземноморского очарования и современного удобства, со всем необходимым в пешей доступности или короткой поездке.",
+  "detail.neighborhood.greece.gettingAround": "Район имеет отличную общественную транспортную систему с подключениями метро и автобусов. Большинство ежедневных направлений легко доступны, и район также очень доступен для пешеходов с множеством кафе и магазинов вдоль улиц.",
+  "detail.neighborhood.greece.servicesAmenities": "Вы найдете современные больницы, частные клиники и аптеки по всему району. В районе также есть международные школы, торговые центры и разнообразная ресторанная сцена, от традиционных таверн до современных ресторанов.",
+  "detail.neighborhood.greece.lifestyleCulture": "Район имеет прочную социальную ткань с регулярными общественными мероприятиями, открытыми пространствами и культурными событиями. Летние вечера особенно яркие с местными жителями и посетителями, наслаждающимися местной атмосферой.",
+
+  "detail.neighborhood.cyprus.about": "Известный своей оживленной атмосферой и гостеприимным сообществом, этот район сочетает островной образ жизни с городской доступностью. Идеален для тех, кто ищет место, которое уравновешивает подлинную жизнь со всеми современными удобствами.",
+  "detail.neighborhood.cyprus.gettingAround": "Хотя общественный транспорт существует через сеть автобусов, наличие машины обеспечивает гибкость. Район хорошо связан с основными дорогами, и популярные направления обычно находятся в 15-30 минутах езды.",
+  "detail.neighborhood.cyprus.servicesAmenities": "Как частные, так и государственные медицинские учреждения удобно расположены. Район имеет хорошие возможности для покупок и растущую ресторанную сцену. Несколько международных школ обслуживают иностранное сообщество.",
+  "detail.neighborhood.cyprus.lifestyleCulture": "Ориентирован на общество с регулярными событиями и мероприятиями. Расслабленный средиземноморский образ жизни очевиден в повседневной жизни, с множеством открытых мест для сборок.",
+
+  "detail.neighborhood.portugal.about": "Этот очаровательный район воплощает сущность португальской жизни—культурно богатый, пешеходный и растущий в популярности среди иностранных жителей. Это идеальное сочетание традиции и современных удобств.",
+  "detail.neighborhood.portugal.gettingAround": "Отличные варианты общественного транспорта, включая метро, автобусы и велосипедную инфраструктуру, делают навигацию легкой. Район очень доступен для пешеходов со многими пунктами назначения в удобной пешей доступности.",
+  "detail.neighborhood.portugal.servicesAmenities": "Отличная система здравоохранения Португалии легко доступна здесь. В районе есть разнообразные рестораны, местные рынки и магазины. Для семей доступно множество международных школ.",
+  "detail.neighborhood.portugal.lifestyleCulture": "Культурно яркий район с галереями, музеями и местными рынками. Португальская традиция общественной жизни сильна, когда жители собираются на площадях и в кафе.",
+
+  "detail.neighborhood.georgia.about": "Динамичный район, быстро развивающийся и предлагающий уникальное сочетание традиционной культуры и современной инфраструктуры. Вы можете почувствовать потенциал и энергию района.",
+  "detail.neighborhood.georgia.gettingAround": "Район обслуживается развивающимися вариантами общественного транспорта. Большинство жителей находят удобным использование машин или такси, хотя система метро расширяется.",
+  "detail.neighborhood.georgia.servicesAmenities": "Современные частные клиники хорошо обслуживают район. Возможности для покупок и питания быстро расширяются. Район все больше привлекает международные предприятия и профессионалов.",
+  "detail.neighborhood.georgia.lifestyleCulture": "Все более космополитичный район со смешением местной грузинской культуры и международного влияния. Район известен гостеприимством и растущей ночной жизнью.",
+
   // Form
   "form.name": "Имя",
   "form.namePlaceholder": "Полное имя",
@@ -1607,6 +1651,28 @@ const arTranslations: Record<string, string> = {
   "detail.gettingAround": "التنقل",
   "detail.servicesAmenities": "الخدمات والمرافق",
   "detail.lifestyleCulture": "نمط الحياة والثقافة",
+
+  // Neighborhood content by country
+  "detail.neighborhood.greece.about": "يقع هذا العقار في حي راسخ مع مرافق ممتازة وطابع مجتمعي قوي. تقدم المنطقة مزيجًا مثاليًا من السحر المتوسطي والراحة الحديثة، مع كل ما تحتاجه على مسافة قريبة أو قيادة قصيرة.",
+  "detail.neighborhood.greece.gettingAround": "يستفيد الحي من وسائل النقل العام الممتازة مع اتصالات المترو والحافلات. معظم الوجهات اليومية يسهل الوصول إليها، والمنطقة أيضًا صديقة جدًا للمشاة مع الكثير من المقاهي والمحلات على طول الشوارع.",
+  "detail.neighborhood.greece.servicesAmenities": "ستجد مستشفيات حديثة وعيادات خاصة وصيدليات في جميع أنحاء المنطقة. يفتخر الحي أيضًا بمدارس دولية وللتسوق ومشهد طعام متنوع يتراوح بين الحانات التقليدية والمطاعم المعاصرة.",
+  "detail.neighborhood.greece.lifestyleCulture": "الحي له نسيج اجتماعي قوي مع أنشطة مجتمعية منتظمة ومساحات خارجية وأحداث ثقافية. أمسيات الصيف نابضة بالحياة بشكل خاص مع السكان المحليين والزوار يستمتعون بالمشهد المحلي.",
+
+  "detail.neighborhood.cyprus.about": "معروفة بأجوائها النابضة بالحياة ومجتمعها الودود، يجمع هذا الحي بين أسلوب حياة الجزيرة مع سهولة الوصول الحضري. مثالي لأولئك الذين يسعون إلى مكان يوازن بين الحياة الحقيقية مع كل مشقات الحياة الحديثة.",
+  "detail.neighborhood.cyprus.gettingAround": "بينما توجد وسائل النقل العام عبر شبكة الحافلات، فإن امتلاك سيارة يوفر المرونة. المنطقة متصلة جيدًا بالطرق الرئيسية، والوجهات الشهيرة عادة ما تكون على بعد 15-30 دقيقة بالسيارة.",
+  "detail.neighborhood.cyprus.servicesAmenities": "تقع المرافق الصحية الخاصة والعامة بسهولة. تتمتع المنطقة بخيارات تسوق جيدة وسوق مطاعم متنام. تخدم عدة مدارس دولية المجتمع الأجنبي.",
+  "detail.neighborhood.cyprus.lifestyleCulture": "موجهة للمجتمع مع أحداث وأنشطة منتظمة. أسلوب الحياة المتوسطي المريح واضح في الحياة اليومية، مع الكثير من المساحات الخارجية للتجمع.",
+
+  "detail.neighborhood.portugal.about": "تجسد هذه المنطقة الساحرة جوهر الحياة البرتغالية - غنية ثقافيًا، قابلة للمشي، وتحظى بشعبية متزايدة بين السكان الدوليين. إنه المزيج المثالي للتقاليد والمشقات الحديثة.",
+  "detail.neighborhood.portugal.gettingAround": "خيارات النقل العام الممتازة بما في ذلك المترو والحافلات وكافة البنية التحتية للدراجات تجعل التنقل سهلاً. الحي قابل جدًا للمشي مع وجهات عديدة على مسافة مريحة سيرًا على الأقدام.",
+  "detail.neighborhood.portugal.servicesAmenities": "نظام الرعاية الصحية الممتاز في البرتغال يسهل الوصول إليه هنا. تتميز المنطقة بمطاعم متنوعة والأسواق المحلية والمحلات. تتوفر العديد من المدارس الدولية للعائلات.",
+  "detail.neighborhood.portugal.lifestyleCulture": "منطقة نابضة بالحياة ثقافيًا مع معارض ومتاحف وأسواق محلية. التقليد البرتغالي للحياة المجتمعية قوي، مع السكان المحليين يجتمعون في الساحات والمقاهي.",
+
+  "detail.neighborhood.georgia.about": "حي ديناميكي يتطور بسرعة، ويقدم مزيجًا فريدًا من الثقافة التقليدية والبنية التحتية الحديثة. يمكنك أن تشعر بإمكانات وطاقة المنطقة.",
+  "detail.neighborhood.georgia.gettingAround": "تخدم المنطقة خيارات النقل العام النامية. يجد معظم السكان أنه من المريح استخدام السيارات أو التاكسي، على الرغم من أن نظام المترو يتوسع.",
+  "detail.neighborhood.georgia.servicesAmenities": "تخدم العيادات الخاصة الحديثة المنطقة جيدًا. تتسع خيارات التسوق والطعام بسرعة. يجتذب الحي بشكل متزايد الشركات والمحترفين الدوليين.",
+  "detail.neighborhood.georgia.lifestyleCulture": "حي متحضر بشكل متزايد مع مزيج من الثقافة الجورجية المحلية والتأثير الدولي. الحي معروف بالضيافة والحياة الليلية الناشئة.",
+
   // Form
   "form.name": "الاسم",
   "form.namePlaceholder": "الاسم الكامل",
@@ -2335,6 +2401,27 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "ניווט וניידות",
     "detail.servicesAmenities": "שירותים ותשתיות",
     "detail.lifestyleCulture": "אורח חיים ותרבות",
+
+    // Neighborhood content by country
+    "detail.neighborhood.greece.about": "הנכס ממוקם בשכונה מבוססת עם מתקנים מעולים ואופי קהילתי חזק. השטח מציע שילוב מושלם של קסם ים תיכוני והנוחות המודרנית, כאשר הכל שאתה צריך בהליכה נוחה או נסיעה קצרה.",
+    "detail.neighborhood.greece.gettingAround": "השכונה נהנית מתחבורה ציבורית מעולה עם חיבורי מטרו ואוטובוסים. רוב היעדים היומיומיים קל להגעה, והשטח גם ידידותי מאוד לרגלים עם הרבה בתי קפה וחנויות לאורך הרחובות.",
+    "detail.neighborhood.greece.servicesAmenities": "תמצא בתי חולים מודרניים, קליניקות פרטיות וביתות מרקחת בכל רחבי השטח. השכונה גם מתהדרת בבתי ספר בינלאומיים, קניונים, וסצנת אוכל מתונה מטברנות מסורתיות ועד מסעדות עכשוויות.",
+    "detail.neighborhood.greece.lifestyleCulture": "לשכונה יש קשר חברתי חזק עם פעילויות קהילתיות קבועות, מרחבים חיצוניים ואירועים תרבותיים. ערבי קיץ תכופים במיוחד בחיוויות עם תושבים ותיירים שנהנים מהסצנה המקומית.",
+
+    "detail.neighborhood.cyprus.about": "ידוע בעל אווירה תוססת וקהילה חמה, השכונה מודגשת בשילוב של אורח חיים איים עם נגישות עירונית. זה אידיאלי לתושבים המחפשים מקום שמשדר חיים בעל מטבע ראשוני אך עם כל סימני הנוחות.",
+    "detail.neighborhood.cyprus.gettingAround": "בעוד שתחבורה ציבורית קיימת דרך רשת אוטובוסים, בעלות רכב מספקת גמישות. השטח קשור היטב לדרכים ראשיות, וחיים פופולריים בדרך כלל 15-30 דקות משם בתנועה.",
+    "detail.neighborhood.cyprus.servicesAmenities": "מתקני בריאות פרטיים וציבוריים ממוקמים בנוחות. לשטח יש אפשרויות קניה טובות וסצנת מסעדה צומחת. מספר בתי ספר בינלאומיים משרתים את הקהילה הגרה.",
+    "detail.neighborhood.cyprus.lifestyleCulture": "קהילתי עם אירועים ופעילויות קבועות. אורח החיים הים תיכוני משונן בחיים היומיום, עם הרבה מרחבים ציבוריים בחוץ לאיסוף.",
+
+    "detail.neighborhood.portugal.about": "אזור קסום זה משדר את הנדנד של החיים הפורטוגלים—עשיר תרבותית, הולך רגל, והולך וגדל בפופולריות בקרב תושבים בינלאומיים. זה השילוב המושלם של מסורת והנדרות מודרנות.",
+    "detail.neighborhood.portugal.gettingAround": "אפשרויות תחבורה ציבורית מעולה כולל מטרו, אוטובוס ותשתית רכיבה על אופניים הופכות את הניווט לקל. השכונה הולכת ברגל גבוה עם יעדים רבים במרחק הליכה נוח.",
+    "detail.neighborhood.portugal.servicesAmenities": "מערכת בריאות מעולה של פורטוגל קל להשגה כאן. לשטח יש מסעדות מגוונות, שווקים מקומיים וחנויות. בתי ספר בינלאומיים רבים זמינים למשפחות.",
+    "detail.neighborhood.portugal.lifestyleCulture": "אזור עשיר תרבותי עם גלריות, מוזיאונים ובשווקים מקומיים. המסורת הפורטוגלית של חיים קהילתיים חזקה, עם תושבים קבוצים בכיכרות וקפיטריות.",
+
+    "detail.neighborhood.georgia.about": "שכונה דינמית שמתפתחת במהירות, המציעה שילוב ייחודי של תרבות ישנה וביססת מודרנית. זה הולך וגדל וניתן להרגיש את הפוטנציאל של התחום.",
+    "detail.neighborhood.georgia.gettingAround": "השטח משולחבר על ידי אפשרויות תחבורה ציבורית מתפתחות. רוב תושבים מוצאים שימושי להשתמש בחיבור ברכב או מוניות, אם כי מערכת המטרו מתרחבת.",
+    "detail.neighborhood.georgia.servicesAmenities": "קליניקות רפואיות פרטיות מודרניות משרתות את השטח כראוי. אפשרויות קניה ואוכל מרחבות במהירות. השכונה משדרת בעוד הכלכלה בינלאומית וארגונים.",
+    "detail.neighborhood.georgia.lifestyleCulture": "שכונה בעלת ספונות בעלת תערובת של תרבות גיאורגית מקומית והשפעה בינלאומית. השטח ידוע בהזמנות ובחיי לילה צומחים.",
 
     // Lead Form
     "form.name": "שם מלא",
@@ -3126,6 +3213,27 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "Getting Around",
     "detail.servicesAmenities": "Services & Amenities",
     "detail.lifestyleCulture": "Lifestyle & Culture",
+
+    // Neighborhood content by country
+    "detail.neighborhood.greece.about": "This property is located in a well-established neighborhood with excellent amenities and strong community character. The area offers the perfect blend of Mediterranean charm and modern convenience, with everything you need within walking distance or a short drive.",
+    "detail.neighborhood.greece.gettingAround": "The neighborhood benefits from excellent public transportation with metro and bus connections. Most daily destinations are easily accessible, and the area is also very pedestrian-friendly with plenty of cafés and shops along the streets.",
+    "detail.neighborhood.greece.servicesAmenities": "You'll find modern hospitals, private clinics, and pharmacies throughout the area. The neighborhood also boasts international schools, shopping centers, and a diverse dining scene ranging from traditional tavernas to contemporary restaurants.",
+    "detail.neighborhood.greece.lifestyleCulture": "The neighborhood has a strong social fabric with regular community activities, outdoor spaces, and cultural events. Summer evenings are particularly vibrant with locals and visitors enjoying the local scene.",
+
+    "detail.neighborhood.cyprus.about": "Known for its vibrant atmosphere and welcoming community, this neighborhood combines island lifestyle with urban accessibility. Perfect for those seeking a place that balances authentic living with all the comforts of modern life.",
+    "detail.neighborhood.cyprus.gettingAround": "While public transport exists via bus network, having a car provides flexibility. The area is well-connected to main roads, and popular destinations are typically 15-30 minutes away by vehicle.",
+    "detail.neighborhood.cyprus.servicesAmenities": "Both private and public healthcare facilities are conveniently located. The area has good shopping options and a growing restaurant scene. Several international schools serve the expatriate community.",
+    "detail.neighborhood.cyprus.lifestyleCulture": "Community-oriented with regular events and activities. The relaxed Mediterranean lifestyle is evident in daily life, with plenty of outdoor gathering spaces.",
+
+    "detail.neighborhood.portugal.about": "This charming area captures the essence of Portuguese living—culturally rich, walkable, and increasingly popular among international residents. It's the perfect combination of tradition and modern amenities.",
+    "detail.neighborhood.portugal.gettingAround": "Excellent public transport options including metro, bus, and cycling infrastructure make it easy to navigate. The neighborhood is highly walkable with many destinations within comfortable walking distance.",
+    "detail.neighborhood.portugal.servicesAmenities": "Portugal's excellent healthcare system is readily accessible here. The area features diverse restaurants, local markets, and shops. Many international schools are available for families.",
+    "detail.neighborhood.portugal.lifestyleCulture": "A culturally vibrant area with galleries, museums, and local markets. The Portuguese tradition of community life is strong, with locals gathering in squares and cafés.",
+
+    "detail.neighborhood.georgia.about": "A dynamic neighborhood that's rapidly developing, offering a unique mix of traditional culture and modern infrastructure. You can feel the potential and energy of the area.",
+    "detail.neighborhood.georgia.gettingAround": "The area is served by developing public transport options. Most residents find it convenient to use cars or taxis, though the metro system is expanding.",
+    "detail.neighborhood.georgia.servicesAmenities": "Modern private clinics serve the area well. Shopping and dining options are expanding rapidly. The neighborhood is increasingly attracting international businesses and professionals.",
+    "detail.neighborhood.georgia.lifestyleCulture": "An increasingly cosmopolitan neighborhood with a mix of local Georgian culture and international influence. The area is known for hospitality and emerging nightlife.",
 
     // Lead Form
     "form.name": "Full Name",
