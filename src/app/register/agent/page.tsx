@@ -424,6 +424,28 @@ export default function AgentRegisterPage() {
                       : "Either party may terminate this agreement with 14 days' notice. MANAIO may terminate immediately for material breach of these terms."}
                   </p>
                 </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "8. סמכות משפטית" : "8. Legal Jurisdiction"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "במקרה של הפרה של הסכם זה, מסוכם בזה כי הסמכות המשפטית המקומית נתונה לבית המשפט השלום או בית המשפט המחוזי בתל אביב (לפי עניין)."
+                      : "In case of breach of this agreement, it is agreed that the local legal jurisdiction shall be with the District Court or Labor Court in Tel Aviv (as applicable)."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "9. דין החל" : "9. Governing Law"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "הסכם זה כפוף לדיני מדינת ישראל."
+                      : "This agreement is governed by the laws of the State of Israel."}
+                  </p>
+                </section>
               </div>
             </div>
 

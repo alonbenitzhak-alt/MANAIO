@@ -105,18 +105,29 @@ export default function PartnershipPage() {
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              {isHe ? "8. דין החל" : "8. Governing Law"}
+              {isHe ? "8. סמכות משפטית" : "8. Legal Jurisdiction"}
             </h2>
             <p>
               {isHe
-                ? "הסכם זה כפוף לדיני מדינת ישראל. כל סכסוך שיתעורר בקשר להסכם זה יובא לפני בתי המשפט המוסמכים."
-                : "This agreement is governed by the laws of the State of Israel. Any dispute arising in connection with this agreement shall be brought before the competent courts."}
+                ? "במקרה של הפרה של הסכם זה, מסוכם בזה כי הסמכות המשפטית המקומית נתונה לבית המשפט השלום או בית המשפט המחוזי בתל אביב (לפי עניין)."
+                : "In case of breach of this agreement, it is agreed that the local legal jurisdiction shall be with the District Court or Labor Court in Tel Aviv (as applicable)."}
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              {isHe ? "9. יצירת קשר" : "9. Contact"}
+              {isHe ? "9. דין החל" : "9. Governing Law"}
+            </h2>
+            <p>
+              {isHe
+                ? "הסכם זה כפוף לדיני מדינת ישראל."
+                : "This agreement is governed by the laws of the State of Israel."}
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-gray-900 mb-2">
+              {isHe ? "10. יצירת קשר" : "10. Contact"}
             </h2>
             <p>
               {isHe ? "לשאלות בנוגע להסכם זה ניתן לפנות אלינו בוואצאפ:" : "For questions regarding this agreement, contact us on WhatsApp:"}
