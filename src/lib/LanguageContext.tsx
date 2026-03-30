@@ -2435,7 +2435,7 @@ const translations: Record<string, Record<string, string>> = {
     "dashboard.buyer.saveChanges": "שמור שינויים",
 
     // Agent Dashboard
-    "dashboard.agent.title": "פאנל סוכן",
+    "dashboard.agent.title": "פאנל מתווך",
     "dashboard.agent.welcome": "שלום",
     "dashboard.agent.signInRequired": "יש להתחבר כדי לגשת לפאנל הסוכן",
     "dashboard.agent.accessDenied": "גישה נדחתה",
