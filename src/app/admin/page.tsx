@@ -691,54 +691,89 @@ function PendingAgentsTab() {
 
 /* ─────────────── Users Tab ─────────────── */
 function UsersTab() {
-  const [users, setUsers] = useState<{ id: string; email: string; role: string; created_at: string }[]>([]);
+  const [users, setUsers] = useState<{ id: string; email: string; full_name: string; role: string; created_at: string }[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openChat, setOpenChat] = useState<{ conversationId: string; name: string } | null>(null);
+  const [chatLoading, setChatLoading] = useState<string | null>(null);
   const { t, lang } = useLanguage();
+  const { session } = useAuth();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (!error && data) {
-        setUsers(data);
-      }
-      setLoading(false);
-    };
-    fetchUsers();
+    supabase
+      .from("profiles")
+      .select("id, email, full_name, role, created_at")
+      .order("created_at", { ascending: false })
+      .then(({ data, error }) => {
+        if (!error && data) setUsers(data);
+        setLoading(false);
+      });
   }, []);
+
+  const handleStartChat = async (userId: string, name: string) => {
+    if (!session?.access_token) return;
+    setChatLoading(userId);
+    const res = await fetch("/api/conversations/start", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", authorization: `Bearer ${session.access_token}` },
+      body: JSON.stringify({ target_user_id: userId }),
+    });
+    const data = await res.json();
+    setChatLoading(null);
+    if (data.conversationId) setOpenChat({ conversationId: data.conversationId, name });
+  };
 
   if (loading) return <div className="text-center py-16 text-gray-400">{t("admin.loadingUsers")}</div>;
 
   return users.length === 0 ? (
-    <div className="text-center py-16 text-gray-400">
-      <p>{t("admin.noUsers")}</p>
-    </div>
+    <div className="text-center py-16 text-gray-400"><p>{t("admin.noUsers")}</p></div>
   ) : (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-200">
-              <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.leads.email")}</th>
-              <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.users.role")}</th>
-              <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.users.joined")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="px-6 py-4 font-medium text-gray-900">{u.email}</td>
-                <td className="px-6 py-4 text-gray-600">{u.role}</td>
-                <td className="px-6 py-4 text-gray-400">
-                  {new Date(u.created_at).toLocaleDateString(lang === "he" || lang === "ar" ? "he-IL" : "en-US")}
-                </td>
+    <div className="flex gap-6">
+      <div className={`bg-white rounded-2xl border border-gray-200 overflow-hidden ${openChat ? "w-1/2" : "w-full"}`}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-gray-50 border-b border-gray-200">
+                <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.leads.email")}</th>
+                <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.users.role")}</th>
+                <th className="text-right px-6 py-3 font-semibold text-gray-600">{t("admin.users.joined")}</th>
+                <th className="px-6 py-3" />
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u.id} className={`border-b border-gray-100 hover:bg-gray-50 ${openChat?.name === (u.full_name || u.email) ? "bg-primary-50" : ""}`}>
+                  <td className="px-6 py-4 font-medium text-gray-900">{u.full_name || u.email}<br /><span className="text-xs text-gray-400 font-normal">{u.email}</span></td>
+                  <td className="px-6 py-4 text-gray-600">{u.role}</td>
+                  <td className="px-6 py-4 text-gray-400">{new Date(u.created_at).toLocaleDateString(lang === "he" || lang === "ar" ? "he-IL" : "en-US")}</td>
+                  <td className="px-6 py-4">
+                    {u.role !== "admin" && (
+                      <button
+                        onClick={() => handleStartChat(u.id, u.full_name || u.email)}
+                        disabled={chatLoading === u.id}
+                        className="flex items-center gap-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        {t("admin.openChat")}
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+      {openChat && (
+        <div className="w-1/2 h-[600px]">
+          <ChatWindow
+            conversationId={openChat.conversationId}
+            otherName={openChat.name}
+            onClose={() => setOpenChat(null)}
+          />
+        </div>
+      )}
     </div>
   );
 }

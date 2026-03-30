@@ -8,7 +8,31 @@ import PageHero from "@/components/PageHero";
 
 export default function CountriesPage() {
   const { properties } = useProperties();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const localName = (c: (typeof countries)[number]) => {
+    if (lang === "he") return c.name_he || c.name;
+    if (lang === "el") return c.name_el || c.name;
+    if (lang === "ru") return c.name_ru || c.name;
+    if (lang === "ar") return c.name_ar || c.name;
+    return c.name;
+  };
+
+  const localDescription = (c: (typeof countries)[number]) => {
+    if (lang === "he") return c.description_he || c.description;
+    if (lang === "el") return c.description_el || c.description;
+    if (lang === "ru") return c.description_ru || c.description;
+    if (lang === "ar") return c.description_ar || c.description;
+    return c.description;
+  };
+
+  const localHighlights = (c: (typeof countries)[number]) => {
+    if (lang === "he") return c.highlights_he || c.highlights;
+    if (lang === "el") return c.highlights_el || c.highlights;
+    if (lang === "ru") return c.highlights_ru || c.highlights;
+    if (lang === "ar") return c.highlights_ar || c.highlights;
+    return c.highlights;
+  };
 
   return (
     <>
@@ -35,19 +59,19 @@ export default function CountriesPage() {
                     {t("countries.comingSoon")}
                   </div>
                   <div className="relative h-56 overflow-hidden">
-                    <img src={country.image} alt={country.name} className="w-full h-full object-cover grayscale-[30%]" />
+                    <img src={country.image} alt={localName(country)} className="w-full h-full object-cover grayscale-[30%]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     <div className="absolute bottom-4 left-5">
-                      <h2 className="text-white text-2xl font-bold">{country.name}</h2>
+                      <h2 className="text-white text-2xl font-bold">{localName(country)}</h2>
                       <p className="text-white/70 text-sm">
                         {t("countries.launchingSoon")}
                       </p>
                     </div>
                   </div>
                   <div className="p-5">
-                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4">{country.description}</p>
+                    <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4">{localDescription(country)}</p>
                     <ul className="space-y-1.5">
-                      {country.highlights.slice(0, 3).map((h, i) => (
+                      {localHighlights(country).slice(0, 3).map((h, i) => (
                         <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
                           <svg className="w-4 h-4 text-gray-300 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -68,19 +92,19 @@ export default function CountriesPage() {
                 className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300"
               >
                 <div className="relative h-56 overflow-hidden">
-                  <img src={country.image} alt={country.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={country.image} alt={localName(country)} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-4 left-5">
-                    <h2 className="text-white text-2xl font-bold">{country.name}</h2>
+                    <h2 className="text-white text-2xl font-bold">{localName(country)}</h2>
                     <p className="text-white/80 text-sm">
                       {countryProperties.length} {t("countries.available")} {countryProperties.length === 1 ? t("properties.property") : t("properties.propertiesNoun")}
                     </p>
                   </div>
                 </div>
                 <div className="p-5">
-                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">{country.description}</p>
+                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">{localDescription(country)}</p>
                   <ul className="space-y-1.5">
-                    {country.highlights.slice(0, 3).map((h, i) => (
+                    {localHighlights(country).slice(0, 3).map((h, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm text-gray-700">
                         <svg className="w-4 h-4 text-accent-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
