@@ -125,6 +125,83 @@ export default function PropertyDetailsPage({
               <p className="text-xs text-gray-400 mb-8">{t("detail.roiDisclaimer")}</p>
 
               <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">🏘️ {t("detail.neighborhood") || "Neighborhood"}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                    <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                      <span>🏫</span> {t("detail.schools") || "Schools"}
+                    </h3>
+                    <p className="text-sm text-blue-700">
+                      {property.country === "Greece" && "Nearby international and local schools available"}
+                      {property.country === "Cyprus" && "Several international schools in the area"}
+                      {property.country === "Portugal" && "Mix of local and international educational institutions"}
+                      {property.country === "Georgia" && "Growing education sector with modern facilities"}
+                    </p>
+                  </div>
+
+                  <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+                    <h3 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
+                      <span>🚗</span> {t("detail.transport") || "Transportation"}
+                    </h3>
+                    <p className="text-sm text-green-700">
+                      {property.country === "Greece" && "Good public transport & metro connections available"}
+                      {property.country === "Cyprus" && "Bus network and car-friendly roads"}
+                      {property.country === "Portugal" && "Excellent public transport & cycling infrastructure"}
+                      {property.country === "Georgia" && "Developing metro and bus system"}
+                    </p>
+                  </div>
+
+                  <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+                    <h3 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
+                      <span>🏥</span> {t("detail.healthcare") || "Healthcare"}
+                    </h3>
+                    <p className="text-sm text-purple-700">
+                      {property.country === "Greece" && "Modern hospitals and clinics in close proximity"}
+                      {property.country === "Cyprus" && "Private & public hospitals well-distributed"}
+                      {property.country === "Portugal" && "Excellent healthcare system, both public & private"}
+                      {property.country === "Georgia" && "Private medical clinics available"}
+                    </p>
+                  </div>
+
+                  <div className="bg-orange-50 rounded-xl p-4 border border-orange-200">
+                    <h3 className="font-semibold text-orange-900 mb-2 flex items-center gap-2">
+                      <span>🍽️</span> {t("detail.dining") || "Dining & Shopping"}
+                    </h3>
+                    <p className="text-sm text-orange-700">
+                      {property.country === "Greece" && "Vibrant local restaurants & modern shopping malls"}
+                      {property.country === "Cyprus" && "Excellent dining scene & shopping centers nearby"}
+                      {property.country === "Portugal" && "Rich culinary culture & plenty of retail options"}
+                      {property.country === "Georgia" && "Growing F&B scene with local markets"}
+                    </p>
+                  </div>
+
+                  <div className="bg-red-50 rounded-xl p-4 border border-red-200">
+                    <h3 className="font-semibold text-red-900 mb-2 flex items-center gap-2">
+                      <span>🏖️</span> {t("detail.attractions") || "Attractions"}
+                    </h3>
+                    <p className="text-sm text-red-700">
+                      {property.country === "Greece" && "Rich history, beaches & outdoor activities nearby"}
+                      {property.country === "Cyprus" && "Beautiful beaches & historical sites within reach"}
+                      {property.country === "Portugal" && "Wine regions, coastal towns & mountain escapes"}
+                      {property.country === "Georgia" && "Mountains, culture & emerging tourism"}
+                    </p>
+                  </div>
+
+                  <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+                    <h3 className="font-semibold text-indigo-900 mb-2 flex items-center gap-2">
+                      <span>💼</span> {t("detail.workspaces") || "Workspaces"}
+                    </h3>
+                    <p className="text-sm text-indigo-700">
+                      {property.country === "Greece" && "Co-working spaces & business hubs in major areas"}
+                      {property.country === "Cyprus" && "Growing startup ecosystem & co-working spaces"}
+                      {property.country === "Portugal" && "Thriving digital nomad & startup scene"}
+                      {property.country === "Georgia" && "Tech hubs & growing business community"}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">{t("detail.about")}</h2>
                 <p className="text-gray-600 leading-relaxed">{displayDescription}</p>
               </div>
