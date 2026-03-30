@@ -135,8 +135,19 @@ function PropertiesContent() {
         </div>
       </div>
 
-      <div className="mb-6 text-sm text-gray-500">
-        {t("properties.showing").replace("{count}", filtered.length.toString()).replace("{noun}", filtered.length === 1 ? t("properties.property") : t("properties.propertiesNoun"))}
+      <div className="flex items-center justify-between mb-6">
+        <div className="text-sm text-gray-500">
+          {t("properties.showing").replace("{count}", filtered.length.toString()).replace("{noun}", filtered.length === 1 ? t("properties.property") : t("properties.propertiesNoun"))}
+        </div>
+        <Link
+          href="/properties/map"
+          className="inline-flex items-center gap-2 text-primary-600 font-semibold text-sm hover:text-primary-700 bg-primary-50 px-4 py-2 rounded-lg transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6.553 3.276A1 1 0 0121 20.382V9.618a1 1 0 00-1.447-.894L15 11m0 0l6-3.618m-6 3.618v10" />
+          </svg>
+          📍 Map View
+        </Link>
       </div>
 
       {filtered.length === 0 ? (

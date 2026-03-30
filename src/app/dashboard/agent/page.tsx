@@ -431,7 +431,15 @@ export default function AgentDashboard() {
         .select("*")
         .eq("agent_id", user.id)
         .order("created_at", { ascending: false });
-      if (propsData) setProperties(propsData);
+
+      // Ensure status field exists (fallback to 'active' if missing)
+      if (propsData) {
+        const propsWithStatus = propsData.map((p: any) => ({
+          ...p,
+          status: p.status || 'active'
+        }));
+        setProperties(propsWithStatus);
+      }
       setPropsLoading(false);
 
       // Fetch leads for agent's properties

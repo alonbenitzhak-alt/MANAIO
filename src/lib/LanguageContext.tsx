@@ -130,6 +130,13 @@ const elTranslations: Record<string, string> = {
   "detail.formSubtitle": "Συμπληρώστε τη φόρμα και η MANAIO θα σας συνδέσει με έναν τοπικό κτηματομεσίτη.",
   "detail.roiDisclaimer": "* Τα δεδομένα βασίζονται μόνο σε πληροφορίες αγοράς και δεν αποτελούν δέσμευση επένδυσης.",
   "detail.connectorDisclaimer": "Η MANAIO είναι πλατφόρμα σύνδεσης μόνο – όλες οι συναλλαγές γίνονται απευθείας με τον πράκτορα",
+  "detail.neighborhood": "Γειτονιά",
+  "detail.schools": "Σχολεία",
+  "detail.transport": "Μεταφορές",
+  "detail.healthcare": "Υγειονομική Περίθαλψη",
+  "detail.dining": "Εστίαση & Αγορές",
+  "detail.attractions": "Ελκυστικά Σημεία",
+  "detail.workspaces": "Χώροι Εργασίας",
   // Form
   "form.name": "Όνομα",
   "form.namePlaceholder": "Πλήρες όνομα",
@@ -2291,6 +2298,13 @@ const translations: Record<string, Record<string, string>> = {
     "detail.formSubtitle": "מלאו את הטופס ו-MANAIO תחבר אתכם עם סוכן נדל\"ן מקומי רלוונטי.",
     "detail.roiDisclaimer": "* הנתונים מבוססים על מידע שוק בלבד ואינם מהווים התחייבות להשקעה.",
     "detail.connectorDisclaimer": "MANAIO היא פלטפורמת חיבור בלבד – כל עסקה מתבצעת ישירות מול הסוכן",
+    "detail.neighborhood": "הסביבה",
+    "detail.schools": "בתי ספר",
+    "detail.transport": "תחבורה",
+    "detail.healthcare": "שירותי בריאות",
+    "detail.dining": "אוכל וקניות",
+    "detail.attractions": "אתרי עניין",
+    "detail.workspaces": "מרחבי עבודה",
 
     // Lead Form
     "form.name": "שם מלא",
@@ -3071,6 +3085,13 @@ const translations: Record<string, Record<string, string>> = {
     "detail.formSubtitle": "Fill out the form and MANAIO will connect you with a relevant local real estate agent.",
     "detail.roiDisclaimer": "* Data is based on market information only and does not constitute an investment commitment.",
     "detail.connectorDisclaimer": "MANAIO is a connection platform only – all transactions are conducted directly with the agent",
+    "detail.neighborhood": "Neighborhood",
+    "detail.schools": "Schools",
+    "detail.transport": "Transportation",
+    "detail.healthcare": "Healthcare",
+    "detail.dining": "Dining & Shopping",
+    "detail.attractions": "Attractions",
+    "detail.workspaces": "Workspaces",
 
     // Lead Form
     "form.name": "Full Name",
