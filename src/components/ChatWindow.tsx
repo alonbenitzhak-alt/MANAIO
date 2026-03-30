@@ -18,14 +18,17 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isOtherUserTyping, setIsOtherUserTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const presenceChannelRef = useRef<any>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    if (!conversationId) return;
+    if (!conversationId || !user) return;
 
     const fetchMessages = async () => {
       const { data } = await supabase
@@ -37,19 +40,17 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
       setLoading(false);
 
       // Mark unread messages as read
-      if (user) {
-        await supabase
-          .from("messages")
-          .update({ read: true })
-          .eq("conversation_id", conversationId)
-          .neq("sender_id", user.id)
-          .eq("read", false);
-      }
+      await supabase
+        .from("messages")
+        .update({ read: true })
+        .eq("conversation_id", conversationId)
+        .neq("sender_id", user.id)
+        .eq("read", false);
     };
     fetchMessages();
 
-    // Subscribe to new messages
-    const channel = supabase
+    // Subscribe to new messages and typing status
+    const messagesChannel = supabase
       .channel(`messages:${conversationId}`)
       .on(
         "postgres_changes",
@@ -58,22 +59,86 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
           const newMsg = payload.new as Message;
           setMessages((prev) => [...prev, newMsg]);
           // Mark as read if we're the recipient
-          if (user && newMsg.sender_id !== user.id) {
+          if (newMsg.sender_id !== user.id) {
             supabase.from("messages").update({ read: true }).eq("id", newMsg.id).then();
           }
         }
       )
       .subscribe();
 
+    // Presence channel for typing indicator
+    const presenceChannel = supabase.channel(`typing:${conversationId}`, {
+      config: { broadcast: { self: true }, presence: { key: user.id } },
+    });
+
+    presenceChannel
+      .on("presence", { event: "sync" }, () => {
+        const presenceState = presenceChannel.presenceState();
+        const otherUserTyping = Object.values(presenceState).some(
+          (presence: any) => Array.isArray(presence) && presence.some((p: any) => p.user_id !== user.id && p.typing)
+        );
+        setIsOtherUserTyping(otherUserTyping);
+      })
+      .on("presence", { event: "join" }, () => {
+        const presenceState = presenceChannel.presenceState();
+        const otherUserTyping = Object.values(presenceState).some(
+          (presence: any) => Array.isArray(presence) && presence.some((p: any) => p.user_id !== user.id && p.typing)
+        );
+        setIsOtherUserTyping(otherUserTyping);
+      })
+      .on("presence", { event: "leave" }, () => {
+        setIsOtherUserTyping(false);
+      })
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          await presenceChannel.track({ user_id: user.id, typing: false });
+        }
+      });
+
+    presenceChannelRef.current = presenceChannel;
+
     return () => {
-      channel.unsubscribe();
-      supabase.removeChannel(channel);
+      messagesChannel.unsubscribe();
+      supabase.removeChannel(messagesChannel);
+      if (presenceChannelRef.current) {
+        presenceChannelRef.current.unsubscribe();
+        supabase.removeChannel(presenceChannelRef.current);
+      }
     };
   }, [conversationId, user]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, isOtherUserTyping]);
+
+  useEffect(() => {
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewMessage(e.target.value);
+
+    // Update typing status
+    if (presenceChannelRef.current && user) {
+      presenceChannelRef.current.track({ user_id: user.id, typing: true });
+
+      // Clear existing timeout
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+      }
+
+      // Set timeout to mark as not typing after 2 seconds of inactivity
+      typingTimeoutRef.current = setTimeout(() => {
+        if (presenceChannelRef.current && user) {
+          presenceChannelRef.current.track({ user_id: user.id, typing: false });
+        }
+      }, 2000);
+    }
+  };
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,11 +147,31 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
     const content = newMessage.trim();
     setNewMessage("");
 
+    // Mark as not typing
+    if (presenceChannelRef.current) {
+      presenceChannelRef.current.track({ user_id: user.id, typing: false });
+    }
+
     await supabase.from("messages").insert({
       conversation_id: conversationId,
       sender_id: user.id,
       content,
     });
+
+    // Notify admin about the new message
+    try {
+      await fetch("/api/messages/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          conversationId,
+          content,
+          senderId: user.id,
+        }),
+      }).catch(() => null); // Silently fail if notification doesn't work
+    } catch {
+      // Ignore errors in notification
+    }
   };
 
   return (
@@ -135,6 +220,20 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
             );
           })
         )}
+        {isOtherUserTyping && (
+          <div className="flex justify-start">
+            <div className="max-w-[75%] px-4 py-2.5 rounded-2xl rounded-bl-md bg-white border border-gray-200 text-gray-900">
+              <div className="flex gap-1.5 items-center">
+                <span className="text-sm text-gray-500">{otherName} {t("chat.typing") || "מקליד..."}</span>
+                <div className="flex gap-1">
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
@@ -143,7 +242,7 @@ export default function ChatWindow({ conversationId, onClose, otherName }: ChatW
         <input
           type="text"
           value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          onChange={handleMessageChange}
           placeholder={t("chat.placeholder")}
           className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 outline-none"
         />

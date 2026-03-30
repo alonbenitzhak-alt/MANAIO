@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase";
 
 export default function AgentRegisterPage() {
   const { signIn, signUp, user } = useAuth();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const router = useRouter();
   const [mode, setMode] = useState<"register" | "login">("register");
   const [email, setEmail] = useState("");
@@ -23,6 +23,8 @@ export default function AgentRegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [showPartnershipModal, setShowPartnershipModal] = useState(false);
+  const isHe = lang === "he";
 
   if (user) {
     router.push("/dashboard/agent");
@@ -274,9 +276,9 @@ export default function AgentRegisterPage() {
                   />
                   <label htmlFor="partnership" className="text-sm text-gray-600 leading-relaxed cursor-pointer">
                     {t("register.agent.partnershipAgree")}{" "}
-                    <Link href="/partnership" target="_blank" className="text-primary-600 font-semibold hover:underline">
+                    <button type="button" onClick={() => setShowPartnershipModal(true)} className="text-primary-600 font-semibold hover:underline">
                       {t("register.agent.partnershipName")}
-                    </Link>{" "}
+                    </button>{" "}
                     {t("register.agent.partnershipWith")}
                   </label>
                 </div>
@@ -314,6 +316,157 @@ export default function AgentRegisterPage() {
           )}
         </div>
       </div>
+
+      {/* Partnership Agreement Modal */}
+      {showPartnershipModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Close button */}
+            <button
+              onClick={() => setShowPartnershipModal(false)}
+              className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Content */}
+            <div className="overflow-y-auto flex-1 p-8">
+              <div className="mb-8 text-center">
+                <img src="/logo.svg" alt="MANAIO" className="h-12 w-auto mx-auto mb-6" />
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {isHe ? "הסכם שותפות — סוכן נדל\"ן" : "Partnership Agreement — Real Estate Agent"}
+                </h1>
+                <p className="text-gray-500 mt-2 text-sm">
+                  {isHe ? "גרסה 1.0 | בתוקף מ-1 בינואר 2025" : "Version 1.0 | Effective January 1, 2025"}
+                </p>
+              </div>
+
+              <div dir={isHe ? "rtl" : "ltr"} className="prose prose-sm max-w-none text-gray-700 space-y-6">
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "1. הצדדים להסכם" : "1. Parties to the Agreement"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "הסכם זה נכרת בין MANAIO (mymanaio.com) לבין הסוכן הנדל\"ן הנרשם לפלטפורמה (להלן: \"הסוכן\")."
+                      : "This agreement is entered into between MANAIO (mymanaio.com) and the real estate agent registering on the platform (hereinafter: \"the Agent\")."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "2. מהות השיתוף" : "2. Nature of the Partnership"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "MANAIO מעמידה לרשות הסוכן פלטפורמה דיגיטלית לשיווק נכסי נדל\"ן בחו\"ל למשקיעים ישראלים. הפלטפורמה כוללת דף נכס מקצועי, חשיפה למשקיעים רשומים, וניהול לידים ממוחשב. הסוכן פועל כגורם עצמאי ואינו עובד של MANAIO."
+                      : "MANAIO provides the Agent with a digital platform for marketing international real estate to Israeli investors. The platform includes a professional property page, exposure to registered investors, and digital lead management. The Agent operates as an independent party and is not an employee of MANAIO."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "3. תנאי קבלה" : "3. Acceptance Criteria"}
+                  </h2>
+                  <ul className="list-disc ps-5 space-y-1">
+                    <li>{isHe ? "רישיון תיווך בתוקף בישראל או במדינת הנכסים" : "Valid broker license in Israel or in the country of the listed properties"}</li>
+                    <li>{isHe ? "ניסיון של שנה לפחות בתחום הנדל\"ן" : "At least one year of experience in real estate"}</li>
+                    <li>{isHe ? "הגשת תעודת זהות ורישיון תיווך לצורך אימות" : "Submission of ID card and broker license for verification"}</li>
+                    <li>{isHe ? "אישור MANAIO לאחר בדיקת המסמכים" : "MANAIO approval following document review"}</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "4. התחייבויות הסוכן" : "4. Agent Obligations"}
+                  </h2>
+                  <ul className="list-disc ps-5 space-y-1">
+                    <li>{isHe ? "פרסום מידע מדויק, מעודכן ואמיתי על הנכסים" : "Publishing accurate, up-to-date and truthful property information"}</li>
+                    <li>{isHe ? "מענה ללידים שהתקבלו תוך 24 שעות לכל היותר" : "Responding to received leads within 24 hours at most"}</li>
+                    <li>{isHe ? "שמירה על סודיות מוחלטת של פרטי הלקוחות" : "Maintaining strict confidentiality of client information"}</li>
+                    <li>{isHe ? "עמידה בדיני הגנת הצרכן, הנדל\"ן והפרטיות החלים" : "Compliance with applicable consumer protection, real estate and privacy laws"}</li>
+                    <li>{isHe ? "אי העברת לידים לגורמים שלישיים ללא אישור מפורש" : "Not transferring leads to third parties without explicit approval"}</li>
+                    <li>{isHe ? "עדכון הפלטפורמה בכל שינוי מהותי בנכס (מחיר, זמינות וכד')" : "Updating the platform on any material change to a property (price, availability, etc.)"}</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "5. עמלות ותגמול" : "5. Fees and Compensation"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "בשלב ההשקה הנוכחי, גישה לפלטפורמה ולידים ניתנת לסוכנים ללא עלות. MANAIO שומרת על הזכות להציג מודל עמלות מעודכן בהתראה מוקדמת של 30 יום. כל שינוי במודל יחול רק על לידים שיתקבלו לאחר מועד ההודעה."
+                      : "During the current launch phase, platform access and leads are provided to agents at no cost. MANAIO reserves the right to introduce an updated fee model with 30 days' prior notice. Any model change will apply only to leads received after the notice date."}
+                  </p>
+                  <p className="mt-3">
+                    {isHe
+                      ? "אישור התנאים מהווה הסכמה בזאת כי החברה MANAIO אינה אחראית לתוצאות כלכליות כלשהן מהשימוש בפלטפורמה או מהעסקאות שתוצאתן. הסוכן מושתק מלטעון כל טענה שהיא כלפי החברה בקשר להפסדים כלכליים, הכנסות שלא התממשו או כל נזק כלכלי אחר."
+                      : "Acceptance of these terms constitutes an agreement that MANAIO is not responsible for any economic or financial results from the use of the platform or transactions conducted. The Agent waives any and all claims against the Company regarding financial losses, lost income, or any other economic damage."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "6. אחריות ואי-תחרות" : "6. Liability and Non-Competition"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "MANAIO אינה אחראית לתוצאות עסקאות שנעשו בין הסוכן ללקוחות. הסוכן מצהיר כי הנכסים שיפרסם הם חוקיים ושיש לו הרשאה לשווקם. הסוכן מתחייב שלא ליצור קשר ישיר עם לקוחות הפלטפורמה לצרכי שיווק מחוץ לפלטפורמה."
+                      : "MANAIO is not responsible for the outcomes of transactions between the Agent and clients. The Agent declares that the properties they list are legal and that they are authorized to market them. The Agent undertakes not to contact platform clients directly for marketing purposes outside the platform."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "7. סיום ההתקשרות" : "7. Termination"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "כל צד רשאי לסיים את ההתקשרות בהודעה של 14 ימים. MANAIO רשאית לסיים מיד בגין הפרה משמעותית של תנאים אלו."
+                      : "Either party may terminate this agreement with 14 days' notice. MANAIO may terminate immediately for material breach of these terms."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "8. סמכות משפטית" : "8. Legal Jurisdiction"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "במקרה של הפרה של הסכם זה, מסוכם בזה כי הסמכות המשפטית המקומית נתונה לבית המשפט השלום או בית המשפט המחוזי בתל אביב (לפי עניין)."
+                      : "In case of breach of this agreement, it is agreed that the local legal jurisdiction shall be with the District Court or Labor Court in Tel Aviv (as applicable)."}
+                  </p>
+                </section>
+
+                <section>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">
+                    {isHe ? "9. דין החל" : "9. Governing Law"}
+                  </h2>
+                  <p>
+                    {isHe
+                      ? "הסכם זה כפוף לדיני מדינת ישראל."
+                      : "This agreement is governed by the laws of the State of Israel."}
+                  </p>
+                </section>
+              </div>
+            </div>
+
+            {/* Back Button */}
+            <div className="border-t border-gray-200 bg-gray-50 px-8 py-4">
+              <button
+                type="button"
+                onClick={() => setShowPartnershipModal(false)}
+                className="w-full bg-gray-900 text-white py-3 rounded-xl font-semibold text-sm hover:bg-gray-800 transition-colors"
+              >
+                {isHe ? "חזור לטופס הרשמה" : "Back to Registration Form"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -570,6 +570,7 @@ const elTranslations: Record<string, string> = {
   "chat.noChats": "Δεν υπάρχουν συνομιλίες ακόμα",
   "chat.noChatsSub": "Όταν οι πελάτες στείλουν μηνύματα, θα εμφανιστούν εδώ",
   "chat.agent": "Συνεργάτης",
+  "chat.typing": "πληκτρολογεί...",
   // Follow
   "agent.follow": "Παρακολούθηση",
   "agent.following": "Παρακολουθείτε",
@@ -1291,6 +1292,7 @@ const ruTranslations: Record<string, string> = {
   "chat.noChats": "Чатов пока нет",
   "chat.noChatsSub": "Когда клиенты отправят сообщения, они появятся здесь",
   "chat.agent": "Агент",
+  "chat.typing": "печатает...",
   // Follow
   "agent.follow": "Подписаться",
   "agent.following": "Подписан",
@@ -2012,6 +2014,7 @@ const arTranslations: Record<string, string> = {
   "chat.noChats": "لا توجد محادثات بعد",
   "chat.noChatsSub": "عندما يرسل العملاء رسائل، ستظهر هنا",
   "chat.agent": "وكيل",
+  "chat.typing": "يكتب...",
   // Follow
   "agent.follow": "متابعة",
   "agent.following": "تتابع",
@@ -2628,6 +2631,7 @@ const translations: Record<string, Record<string, string>> = {
 
     // Chat
     "chat.agent": "סוכן",
+    "chat.typing": "מקליד...",
 
     // About extras
     "about.aboutUs": "מי אנחנו",
@@ -3407,6 +3411,7 @@ const translations: Record<string, Record<string, string>> = {
 
     // Chat extras
     "chat.agent": "Agent",
+    "chat.typing": "typing...",
 
     // About extras
     "about.aboutUs": "About Us",

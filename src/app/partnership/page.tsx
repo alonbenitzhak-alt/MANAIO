@@ -79,6 +79,11 @@ export default function PartnershipPage() {
                 ? "בשלב ההשקה הנוכחי, גישה לפלטפורמה ולידים ניתנת לסוכנים ללא עלות. MANAIO שומרת על הזכות להציג מודל עמלות מעודכן בהתראה מוקדמת של 30 יום. כל שינוי במודל יחול רק על לידים שיתקבלו לאחר מועד ההודעה."
                 : "During the current launch phase, platform access and leads are provided to agents at no cost. MANAIO reserves the right to introduce an updated fee model with 30 days' prior notice. Any model change will apply only to leads received after the notice date."}
             </p>
+            <p className="mt-3">
+              {isHe
+                ? "אישור התנאים מהווה הסכמה בזאת כי החברה MANAIO אינה אחראית לתוצאות כלכליות כלשהן מהשימוש בפלטפורמה או מהעסקאות שתוצאתן. הסוכן מושתק מלטעון כל טענה שהיא כלפי החברה בקשר להפסדים כלכליים, הכנסות שלא התממשו או כל נזק כלכלי אחר."
+                : "Acceptance of these terms constitutes an agreement that MANAIO is not responsible for any economic or financial results from the use of the platform or transactions conducted. The Agent waives any and all claims against the Company regarding financial losses, lost income, or any other economic damage."}
+            </p>
           </section>
 
           <section>
@@ -105,18 +110,29 @@ export default function PartnershipPage() {
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              {isHe ? "8. דין החל" : "8. Governing Law"}
+              {isHe ? "8. סמכות משפטית" : "8. Legal Jurisdiction"}
             </h2>
             <p>
               {isHe
-                ? "הסכם זה כפוף לדיני מדינת ישראל. כל סכסוך שיתעורר בקשר להסכם זה יובא לפני בתי המשפט המוסמכים."
-                : "This agreement is governed by the laws of the State of Israel. Any dispute arising in connection with this agreement shall be brought before the competent courts."}
+                ? "במקרה של הפרה של הסכם זה, מסוכם בזה כי הסמכות המשפטית המקומית נתונה לבית המשפט השלום או בית המשפט המחוזי בתל אביב (לפי עניין)."
+                : "In case of breach of this agreement, it is agreed that the local legal jurisdiction shall be with the District Court or Labor Court in Tel Aviv (as applicable)."}
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              {isHe ? "9. יצירת קשר" : "9. Contact"}
+              {isHe ? "9. דין החל" : "9. Governing Law"}
+            </h2>
+            <p>
+              {isHe
+                ? "הסכם זה כפוף לדיני מדינת ישראל."
+                : "This agreement is governed by the laws of the State of Israel."}
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-gray-900 mb-2">
+              {isHe ? "10. יצירת קשר" : "10. Contact"}
             </h2>
             <p>
               {isHe ? "לשאלות בנוגע להסכם זה ניתן לפנות אלינו בוואצאפ:" : "For questions regarding this agreement, contact us on WhatsApp:"}

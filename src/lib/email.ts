@@ -221,3 +221,42 @@ export async function sendWelcomeEmail(user: { email: string; name: string }) {
     `,
   });
 }
+
+export async function sendAdminChatNotification(data: {
+  senderName: string;
+  senderEmail: string;
+  senderRole: string;
+  recipientName: string;
+  messageContent: string;
+  conversationId: string;
+}) {
+  const resend = getResend();
+  if (!ADMIN_EMAIL) return;
+
+  const adminDashboardUrl = `${SITE_URL}/admin`;
+  const roleLabel = ROLE_LABELS[data.senderRole] || data.senderRole;
+
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: ADMIN_EMAIL,
+    subject: `MANAIO - הודעה חדשה בצ'אט: ${escapeHtml(data.senderName)}`,
+    html: `
+      <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #1e3a5f;">הודעה חדשה בצ'אט הפרטי</h2>
+        <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+          <span style="background: #dbeafe; color: #1d4ed8; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: bold;">${roleLabel}</span>
+          <span style="background: #fef3c7; color: #92400e; padding: 4px 12px; border-radius: 20px; font-size: 13px;">צ'אט פרטי</span>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 16px 0;">
+          <p style="margin: 4px 0;"><strong>משלח:</strong> ${escapeHtml(data.senderName)}</p>
+          <p style="margin: 4px 0;"><strong>אימייל:</strong> ${escapeHtml(data.senderEmail)}</p>
+          <p style="margin: 4px 0;"><strong>אל:</strong> ${escapeHtml(data.recipientName)}</p>
+          <p style="margin: 8px 0 4px;"><strong>הודעה:</strong></p>
+          <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; white-space: pre-wrap; max-height: 300px; overflow-y: auto;">${escapeHtml(data.messageContent)}</div>
+        </div>
+        <a href="${adminDashboardUrl}" style="display: inline-block; padding: 12px 22px; background-color: #1e3a5f; color: white; text-decoration: none; border-radius: 10px; font-weight: bold;">📋 לפאנל הניהול</a>
+        <p style="color: #94a3b8; font-size: 12px; margin-top: 24px;">הודעה אוטומטית מפלטפורמת MANAIO</p>
+      </div>
+    `,
+  });
+}
