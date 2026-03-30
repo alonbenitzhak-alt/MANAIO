@@ -125,79 +125,50 @@ export default function PropertyDetailsPage({
               <p className="text-xs text-gray-400 mb-8">{t("detail.roiDisclaimer")}</p>
 
               <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">🏘️ {t("detail.neighborhood") || "Neighborhood"}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                    <h3 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-                      <span>🏫</span> {t("detail.schools") || "Schools"}
-                    </h3>
-                    <p className="text-sm text-blue-700">
-                      {property.country === "Greece" && "Nearby international and local schools available"}
-                      {property.country === "Cyprus" && "Several international schools in the area"}
-                      {property.country === "Portugal" && "Mix of local and international educational institutions"}
-                      {property.country === "Georgia" && "Growing education sector with modern facilities"}
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">About This Neighborhood</h2>
+
+                <div className="space-y-6 text-gray-700 leading-relaxed">
+                  <p>
+                    This property is located in a well-established neighborhood with excellent amenities and strong community character.
+                    {property.country === "Greece" && " The area offers the perfect blend of Mediterranean charm and modern convenience, with everything you need within walking distance or a short drive."}
+                    {property.country === "Cyprus" && " Known for its vibrant atmosphere and welcoming community, this neighborhood combines island lifestyle with urban accessibility."}
+                    {property.country === "Portugal" && " This charming area captures the essence of Portuguese living—culturally rich, walkable, and increasingly popular among international residents."}
+                    {property.country === "Georgia" && " A dynamic neighborhood that's rapidly developing, offering a unique mix of traditional culture and modern infrastructure."}
+                  </p>
+
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Getting Around</h3>
+                    <p>
+                      {property.country === "Greece" && "The neighborhood benefits from excellent public transportation with metro and bus connections. Most daily destinations are easily accessible, and the area is also very pedestrian-friendly with plenty of cafés and shops along the streets."}
+                      {property.country === "Cyprus" && "While public transport exists via bus network, having a car provides flexibility. The area is well-connected to main roads, and popular destinations are typically 15-30 minutes away by vehicle."}
+                      {property.country === "Portugal" && "Excellent public transport options including metro, bus, and cycling infrastructure make it easy to navigate. The neighborhood is highly walkable with many destinations within comfortable walking distance."}
+                      {property.country === "Georgia" && "The area is served by developing public transport options. Most residents find it convenient to use cars or taxis, though the metro system is expanding."}
                     </p>
                   </div>
 
-                  <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-                    <h3 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
-                      <span>🚗</span> {t("detail.transport") || "Transportation"}
-                    </h3>
-                    <p className="text-sm text-green-700">
-                      {property.country === "Greece" && "Good public transport & metro connections available"}
-                      {property.country === "Cyprus" && "Bus network and car-friendly roads"}
-                      {property.country === "Portugal" && "Excellent public transport & cycling infrastructure"}
-                      {property.country === "Georgia" && "Developing metro and bus system"}
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Services & Amenities</h3>
+                    <p>
+                      {property.country === "Greece" && "You'll find modern hospitals, private clinics, and pharmacies throughout the area. The neighborhood also boasts international schools, shopping centers, and a diverse dining scene ranging from traditional tavernas to contemporary restaurants."}
+                      {property.country === "Cyprus" && "Both private and public healthcare facilities are conveniently located. The area has good shopping options and a growing restaurant scene. Several international schools serve the expatriate community."}
+                      {property.country === "Portugal" && "Portugal's excellent healthcare system is readily accessible here. The area features diverse restaurants, local markets, and shops. Many international schools are available for families."}
+                      {property.country === "Georgia" && "Modern private clinics serve the area well. Shopping and dining options are expanding rapidly. The neighborhood is increasingly attracting international businesses and professionals."}
                     </p>
                   </div>
 
-                  <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
-                    <h3 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
-                      <span>🏥</span> {t("detail.healthcare") || "Healthcare"}
-                    </h3>
-                    <p className="text-sm text-purple-700">
-                      {property.country === "Greece" && "Modern hospitals and clinics in close proximity"}
-                      {property.country === "Cyprus" && "Private & public hospitals well-distributed"}
-                      {property.country === "Portugal" && "Excellent healthcare system, both public & private"}
-                      {property.country === "Georgia" && "Private medical clinics available"}
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Lifestyle & Culture</h3>
+                    <p>
+                      {property.country === "Greece" && "The neighborhood has a strong social fabric with regular community activities, outdoor spaces, and cultural events. Summer evenings are particularly vibrant with locals and visitors enjoying the local scene."}
+                      {property.country === "Cyprus" && "Community-oriented with regular events and activities. The relaxed Mediterranean lifestyle is evident in daily life, with plenty of outdoor gathering spaces."}
+                      {property.country === "Portugal" && "A culturally vibrant area with galleries, museums, and local markets. The Portuguese tradition of community life is strong, with locals gathering in squares and cafés."}
+                      {property.country === "Georgia" && "An increasingly cosmopolitan neighborhood with a mix of local Georgian culture and international influence. The area is known for hospitality and emerging nightlife."}
                     </p>
                   </div>
 
-                  <div className="bg-orange-50 rounded-xl p-4 border border-orange-200">
-                    <h3 className="font-semibold text-orange-900 mb-2 flex items-center gap-2">
-                      <span>🍽️</span> {t("detail.dining") || "Dining & Shopping"}
-                    </h3>
-                    <p className="text-sm text-orange-700">
-                      {property.country === "Greece" && "Vibrant local restaurants & modern shopping malls"}
-                      {property.country === "Cyprus" && "Excellent dining scene & shopping centers nearby"}
-                      {property.country === "Portugal" && "Rich culinary culture & plenty of retail options"}
-                      {property.country === "Georgia" && "Growing F&B scene with local markets"}
-                    </p>
-                  </div>
-
-                  <div className="bg-red-50 rounded-xl p-4 border border-red-200">
-                    <h3 className="font-semibold text-red-900 mb-2 flex items-center gap-2">
-                      <span>🏖️</span> {t("detail.attractions") || "Attractions"}
-                    </h3>
-                    <p className="text-sm text-red-700">
-                      {property.country === "Greece" && "Rich history, beaches & outdoor activities nearby"}
-                      {property.country === "Cyprus" && "Beautiful beaches & historical sites within reach"}
-                      {property.country === "Portugal" && "Wine regions, coastal towns & mountain escapes"}
-                      {property.country === "Georgia" && "Mountains, culture & emerging tourism"}
-                    </p>
-                  </div>
-
-                  <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
-                    <h3 className="font-semibold text-indigo-900 mb-2 flex items-center gap-2">
-                      <span>💼</span> {t("detail.workspaces") || "Workspaces"}
-                    </h3>
-                    <p className="text-sm text-indigo-700">
-                      {property.country === "Greece" && "Co-working spaces & business hubs in major areas"}
-                      {property.country === "Cyprus" && "Growing startup ecosystem & co-working spaces"}
-                      {property.country === "Portugal" && "Thriving digital nomad & startup scene"}
-                      {property.country === "Georgia" && "Tech hubs & growing business community"}
-                    </p>
-                  </div>
+                  <p className="text-sm text-gray-500 pt-4 border-t border-gray-200">
+                    This neighborhood overview is based on current market conditions and community feedback. For the most up-to-date information, we recommend speaking with our local partner who can provide detailed insights based on their on-the-ground knowledge.
+                  </p>
                 </div>
               </div>
 
