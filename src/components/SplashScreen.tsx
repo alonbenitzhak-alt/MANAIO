@@ -59,7 +59,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             : "opacity-0 translate-y-6"
         }`}
       >
-        <p className="text-3xl sm:text-4xl font-bold text-white tracking-wide drop-shadow-lg">
+        <p className="text-3xl sm:text-4xl font-bold tracking-wide drop-shadow-lg" style={{ color: '#1A3A7A' }}>
           {t("splash.tagline")}
         </p>
       </div>
