@@ -9,6 +9,7 @@ import { Property, Lead, Payment, PaymentStatus, PaymentType, ContactSubmission 
 import { supabase } from "@/lib/supabase";
 import { useLanguage } from "@/lib/LanguageContext";
 import PageHero from "@/components/PageHero";
+import { generatePropertyNumber } from "@/lib/propertyNumber";
 
 type Tab = "properties" | "closed" | "leads" | "agents" | "users" | "pending_agents" | "finance" | "contacts";
 
@@ -28,6 +29,7 @@ function PropertyForm({
   const [form, setForm] = useState<Property & { show_roi: boolean }>(
     {
       id: property?.id || Date.now().toString(),
+      property_number: property?.property_number || generatePropertyNumber(),
       title: property?.title || "",
       country: property?.country || "Greece",
       city: property?.city || "",
@@ -93,6 +95,11 @@ function PropertyForm({
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.titleLabel")}</label>
           <input type="text" required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Property Number</label>
+          <input type="text" disabled value={`#${form.property_number || ""}`} className={inp + " bg-gray-100 cursor-not-allowed"} />
+          <p className="text-xs text-gray-400 mt-1">Auto-generated unique listing number</p>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("detail.country")}</label>
