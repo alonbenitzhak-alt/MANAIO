@@ -28,9 +28,9 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         phase === "fadeOut" ? "opacity-0" : "opacity-100"
       }`}
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80')`,
         backgroundSize: "cover",
-        backgroundPosition: "center top",
+        backgroundPosition: "center",
       }}
     >
       {/* Minimal gradient overlay for text readability */}
