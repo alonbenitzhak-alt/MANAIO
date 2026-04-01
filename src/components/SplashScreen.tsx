@@ -33,8 +33,10 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         backgroundPosition: "center",
       }}
     >
-      {/* Subtle overlay for text readability */}
-      <div className="absolute inset-0 bg-black/25" />
+      {/* Subtle gradient overlay for text readability only at top and bottom */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.15) 100%)"
+      }} />
       {/* Logo */}
       <div
         className="relative z-10"
