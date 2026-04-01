@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 import { supabase } from "./supabase";
 import { Property } from "./types";
 import { properties as staticProperties } from "@/data/properties";
+import { generatePropertyNumber } from "./propertyNumber";
 
 interface PropertiesContextType {
   properties: Property[];
@@ -58,9 +59,13 @@ export function PropertiesProvider({ children }: { children: ReactNode }) {
 
   const addProperty = async (p: Omit<Property, "id">): Promise<boolean> => {
     try {
+      const propertyData = {
+        ...p,
+        property_number: p.property_number || generatePropertyNumber(),
+      };
       const { data, error } = await supabase
         .from("properties")
-        .insert(p)
+        .insert(propertyData)
         .select()
         .single();
 
@@ -69,7 +74,11 @@ export function PropertiesProvider({ children }: { children: ReactNode }) {
       return true;
     } catch {
       // Fallback: add locally
-      const newProp = { ...p, id: Date.now().toString() } as Property;
+      const newProp = {
+        ...p,
+        id: Date.now().toString(),
+        property_number: p.property_number || generatePropertyNumber(),
+      } as Property;
       setProperties((prev) => [newProp, ...prev]);
       return true;
     }

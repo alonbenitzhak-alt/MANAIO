@@ -33,7 +33,8 @@ function PropertiesContent() {
           p.title.toLowerCase().includes(q) ||
           p.city.toLowerCase().includes(q) ||
           p.country.toLowerCase().includes(q) ||
-          p.description?.toLowerCase().includes(q);
+          p.description?.toLowerCase().includes(q) ||
+          (p.property_number && p.property_number.includes(q));
         if (!match) return false;
       }
       if (filters.country && p.country !== filters.country) return false;

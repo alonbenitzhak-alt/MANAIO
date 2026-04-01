@@ -45,6 +45,15 @@ export default function PropertyCard({ property }: { property: Property }) {
           </div>
         )}
 
+        {/* Property number badge */}
+        {property.property_number && (
+          <div className="absolute bottom-3 start-3 z-10">
+            <span className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
+              #{property.property_number}
+            </span>
+          </div>
+        )}
+
         {/* ROI badge */}
         {property.expected_roi > 0 && (
           <div className="absolute top-3 end-3">
