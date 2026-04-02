@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import { useState } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -46,10 +47,37 @@ export default function AgentsLandingPage() {
     "agents.for.item4",
   ];
 
-  return (
-    <div dir={dir} className="min-h-screen bg-white font-sans">
+  // JSON-LD Schema for SEO
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://manaio.com";
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "MANAIO",
+    description: "Platform connecting Israeli real estate investors with international agents",
+    url: `${baseUrl}/agents`,
+    image: `${baseUrl}/logo.svg`,
+    jobTitle: "Real Estate Agent / Broker",
+    image_url: `${baseUrl}/logo.svg`,
+    areaServed: ["Greece", "Cyprus", "Portugal", "Georgia"],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "Partner Inquiry",
+      telephone: ADMIN_WHATSAPP,
+    },
+  };
 
-      {/* ─── HERO ─── */}
+  return (
+    <>
+      {/* JSON-LD Schema */}
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        strategy="afterInteractive"
+      />
+
+      <div dir={dir} className="min-h-screen bg-white font-sans">
+
+        {/* ─── HERO ─── */}
       <section className="relative bg-gradient-to-br from-gray-900 via-primary-950 to-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=1600&h=900&fit=crop')] bg-cover bg-center opacity-20" />
         <div className="relative max-w-5xl mx-auto px-6 py-24 text-center">
@@ -185,8 +213,8 @@ export default function AgentsLandingPage() {
       {/* ─── WHO IS IT FOR ─── */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
+          <div className="grid grid-cols-1 gap-12 items-center">
+            <div className="max-w-2xl">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
                 {t("agents.for.title")}
               </h2>
@@ -199,7 +227,7 @@ export default function AgentsLandingPage() {
                 ))}
               </div>
             </div>
-            <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-primary-200">
+            <div className="hidden bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-primary-200">
               <div className="text-primary-600 font-bold text-sm mb-3 uppercase tracking-wide">{t("agents.founder.label")}</div>
               <p className="text-gray-700 leading-relaxed mb-4">
                 {t("agents.founder.text1")}
@@ -298,6 +326,7 @@ export default function AgentsLandingPage() {
         </div>
         <p>© {new Date().getFullYear()} MANAIO. {t("footer.rights")}</p>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
