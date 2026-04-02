@@ -477,14 +477,18 @@ type PendingAgent = {
   approved?: boolean | null;
 };
 
-function DocStatus({ url, label, icon, missingLabel }: { url: string | null; label: string; icon: React.ReactNode; missingLabel: string }) {
+function DocStatus({ url, label, icon, missingLabel, onView }: { url: string | null; label: string; icon: React.ReactNode; missingLabel: string; onView?: () => void }) {
   const handleView = async () => {
     if (!url) return;
-    // Generate a short-lived signed URL (60 seconds) for private bucket access
-    const { data } = await supabase.storage
-      .from("agent-licenses")
-      .createSignedUrl(url, 60);
-    if (data?.signedUrl) window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    if (onView) {
+      onView();
+    } else {
+      // Fallback: Generate a short-lived signed URL (60 seconds) for private bucket access
+      const { data } = await supabase.storage
+        .from("agent-licenses")
+        .createSignedUrl(url, 60);
+      if (data?.signedUrl) window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    }
   };
 
   if (url) {
@@ -514,6 +518,8 @@ function PendingAgentsTab() {
   const [agents, setAgents] = useState<PendingAgent[]>([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [viewingAgent, setViewingAgent] = useState<string | null>(null);
+  const [signedUrls, setSignedUrls] = useState<Record<string, Record<string, string>>>({});
   const { t, lang } = useLanguage();
   const { session } = useAuth();
 
@@ -610,107 +616,197 @@ function PendingAgentsTab() {
     setActionLoading(null);
   };
 
+  const viewingAgentData = agents.find((a) => a.id === viewingAgent);
+
+  const handleViewDocument = async (agentId: string) => {
+    if (!signedUrls[agentId]) {
+      const agent = agents.find((a) => a.id === agentId);
+      if (!agent) return;
+
+      const urls: Record<string, string> = {};
+
+      // Generate signed URL for license
+      if (agent.license_url) {
+        const { data } = await supabase.storage
+          .from("agent-licenses")
+          .createSignedUrl(agent.license_url, 3600);
+        if (data?.signedUrl) urls.license = data.signedUrl;
+      }
+
+      // Generate signed URL for ID
+      if (agent.id_url) {
+        const { data } = await supabase.storage
+          .from("agent-licenses")
+          .createSignedUrl(agent.id_url, 3600);
+        if (data?.signedUrl) urls.id = data.signedUrl;
+      }
+
+      setSignedUrls((prev) => ({ ...prev, [agentId]: urls }));
+    }
+
+    setViewingAgent(agentId);
+  };
+
   if (loading) return <div className="text-center py-16 text-gray-400">{t("admin.loading")}</div>;
 
-  return agents.length === 0 ? (
-    <div className="text-center py-16 text-gray-400">
-      <svg className="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <p>{t("admin.pendingAgents.noPending")}</p>
-    </div>
-  ) : (
-    <div className="space-y-5">
-      {agents.map((agent) => {
-        const allDocsOk = !!agent.license_url && !!agent.id_url && !!agent.partnership_signed;
-        return (
-          <div key={agent.id} className={`bg-white rounded-2xl border p-6 shadow-sm ${allDocsOk ? "border-amber-200" : "border-red-200"}`}>
-            {/* Header row */}
-            <div className="flex items-start justify-between gap-4 mb-5">
-              <div>
-                <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                  <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">{t("admin.pendingApproval")}</span>
-                  {!allDocsOk && (
-                    <span className="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-1 rounded-full">{t("admin.missingDocuments")}</span>
+  return (
+    <>
+      {agents.length === 0 ? (
+        <div className="text-center py-16 text-gray-400">
+          <svg className="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p>{t("admin.pendingAgents.noPending")}</p>
+        </div>
+      ) : (
+        <div className="space-y-5">
+          {agents.map((agent) => {
+            const allDocsOk = !!agent.license_url && !!agent.id_url && !!agent.partnership_signed;
+            return (
+              <div key={agent.id} className={`bg-white rounded-2xl border p-6 shadow-sm ${allDocsOk ? "border-amber-200" : "border-red-200"}`}>
+                {/* Header row */}
+                <div className="flex items-start justify-between gap-4 mb-5">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                      <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">{t("admin.pendingApproval")}</span>
+                      {!allDocsOk && (
+                        <span className="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-1 rounded-full">{t("admin.missingDocuments")}</span>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-gray-900 text-lg leading-tight">{agent.full_name || "—"}</h3>
+                    <a href={`mailto:${agent.email}`} className="text-sm text-primary-600 hover:underline">{agent.email}</a>
+                    {agent.phone && <p className="text-sm text-gray-500 mt-0.5">{agent.phone}</p>}
+                    {agent.company && <p className="text-sm text-gray-500">{agent.company}</p>}
+                    <p className="text-xs text-gray-400 mt-1">
+                      {t("admin.registered")} {new Date(agent.created_at).toLocaleDateString(lang === "he" || lang === "ar" ? "he-IL" : "en-US")}
+                    </p>
+                  </div>
+                  <div className="flex gap-2 shrink-0">
+                    <button
+                      onClick={() => handleApprove(agent.id)}
+                      disabled={actionLoading === agent.id}
+                      className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {t("admin.approve")}
+                    </button>
+                    <button
+                      onClick={() => handleReject(agent.id)}
+                      disabled={actionLoading === agent.id}
+                      className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      {t("admin.reject")}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Documents & contract status */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <DocStatus
+                    url={agent.license_url}
+                    label={t("admin.brokerLicense")}
+                    missingLabel={t("admin.missing")}
+                    onView={() => handleViewDocument(agent.id)}
+                    icon={
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    }
+                  />
+                  <DocStatus
+                    url={agent.id_url}
+                    label={t("admin.idCard")}
+                    missingLabel={t("admin.missing")}
+                    onView={() => handleViewDocument(agent.id)}
+                    icon={
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2" />
+                      </svg>
+                    }
+                  />
+                  {/* Partnership agreement status (no URL, just signed/not) */}
+                  {agent.partnership_signed ? (
+                    <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium">
+                      <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{t("admin.partnershipAgreement")}</span>
+                      <span className="ms-auto text-xs text-green-500">{t("admin.partnershipApproved")}</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 rounded-xl px-3 py-2 text-sm font-medium">
+                      <svg className="w-5 h-5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span>{t("admin.partnershipAgreement")}</span>
+                      <span className="ms-auto text-xs text-red-400">{t("admin.notSigned")}</span>
+                    </div>
                   )}
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg leading-tight">{agent.full_name || "—"}</h3>
-                <a href={`mailto:${agent.email}`} className="text-sm text-primary-600 hover:underline">{agent.email}</a>
-                {agent.phone && <p className="text-sm text-gray-500 mt-0.5">{agent.phone}</p>}
-                {agent.company && <p className="text-sm text-gray-500">{agent.company}</p>}
-                <p className="text-xs text-gray-400 mt-1">
-                  {t("admin.registered")} {new Date(agent.created_at).toLocaleDateString(lang === "he" || lang === "ar" ? "he-IL" : "en-US")}
-                </p>
               </div>
-              <div className="flex gap-2 shrink-0">
-                <button
-                  onClick={() => handleApprove(agent.id)}
-                  disabled={actionLoading === agent.id}
-                  className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  {t("admin.approve")}
-                </button>
-                <button
-                  onClick={() => handleReject(agent.id)}
-                  disabled={actionLoading === agent.id}
-                  className="bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-1.5"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  {t("admin.reject")}
-                </button>
-              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Document Viewer Modal */}
+      {viewingAgentData && viewingAgent && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setViewingAgent(null)}>
+          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+              <h2 className="text-lg font-bold text-gray-900">{t("admin.idCard")} & {t("admin.brokerLicense")}</h2>
+              <button
+                onClick={() => setViewingAgent(null)}
+                className="text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
-            {/* Documents & contract status */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <DocStatus
-                url={agent.license_url}
-                label={t("admin.brokerLicense")}
-                missingLabel={t("admin.missing")}
-                icon={
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                }
-              />
-              <DocStatus
-                url={agent.id_url}
-                label={t("admin.idCard")}
-                missingLabel={t("admin.missing")}
-                icon={
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2" />
-                  </svg>
-                }
-              />
-              {/* Partnership agreement status (no URL, just signed/not) */}
-              {agent.partnership_signed ? (
-                <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 rounded-xl px-3 py-2 text-sm font-medium">
-                  <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{t("admin.partnershipAgreement")}</span>
-                  <span className="ms-auto text-xs text-green-500">{t("admin.partnershipApproved")}</span>
+            {/* Documents */}
+            <div className="p-6 space-y-6">
+              {/* ID Card */}
+              {signedUrls[viewingAgent]?.id && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-3">{t("admin.idCard")}</h3>
+                  <img
+                    src={signedUrls[viewingAgent].id}
+                    alt="ID Card"
+                    className="w-full max-h-96 object-contain rounded-xl border border-gray-200"
+                  />
                 </div>
-              ) : (
-                <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 rounded-xl px-3 py-2 text-sm font-medium">
-                  <svg className="w-5 h-5 text-red-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{t("admin.partnershipAgreement")}</span>
-                  <span className="ms-auto text-xs text-red-400">{t("admin.notSigned")}</span>
+              )}
+
+              {/* License */}
+              {signedUrls[viewingAgent]?.license && (
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-900 mb-3">{t("admin.brokerLicense")}</h3>
+                  <img
+                    src={signedUrls[viewingAgent].license}
+                    alt="Broker License"
+                    className="w-full max-h-96 object-contain rounded-xl border border-gray-200"
+                  />
+                </div>
+              )}
+
+              {!signedUrls[viewingAgent]?.id && !signedUrls[viewingAgent]?.license && (
+                <div className="text-center py-8 text-gray-500">
+                  <p>{t("admin.noDocuments")}</p>
                 </div>
               )}
             </div>
           </div>
-        );
-      })}
-    </div>
+        </div>
+      )}
+    </>
   );
 }
 
