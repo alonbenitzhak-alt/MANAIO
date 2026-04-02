@@ -3017,7 +3017,7 @@ const translations: Record<string, Record<string, string>> = {
     "agents.hero.spotsLeft": "נותרו {spots} מקומות לשותפי מייסדים",
     "agents.hero.title1": "הצג את הנכסים שלך",
     "agents.hero.title2": "לאלפי משקיעים ישראלים",
-    "agents.hero.subtitle": "MANAIO היא הפלטפורמה הישראלית הראשונה להשקעות נדל\"ן בחו\"ל. הצטרף חינם. שלם רק כשסגרת עסקה.",
+    "agents.hero.subtitle": "MANAIO היא הפלטפורמה הישראלית הראשונה להשקעות נדל\"ן בחו\"ל. הצטרף חינם עכשיו. בעתיד — שלם רק על לידים. 70% הנחה נעולה לתמיד.",
     "agents.hero.cta": "הצטרף עכשיו — בחינם",
     "agents.hero.howItWorks": "איך זה עובד?",
     "agents.hero.disclaimer": "ללא כרטיס אשראי · ללא התחייבות חודשית",
