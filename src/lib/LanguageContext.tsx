@@ -908,7 +908,6 @@ const ruTranslations: Record<string, string> = {
   "detail.yearBuilt": "Год постройки",
   "detail.floor": "Этаж",
   "detail.amenities": "Удобства",
-  "detail.neighborhood": "Район",
 
   // Neighborhood content by country
   "detail.neighborhood.greece.about": "Это имущество расположено в хорошо зарекомендовавшем себе районе с отличными удобствами и сильным чувством общности. Район предлагает идеальное сочетание средиземноморского очарования и современного удобства, со всем необходимым в пешей доступности или короткой поездке.",
