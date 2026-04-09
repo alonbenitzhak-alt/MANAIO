@@ -141,6 +141,13 @@ const elTranslations: Record<string, string> = {
   "detail.gettingAround": "Μετακίνηση",
   "detail.servicesAmenities": "Υπηρεσίες & Ανέσεις",
   "detail.lifestyleCulture": "Τρόπος Ζωής & Πολιτισμός",
+  "detail.features": "Χαρακτηριστικά Ακινήτου",
+  "detail.area": "Εμβαδόν",
+  "detail.bathrooms": "Μπάνια",
+  "detail.yearBuilt": "Έτος Κατασκευής",
+  "detail.floor": "Όροφος",
+  "detail.amenities": "Παροχές",
+  "detail.neighborhood": "Γειτονιά",
 
   // Neighborhood content by country
   "detail.neighborhood.greece.about": "Αυτό το ακίνητο βρίσκεται σε μια καλά εγκατεστημένη γειτονιά με εξαιρετικές υπηρεσίες και ισχυρό κοινοτικό χαρακτήρα. Το εμβαδόν προσφέρει την τέλεια μίξη μεσογειακής γοητείας και σύγχρονης ευκολίας, με ό,τι χρειάζεσαι σε απόσταση περιπάτου ή σύντομης διαδρομής.",
@@ -896,6 +903,13 @@ const ruTranslations: Record<string, string> = {
   "detail.gettingAround": "Передвижение",
   "detail.servicesAmenities": "Услуги и удобства",
   "detail.lifestyleCulture": "Образ жизни и культура",
+  "detail.features": "Характеристики объекта",
+  "detail.area": "Площадь",
+  "detail.bathrooms": "Ванные комнаты",
+  "detail.yearBuilt": "Год постройки",
+  "detail.floor": "Этаж",
+  "detail.amenities": "Удобства",
+  "detail.neighborhood": "Район",
 
   // Neighborhood content by country
   "detail.neighborhood.greece.about": "Это имущество расположено в хорошо зарекомендовавшем себе районе с отличными удобствами и сильным чувством общности. Район предлагает идеальное сочетание средиземноморского очарования и современного удобства, со всем необходимым в пешей доступности или короткой поездке.",
@@ -1651,6 +1665,12 @@ const arTranslations: Record<string, string> = {
   "detail.gettingAround": "التنقل",
   "detail.servicesAmenities": "الخدمات والمرافق",
   "detail.lifestyleCulture": "نمط الحياة والثقافة",
+  "detail.features": "مميزات العقار",
+  "detail.area": "المساحة",
+  "detail.bathrooms": "الحمامات",
+  "detail.yearBuilt": "سنة البناء",
+  "detail.floor": "الطابق",
+  "detail.amenities": "المرافق",
 
   // Neighborhood content by country
   "detail.neighborhood.greece.about": "يقع هذا العقار في حي راسخ مع مرافق ممتازة وطابع مجتمعي قوي. تقدم المنطقة مزيجًا مثاليًا من السحر المتوسطي والراحة الحديثة، مع كل ما تحتاجه على مسافة قريبة أو قيادة قصيرة.",
@@ -2401,6 +2421,12 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "ניווט וניידות",
     "detail.servicesAmenities": "שירותים ותשתיות",
     "detail.lifestyleCulture": "אורח חיים ותרבות",
+    "detail.features": "תכונות הנכס",
+    "detail.area": "שטח",
+    "detail.bathrooms": "חדרי אמבטיה",
+    "detail.yearBuilt": "שנת בנייה",
+    "detail.floor": "קומה",
+    "detail.amenities": "מתקנים",
 
     // Neighborhood content by country
     "detail.neighborhood.greece.about": "הנכס ממוקם בשכונה מבוססת עם מתקנים מעולים ואופי קהילתי חזק. השטח מציע שילוב מושלם של קסם ים תיכוני והנוחות המודרנית, כאשר הכל שאתה צריך בהליכה נוחה או נסיעה קצרה.",
@@ -3213,6 +3239,12 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "Getting Around",
     "detail.servicesAmenities": "Services & Amenities",
     "detail.lifestyleCulture": "Lifestyle & Culture",
+    "detail.features": "Property Features",
+    "detail.area": "Area",
+    "detail.bathrooms": "Bathrooms",
+    "detail.yearBuilt": "Year Built",
+    "detail.floor": "Floor",
+    "detail.amenities": "Amenities",
 
     // Neighborhood content by country
     "detail.neighborhood.greece.about": "This property is located in a well-established neighborhood with excellent amenities and strong community character. The area offers the perfect blend of Mediterranean charm and modern convenience, with everything you need within walking distance or a short drive.",
