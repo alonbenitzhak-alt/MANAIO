@@ -147,7 +147,6 @@ const elTranslations: Record<string, string> = {
   "detail.yearBuilt": "Έτος Κατασκευής",
   "detail.floor": "Όροφος",
   "detail.amenities": "Παροχές",
-  "detail.neighborhood": "Γειτονιά",
 
   // Neighborhood content by country
   "detail.neighborhood.greece.about": "Αυτό το ακίνητο βρίσκεται σε μια καλά εγκατεστημένη γειτονιά με εξαιρετικές υπηρεσίες και ισχυρό κοινοτικό χαρακτήρα. Το εμβαδόν προσφέρει την τέλεια μίξη μεσογειακής γοητείας και σύγχρονης ευκολίας, με ό,τι χρειάζεσαι σε απόσταση περιπάτου ή σύντομης διαδρομής.",
