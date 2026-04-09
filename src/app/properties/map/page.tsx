@@ -14,6 +14,13 @@ export default function PropertiesMapPage() {
   const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
 
   const mapProperties = useMemo(() => {
+    const cityCoords: Record<string, [number, number]> = {
+      "Athens, Greece": [37.9838, 23.7275],
+      "Thessaloniki, Greece": [40.6401, 22.9444],
+      "Limassol, Cyprus": [34.7071, 33.0226],
+      "Paphos, Cyprus": [34.7754, 32.4218],
+    };
+
     const countryCoords: Record<string, [number, number]> = {
       "Greece": [39.074208, 21.824312],
       "Cyprus": [34.9249, 33.4299],
@@ -23,7 +30,7 @@ export default function PropertiesMapPage() {
 
     return properties.map((p) => ({
       ...p,
-      coords: countryCoords[p.country] || [0, 0],
+      coords: cityCoords[`${p.city}, ${p.country}`] || countryCoords[p.country] || [0, 0],
     }));
   }, [properties]);
 

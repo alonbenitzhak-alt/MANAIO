@@ -33,11 +33,18 @@ function PropertyForm({
       title: property?.title || "",
       country: property?.country || "Greece",
       city: property?.city || "",
+      neighborhood: property?.neighborhood || "",
       price: property?.price || 0,
       currency: property?.currency || "EUR",
       show_roi: property?.show_roi ?? true,
       expected_roi: property?.expected_roi || 0,
       bedrooms: property?.bedrooms || 1,
+      bathrooms: property?.bathrooms || 1,
+      area_sqm: property?.area_sqm || 0,
+      year_built: property?.year_built || new Date().getFullYear(),
+      floor: property?.floor || 0,
+      furnished: property?.furnished ?? false,
+      amenities: property?.amenities || [],
       property_type: property?.property_type || "Apartment",
       description: property?.description || "",
       images: property?.images || [],
@@ -113,6 +120,10 @@ function PropertyForm({
           <input type="text" required value={form.city} onChange={(e) => setForm({ ...form, city: e.target.value })} className={inp} />
         </div>
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Neighborhood</label>
+          <input type="text" value={form.neighborhood} onChange={(e) => setForm({ ...form, neighborhood: e.target.value })} className={inp} placeholder="e.g., Plaka, Psyrri" />
+        </div>
+        <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("card.price")}</label>
           <div className="flex gap-2">
             <select value={form.currency || "EUR"} onChange={(e) => setForm({ ...form, currency: e.target.value as "EUR" | "USD" | "GBP" | "ILS" })} className="px-3 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-primary-500 outline-none">
@@ -133,6 +144,28 @@ function PropertyForm({
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("admin.form.bedrooms")}</label>
           <input type="number" required min={0} value={form.bedrooms} onChange={(e) => setForm({ ...form, bedrooms: parseInt(e.target.value) || 1 })} className={inp} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Bathrooms</label>
+          <input type="number" min={0} step={0.5} value={form.bathrooms || 1} onChange={(e) => setForm({ ...form, bathrooms: parseFloat(e.target.value) || 1 })} className={inp} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Area (m²)</label>
+          <input type="number" min={0} value={form.area_sqm || 0} onChange={(e) => setForm({ ...form, area_sqm: parseInt(e.target.value) || 0 })} className={inp} placeholder="e.g., 85" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Year Built</label>
+          <input type="number" min={1900} max={2100} value={form.year_built || new Date().getFullYear()} onChange={(e) => setForm({ ...form, year_built: parseInt(e.target.value) || new Date().getFullYear() })} className={inp} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Floor</label>
+          <input type="number" min={0} value={form.floor || 0} onChange={(e) => setForm({ ...form, floor: parseInt(e.target.value) || 0 })} className={inp} placeholder="0 for ground floor" />
+        </div>
+        <div>
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+            <input type="checkbox" checked={form.furnished || false} onChange={(e) => setForm({ ...form, furnished: e.target.checked })} className="w-4 h-4 text-primary-600 rounded" />
+            Furnished
+          </label>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">{t("detail.propertyType")}</label>
@@ -163,6 +196,26 @@ function PropertyForm({
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">{t("dashboard.agent.description")}</label>
         <textarea rows={3} required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className={inp + " resize-none"} />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Amenities <span className="text-gray-400 font-normal text-xs">(comma separated)</span></label>
+        <textarea
+          rows={2}
+          value={form.amenities?.join(", ") || ""}
+          onChange={(e) => setForm({ ...form, amenities: e.target.value.split(",").map(a => a.trim()).filter(a => a) })}
+          className={inp + " resize-none"}
+          placeholder="e.g., Pool, Parking, Balcony, AC, Heating, Garden, Elevator"
+        />
+        {form.amenities && form.amenities.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-2">
+            {form.amenities.map((amenity) => (
+              <span key={amenity} className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1">
+                {amenity}
+                <button type="button" onClick={() => setForm({ ...form, amenities: form.amenities?.filter(a => a !== amenity) || [] })} className="ml-1 text-blue-500 hover:text-blue-700">✕</button>
+              </span>
+            ))}
+          </div>
+        )}
       </div>
       {/* Image upload */}
       <div>

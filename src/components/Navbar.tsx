@@ -233,11 +233,11 @@ export default function Navbar() {
                 onChange={(e) => setLang(e.target.value as Lang)}
                 className="text-xs font-bold border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 hover:bg-gray-50 transition-colors bg-white cursor-pointer outline-none focus:ring-2 focus:ring-primary-500"
               >
-                <option value="he">עב</option>
-                <option value="en">EN</option>
-                <option value="el">ΕΛ</option>
-                <option value="ru">РУ</option>
-                <option value="ar">ع</option>
+                <option value="he">🇮🇱 עברית</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="ar">🇸🇦 العربية</option>
               </select>
 
               {user ? (
@@ -334,11 +334,11 @@ export default function Navbar() {
                 onChange={(e) => { setLang(e.target.value as Lang); setMobileOpen(false); }}
                 className="w-full text-base font-medium text-primary-600 bg-primary-50 rounded-lg px-3 py-2 cursor-pointer outline-none border border-primary-100"
               >
-                <option value="he">עברית</option>
-                <option value="en">English</option>
-                <option value="el">Ελληνικά</option>
-                <option value="ru">Русский</option>
-                <option value="ar">العربية</option>
+                <option value="he">🇮🇱 עברית</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="el">🇬🇷 Ελληνικά</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="ar">🇸🇦 العربية</option>
               </select>
             </div>
             {user ? (

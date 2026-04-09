@@ -116,15 +116,16 @@ export default function PropertyDetailsPage({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-2">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-2">
                 {[
                   { label: t("detail.expectedRoi"), value: `${property.expected_roi}%`, accent: true },
                   { label: t("detail.bedrooms"), value: property.bedrooms.toString() },
+                  { label: property.area_sqm ? "Area" : null, value: property.area_sqm ? `${property.area_sqm} m²` : null },
                   { label: t("detail.propertyType"), value: t(`propertyType.${property.property_type.toLowerCase()}`) || property.property_type },
                   { label: t("detail.country"), value: t(`footer.${property.country.toLowerCase()}`) || property.country },
-                ].map((item) => (
-                  <div key={item.label} className="bg-gray-50 rounded-xl p-4 text-center">
-                    <div className="text-xs font-semibold text-gray-400 uppercase mb-1">{item.label}</div>
+                ].filter(item => item.label !== null).map((item) => (
+                  <div key={item.label} className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-3 text-center border border-blue-100">
+                    <div className="text-xs font-semibold text-gray-500 uppercase mb-1">{item.label}</div>
                     <div className={`text-lg font-bold ${item.accent ? "text-accent-600" : "text-gray-900"}`}>{item.value}</div>
                   </div>
                 ))}
@@ -165,6 +166,78 @@ export default function PropertyDetailsPage({
                   </p>
                 </div>
               </div>
+
+              {/* Property Features & Amenities */}
+              {(property.area_sqm || property.bathrooms || property.year_built || property.furnished !== undefined || property.amenities?.length) && (
+                <div className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6">
+                  <h2 className="text-xl font-bold text-gray-900 mb-6">{t("detail.features") || "Property Features"}</h2>
+
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    {property.area_sqm && (
+                      <div className="bg-white rounded-lg p-4 text-center">
+                        <svg className="w-6 h-6 text-blue-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                        <div className="text-lg font-bold text-gray-900">{property.area_sqm} m²</div>
+                        <div className="text-xs text-gray-500">{t("detail.area") || "Area"}</div>
+                      </div>
+                    )}
+
+                    {property.bedrooms && (
+                      <div className="bg-white rounded-lg p-4 text-center">
+                        <svg className="w-6 h-6 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <div className="text-lg font-bold text-gray-900">{property.bedrooms}</div>
+                        <div className="text-xs text-gray-500">{t("detail.bedrooms") || "Bedrooms"}</div>
+                      </div>
+                    )}
+
+                    {property.bathrooms && (
+                      <div className="bg-white rounded-lg p-4 text-center">
+                        <svg className="w-6 h-6 text-purple-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6V4m12 2v2m7 0a2 2 0 01-2 2H3a2 2 0 01-2-2V4a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2H3a2 2 0 01-2-2V4z" />
+                        </svg>
+                        <div className="text-lg font-bold text-gray-900">{property.bathrooms}</div>
+                        <div className="text-xs text-gray-500">{t("detail.bathrooms") || "Bathrooms"}</div>
+                      </div>
+                    )}
+
+                    {property.year_built && (
+                      <div className="bg-white rounded-lg p-4 text-center">
+                        <svg className="w-6 h-6 text-orange-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
+                        </svg>
+                        <div className="text-lg font-bold text-gray-900">{property.year_built}</div>
+                        <div className="text-xs text-gray-500">{t("detail.yearBuilt") || "Year Built"}</div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Amenities */}
+                  {property.amenities && property.amenities.length > 0 && (
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-3">{t("detail.amenities") || "Amenities"}</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {property.amenities.map((amenity) => (
+                          <span key={amenity} className="bg-white border border-blue-200 text-blue-700 text-sm font-medium px-3 py-1.5 rounded-full">
+                            ✓ {amenity}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Furnished status */}
+                  {property.furnished !== undefined && (
+                    <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200">
+                      <span className="text-sm font-medium text-gray-900">
+                        {property.furnished ? "✓ Furnished" : "○ Unfurnished"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">{t("detail.about")}</h2>
