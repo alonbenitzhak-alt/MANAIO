@@ -97,22 +97,62 @@ export default function PropertyCard({ property }: { property: Property }) {
           {locationLabel}
         </p>
 
-        {/* Stats row */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="flex items-center gap-1.5 text-gray-500 text-xs">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Stats row - 4 columns */}
+        <div className="grid grid-cols-4 gap-2 mb-4">
+          {/* Bedrooms */}
+          <div className="flex flex-col items-center text-center">
+            <svg className="w-4 h-4 text-gray-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            {property.bedrooms} {property.bedrooms === 1 ? t("card.bedroom") : t("card.bedrooms")}
+            <span className="text-xs font-semibold text-gray-900">{property.bedrooms}</span>
+            <span className="text-xs text-gray-500">{t("card.bedroom")}</span>
           </div>
-          <div className="w-1 h-1 bg-gray-300 rounded-full" />
-          <div className="flex items-center gap-1.5 text-emerald-600 text-xs font-semibold">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+          {/* Square meters */}
+          {property.area_sqm && (
+            <div className="flex flex-col items-center text-center">
+              <svg className="w-4 h-4 text-gray-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+              <span className="text-xs font-semibold text-gray-900">{property.area_sqm}</span>
+              <span className="text-xs text-gray-500">m²</span>
+            </div>
+          )}
+
+          {/* ROI */}
+          <div className="flex flex-col items-center text-center">
+            <svg className="w-4 h-4 text-emerald-600 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            {t("card.roi")} {property.expected_roi}%
+            <span className="text-xs font-semibold text-emerald-600">{property.expected_roi}%</span>
+            <span className="text-xs text-gray-500">ROI</span>
           </div>
+
+          {/* Furnished */}
+          {property.furnished !== undefined && (
+            <div className="flex flex-col items-center text-center">
+              <svg className="w-4 h-4 text-gray-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <span className="text-xs font-semibold text-gray-900">{property.furnished ? "✓" : "✗"}</span>
+              <span className="text-xs text-gray-500">{property.furnished ? "Furnished" : "Unfurn."}</span>
+            </div>
+          )}
         </div>
+
+        {/* Amenities highlights - show first 3 */}
+        {property.amenities && property.amenities.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {property.amenities.slice(0, 3).map((amenity) => (
+              <span key={amenity} className="bg-blue-50 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
+                {amenity}
+              </span>
+            ))}
+            {property.amenities.length > 3 && (
+              <span className="text-gray-500 text-xs px-2 py-1">+{property.amenities.length - 3}</span>
+            )}
+          </div>
+        )}
 
         {/* Price + CTA */}
         <div className="flex items-center justify-between mb-3">
