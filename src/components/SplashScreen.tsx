@@ -3,9 +3,21 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
+const SPLASH_IMAGES = [
+  "/splash-1.jpg", // Boats/Sea
+  "/splash-2.jpg", // Sunset/Mountains
+];
+
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const { t } = useLanguage();
   const [phase, setPhase] = useState<"logo" | "slogan" | "fadeOut">("logo");
+  const [backgroundImage, setBackgroundImage] = useState("");
+
+  useEffect(() => {
+    // Pick random background image
+    const randomImage = SPLASH_IMAGES[Math.floor(Math.random() * SPLASH_IMAGES.length)];
+    setBackgroundImage(randomImage);
+  }, []);
 
   useEffect(() => {
     // Logo appears immediately, then show slogan after 800ms
@@ -28,40 +40,57 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         phase === "fadeOut" ? "opacity-0" : "opacity-100"
       }`}
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80')`,
+        backgroundImage: `url('${backgroundImage}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Minimal gradient overlay for text readability */}
+      {/* Subtle gradient overlay */}
       <div className="absolute inset-0 pointer-events-none" style={{
         background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.08) 100%)"
       }} />
-      {/* Logo */}
-      <div
-        className="relative z-10"
-        style={{
-          animation: "logoEntry 0.8s ease-out forwards",
-        }}
-      >
-        <img
-          src="/logo.svg"
-          alt="MANAIO"
-          className="w-64 h-64 sm:w-80 sm:h-80 object-contain drop-shadow-2xl"
-        />
-      </div>
 
-      {/* Hebrew Tagline */}
-      <div
-        className={`mt-6 text-center transition-all duration-1000 ease-out relative z-10 ${
-          phase === "slogan" || phase === "fadeOut"
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-6"
-        }`}
-      >
-        <p className="text-3xl sm:text-4xl font-bold tracking-wide drop-shadow-lg" style={{ color: '#1A3A7A' }}>
-          {t("splash.tagline")}
-        </p>
+      {/* Logo & Tagline Container with semi-transparent background */}
+      <div className="relative z-10 flex flex-col items-center gap-4">
+
+        {/* Background blur/dark overlay behind content */}
+        <div className="absolute -inset-8 rounded-2xl bg-black/30 backdrop-blur-sm -z-10" />
+
+        {/* Logo with Drop Shadow */}
+        <div
+          style={{
+            animation: "logoEntry 0.8s ease-out forwards",
+          }}
+        >
+          <img
+            src="/logo.svg"
+            alt="MANAIO"
+            className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
+            style={{
+              filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))",
+            }}
+          />
+        </div>
+
+        {/* Tagline with Text Shadow & Semi-transparent Background */}
+        <div
+          className={`transition-all duration-1000 ease-out ${
+            phase === "slogan" || phase === "fadeOut"
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-6"
+          }`}
+        >
+          <p
+            className="text-3xl sm:text-4xl font-bold tracking-wide px-6 py-3 rounded-lg text-white"
+            style={{
+              backgroundColor: "rgba(0,0,0,0.4)",
+              textShadow: "0 2px 8px rgba(0,0,0,0.7)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            {t("splash.tagline")}
+          </p>
+        </div>
       </div>
 
       {/* Subtle loading dots */}
