@@ -83,7 +83,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
           <img
             src="/logo.svg"
             alt="MANAIO"
-            className="w-48 h-48 sm:w-56 sm:h-56 object-contain"
+            className="w-24 h-24 sm:w-28 sm:h-28 object-contain"
             style={{
               filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))",
             }}
