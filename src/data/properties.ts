@@ -46,9 +46,9 @@ export const properties: Property[] = [
     description_he:
       "דירה מרהיבה עם 2 חדרי שינה הממוקמת לאורך הריביירה האתונאית עם נוף פנורמי לים. הנכס המודרני כולל חלונות מרצפה לתקרה, סלון פתוח ומרווח ומרפסת פרטית עם נוף לים האגאי. הבניין כולל בריכה משותפת, חדר כושר ואבטחה 24/7. מתאים במיוחד להשכרה קצרת מועד עם ביקוש תיירותי גבוה לאורך כל השנה. ממוקם 20 דקות בלבד משדה התעופה הבינלאומי של אתונה ובסמוך לחופים, מסעדות ואתרי תרבות.",
     images: [
-      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1577959375944-97e38aafcc9c?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1611210316969-a82fbe63d730?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600573455063-fd410b519629?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
     ],
     agent_name: "Nikos Papadopoulos",
     agent_email: "nikos@manaio.com",
@@ -205,9 +205,9 @@ export const properties: Property[] = [
     description_he:
       "דירה מודרנית על הים בלימסול עם 2 חדרי שינה ומרפסת פרטית. הנכס משקיף ישירות על הים התיכון עם חוף בקרבת מקום. מושקעת בבניין מהודר עם בריכה משותפת וחדר כושר. לימסול היא הנמל הראשי של קפריסין עם צמיחה כלכלית חזקה. מתאימה להשקעה ממוזגת עם שילוב תיירות וגרים. תשואות מעניינות מהשכרה ופיתוח ערך.",
     images: [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1570129477492-45ac003d2e0b?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1576070611519-41e6b06f7b39?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop",
     ],
     agent_name: "Marina Charalambous",
     agent_email: "marina@manaio.com",
@@ -311,9 +311,9 @@ export const properties: Property[] = [
     description_he:
       "דיור בן שתי קומות עכשווי בסלוניקי עם 3 חדרי שינה וגינה פרטית. הנכס משתרע על שתי קומות עם סלון מרווח וחדר מדיה. ממוקם בשכונה עכשווית קרוב למרכז העסקים וחיי הלילה. סלוניקי היא העיר השנייה בגודלה ביוון עם קצב צמיחה מהיר. השקעה מעולה למגורים וגם להשכרה קצרת מועד. פוטנציאל משוער עם צמיחה של השוק הכללי.",
     images: [
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1580136579312-94651dfd596d?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512623538486-d4bc4b7ce888?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1523217311519-efbd879fd73a?w=800&h=600&fit=crop",
     ],
     agent_name: "Dimitris Papadakis",
     agent_email: "dimitris@manaio.com",
