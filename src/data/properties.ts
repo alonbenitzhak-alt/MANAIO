@@ -46,9 +46,9 @@ export const properties: Property[] = [
     description_he:
       "דירה מרהיבה עם 2 חדרי שינה הממוקמת לאורך הריביירה האתונאית עם נוף פנורמי לים. הנכס המודרני כולל חלונות מרצפה לתקרה, סלון פתוח ומרווח ומרפסת פרטית עם נוף לים האגאי. הבניין כולל בריכה משותפת, חדר כושר ואבטחה 24/7. מתאים במיוחד להשכרה קצרת מועד עם ביקוש תיירותי גבוה לאורך כל השנה. ממוקם 20 דקות בלבד משדה התעופה הבינלאומי של אתונה ובסמוך לחופים, מסעדות ואתרי תרבות.",
     images: [
-      "https://images.unsplash.com/photo-1600573455063-fd410b519629?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
     ],
     agent_name: "Nikos Papadopoulos",
     agent_email: "nikos@manaio.com",
@@ -99,9 +99,9 @@ export const properties: Property[] = [
     description_he:
       "וילה יוקרתית במיקונוס עם 3 חדרי שינה ובריכה פרטית. הנכס משקיף על הים האגאי ומציע נוף מדהים. כוללת מטבח משודרג, מרפסות פתוחות ותכנון ארכיטקטוני מודרני. אידיאלית להשקעה בתיירות יוקרה. מיקום פרימיום בעיירה הכי מבוקשת ביוון. צפויה תשואה גבוהה מהשכרת עונתית.",
     images: [
-      "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e?w=800&h=600&fit=crop",
       "https://images.unsplash.com/photo-1512917774080-9b2b17855449?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9b2b17855449?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9b2b17855449?w=800&h=600&fit=crop",
     ],
     agent_name: "Sofia Dimitriou",
     agent_email: "sofia@manaio.com",
@@ -153,8 +153,8 @@ export const properties: Property[] = [
       "בית מסורתי קרטי משוחזר בידי אדריכלים בינלאומיים. מכיל 4 חדרי שינה, כניסה פרטית וגינה מושקעת. הבית שומר על הסגנון המסורתי הקרטי עם טכנולוגיה ונוחות מודרנית. מיקום במרכז כרתים קרוב לחופים וערים תוססות. אפשרויות להשכרה עונתית או גם לגור בעצמו. השקעה מוצקה בנכס עם פוטנציאל ארוך טווח.",
     images: [
       "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
     ],
     agent_name: "Georgios Konstantinidis",
     agent_email: "georgios@manaio.com",
@@ -206,8 +206,8 @@ export const properties: Property[] = [
       "דירה מודרנית על הים בלימסול עם 2 חדרי שינה ומרפסת פרטית. הנכס משקיף ישירות על הים התיכון עם חוף בקרבת מקום. מושקעת בבניין מהודר עם בריכה משותפת וחדר כושר. לימסול היא הנמל הראשי של קפריסין עם צמיחה כלכלית חזקה. מתאימה להשקעה ממוזגת עם שילוב תיירות וגרים. תשואות מעניינות מהשכרה ופיתוח ערך.",
     images: [
       "https://images.unsplash.com/photo-1576070611519-41e6b06f7b39?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1576070611519-41e6b06f7b39?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1576070611519-41e6b06f7b39?w=800&h=600&fit=crop",
     ],
     agent_name: "Marina Charalambous",
     agent_email: "marina@manaio.com",
@@ -259,8 +259,8 @@ export const properties: Property[] = [
       "פנטהאוס מפואר בפאפוס עם 3 חדרי שינה ונוף מדהים. הדירה ממוקמת על קומה גבוהה עם נוף לחופי פאפוס היפים ובתים מהודרים. כוללת מטבח מהודר, מרפסת פתוחה ענקית וסלון מודרני. בניין בעל אבטחה ראשונית וסרוויסים. פאפוס מושך תיירים עשירים ומגורים רזידנציאליים חדשים. השקעה מעמדית עם פוטנציאל גבוה של השכרה למטיילים יוקרה.",
     images: [
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1611228434197-4d707e15e458?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1585399691641-11d846c17f9b?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
     ],
     agent_name: "Alexios Pavlides",
     agent_email: "alexios@manaio.com",
@@ -312,8 +312,8 @@ export const properties: Property[] = [
       "דיור בן שתי קומות עכשווי בסלוניקי עם 3 חדרי שינה וגינה פרטית. הנכס משתרע על שתי קומות עם סלון מרווח וחדר מדיה. ממוקם בשכונה עכשווית קרוב למרכז העסקים וחיי הלילה. סלוניקי היא העיר השנייה בגודלה ביוון עם קצב צמיחה מהיר. השקעה מעולה למגורים וגם להשכרה קצרת מועד. פוטנציאל משוער עם צמיחה של השוק הכללי.",
     images: [
       "https://images.unsplash.com/photo-1512623538486-d4bc4b7ce888?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1523217311519-efbd879fd73a?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512623538486-d4bc4b7ce888?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1512623538486-d4bc4b7ce888?w=800&h=600&fit=crop",
     ],
     agent_name: "Dimitris Papadakis",
     agent_email: "dimitris@manaio.com",
