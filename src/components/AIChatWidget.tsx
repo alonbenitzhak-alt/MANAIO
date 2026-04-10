@@ -55,7 +55,7 @@ export default function AIChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // WhatsApp configuration - update with your company's WhatsApp number
-  const whatsappNumber = "972501234567"; // Replace with actual WhatsApp number
+  const whatsappNumber = "972586836555";
   const whatsappMessage = encodeURIComponent(
     lang === "he" ? "שלום, אני מעוניין בעזרה בנושא השקעה" :
     lang === "el" ? "Γεια σας, ενδιαφέρομαι να λάβω βοήθεια σχετικά με μια επένδυση" :
