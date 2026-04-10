@@ -3,26 +3,32 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
 
-const SPLASH_IMAGES = [
-  "/splash-1.jpg", // Boats/Sea
-  "/splash-2.jpg", // Sunset/Mountains
-  "/splash-3.jpg",
-  "/splash-4.jpg",
-  "/splash-5.jpg",
-  "/splash-6.jpg",
-  "/splash-7.jpg",
-  "/splash-8.jpg",
+interface SplashImage {
+  url: string;
+  location: string;
+  location_he: string;
+}
+
+const SPLASH_IMAGES: SplashImage[] = [
+  { url: "/splash-1.jpg", location: "Athens, Greece", location_he: "אתונה, יוון" },
+  { url: "/splash-2.jpg", location: "Mykonos, Greece", location_he: "מיקונוס, יוון" },
+  { url: "/splash-3.jpg", location: "Crete, Greece", location_he: "כרתים, יוון" },
+  { url: "/splash-4.jpg", location: "Limassol, Cyprus", location_he: "לימסול, קפריסין" },
+  { url: "/splash-5.jpg", location: "Paphos, Cyprus", location_he: "פאפוס, קפריסין" },
+  { url: "/splash-6.jpg", location: "Santorini, Greece", location_he: "סנטוריני, יוון" },
+  { url: "/splash-7.jpg", location: "Thessaloniki, Greece", location_he: "סלוניקי, יוון" },
+  { url: "/splash-8.jpg", location: "Nicosia, Cyprus", location_he: "ניקוסיה, קפריסין" },
 ];
 
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [phase, setPhase] = useState<"logo" | "slogan" | "fadeOut">("logo");
-  const [backgroundImage, setBackgroundImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<SplashImage | null>(null);
 
   useEffect(() => {
     // Pick random background image
     const randomImage = SPLASH_IMAGES[Math.floor(Math.random() * SPLASH_IMAGES.length)];
-    setBackgroundImage(randomImage);
+    setSelectedImage(randomImage);
   }, []);
 
   useEffect(() => {
@@ -46,14 +52,14 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         phase === "fadeOut" ? "opacity-0" : "opacity-100"
       }`}
       style={{
-        backgroundImage: `url('${backgroundImage}')`,
+        backgroundImage: selectedImage ? `url('${selectedImage.url}')` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      {/* Subtle gradient overlay */}
+      {/* Enhanced gradient overlay for better contrast */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.08) 100%)"
+        background: "linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.15) 100%)"
       }} />
 
       {/* Logo & Tagline Container with semi-transparent background */}
@@ -88,17 +94,45 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
           }`}
         >
           <p
-            className="text-3xl sm:text-4xl font-bold tracking-wide px-6 py-3 rounded-lg text-white"
+            className="text-3xl sm:text-4xl font-bold tracking-wide px-8 py-4 rounded-xl text-white"
             style={{
-              backgroundColor: "rgba(0,0,0,0.4)",
-              textShadow: "0 2px 8px rgba(0,0,0,0.7)",
-              backdropFilter: "blur(8px)",
+              backgroundColor: "rgba(0,0,0,0.45)",
+              textShadow: "0 3px 10px rgba(0,0,0,0.8)",
+              backdropFilter: "blur(10px)",
+              border: "1px solid rgba(255,255,255,0.1)",
             }}
           >
             {t("splash.tagline")}
           </p>
         </div>
       </div>
+
+      {/* Location Label */}
+      {selectedImage && (
+        <div
+          className={`absolute bottom-28 transition-all duration-1000 ease-out relative z-10 ${
+            phase === "slogan" || phase === "fadeOut"
+              ? "opacity-100"
+              : "opacity-0"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span
+              className="text-sm font-semibold text-white px-4 py-1.5 rounded-full backdrop-blur-sm"
+              style={{
+                backgroundColor: "rgba(0,0,0,0.5)",
+                textShadow: "0 1px 4px rgba(0,0,0,0.7)",
+              }}
+            >
+              {lang === "he" ? selectedImage.location_he : selectedImage.location}
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Subtle loading dots */}
       <div
