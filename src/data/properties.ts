@@ -47,8 +47,6 @@ export const properties: Property[] = [
       "דירה מרהיבה עם 2 חדרי שינה הממוקמת לאורך הריביירה האתונאית עם נוף פנורמי לים. הנכס המודרני כולל חלונות מרצפה לתקרה, סלון פתוח ומרווח ומרפסת פרטית עם נוף לים האגאי. הבניין כולל בריכה משותפת, חדר כושר ואבטחה 24/7. מתאים במיוחד להשכרה קצרת מועד עם ביקוש תיירותי גבוה לאורך כל השנה. ממוקם 20 דקות בלבד משדה התעופה הבינלאומי של אתונה ובסמוך לחופים, מסעדות ואתרי תרבות.",
     images: [
       "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600073014784-baf60a2e94ef?w=800&h=600&fit=crop",
     ],
     agent_name: "Nikos Papadopoulos",
     agent_email: "nikos@manaio.com",
