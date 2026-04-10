@@ -66,7 +66,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         <div
           style={{
             animation: "logoEntry 0.8s ease-out forwards",
-            marginBottom: "-20px",
+            marginBottom: "-15px",
           }}
         >
           <img
