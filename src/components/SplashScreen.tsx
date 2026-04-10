@@ -6,6 +6,12 @@ import { useLanguage } from "@/lib/LanguageContext";
 const SPLASH_IMAGES = [
   "/splash-1.jpg", // Boats/Sea
   "/splash-2.jpg", // Sunset/Mountains
+  "/splash-3.jpg",
+  "/splash-4.jpg",
+  "/splash-5.jpg",
+  "/splash-6.jpg",
+  "/splash-7.jpg",
+  "/splash-8.jpg",
 ];
 
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
