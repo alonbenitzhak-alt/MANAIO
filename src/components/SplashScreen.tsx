@@ -51,7 +51,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[200] flex flex-col items-center justify-center transition-opacity duration-700 ${
+      className={`fixed inset-0 z-[200] transition-opacity duration-700 ${
         phase === "fadeOut" ? "opacity-0" : "opacity-100"
       }`}
       style={{
@@ -67,17 +67,11 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         background: "linear-gradient(135deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.08) 100%)"
       }} />
 
-      {/* Logo & Tagline Container with semi-transparent background */}
-      <div className="relative z-10 flex flex-col items-center gap-2 sm:gap-4 px-4 sm:px-0">
-
-        {/* Background blur/dark overlay behind content */}
-        <div className="absolute -inset-8 rounded-2xl bg-black/30 backdrop-blur-sm -z-10" />
-
-        {/* Logo with Drop Shadow */}
+      {/* Logo - positioned at top center */}
+      <div className="absolute top-6 sm:top-10 left-1/2 transform -translate-x-1/2 z-10">
         <div
           style={{
             animation: "logoEntry 0.8s ease-out forwards",
-            marginBottom: "-15px",
           }}
         >
           <img
@@ -89,10 +83,19 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             }}
           />
         </div>
+      </div>
+
+      {/* Tagline & Location Container - centered vertically */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 sm:px-0">
+
+        {/* Background blur/dark overlay behind tagline */}
+        <div className="absolute rounded-2xl bg-black/30 backdrop-blur-sm -z-10" style={{
+          inset: "-30px",
+        }} />
 
         {/* Tagline with Text Shadow & Semi-transparent Background */}
         <div
-          className={`transition-all duration-1000 ease-out ${
+          className={`transition-all duration-1000 ease-out relative ${
             phase === "slogan" || phase === "fadeOut"
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-6"
@@ -110,17 +113,16 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             {t("splash.tagline")}
           </p>
         </div>
-      </div>
 
-      {/* Location Label */}
-      {selectedImage && (
-        <div
-          className={`absolute bottom-20 sm:bottom-28 transition-all duration-1000 ease-out relative z-10 px-4 ${
-            phase === "slogan" || phase === "fadeOut"
-              ? "opacity-100"
-              : "opacity-0"
-          }`}
-        >
+        {/* Location Label */}
+        {selectedImage && (
+          <div
+            className={`transition-all duration-1000 ease-out relative z-10 px-4 mt-8 ${
+              phase === "slogan" || phase === "fadeOut"
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
+          >
           <div className="flex items-center gap-1.5 sm:gap-2">
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -141,7 +143,8 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
             </span>
           </div>
         </div>
-      )}
+        )}
+      </div>
 
       {/* Subtle loading dots */}
       <div
