@@ -206,7 +206,7 @@ export const properties: Property[] = [
       "דירה מודרנית על הים בלימסול עם 2 חדרי שינה ומרפסת פרטית. הנכס משקיף ישירות על הים התיכון עם חוף בקרבת מקום. מושקעת בבניין מהודר עם בריכה משותפת וחדר כושר. לימסול היא הנמל הראשי של קפריסין עם צמיחה כלכלית חזקה. מתאימה להשקעה ממוזגת עם שילוב תיירות וגרים. תשואות מעניינות מהשכרה ופיתוח ערך.",
     images: [
       "https://images.unsplash.com/photo-1576070611519-41e6b06f7b39?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop",
       "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&h=600&fit=crop",
     ],
     agent_name: "Marina Charalambous",
@@ -259,7 +259,7 @@ export const properties: Property[] = [
       "פנטהאוס מפואר בפאפוס עם 3 חדרי שינה ונוף מדהים. הדירה ממוקמת על קומה גבוהה עם נוף לחופי פאפוס היפים ובתים מהודרים. כוללת מטבח מהודר, מרפסת פתוחה ענקית וסלון מודרני. בניין בעל אבטחה ראשונית וסרוויסים. פאפוס מושך תיירים עשירים ומגורים רזידנציאליים חדשים. השקעה מעמדית עם פוטנציאל גבוה של השכרה למטיילים יוקרה.",
     images: [
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1600573455063-fd410b519629?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1611228434197-4d707e15e458?w=800&h=600&fit=crop",
       "https://images.unsplash.com/photo-1585399691641-11d846c17f9b?w=800&h=600&fit=crop",
     ],
     agent_name: "Alexios Pavlides",

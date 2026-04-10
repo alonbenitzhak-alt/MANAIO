@@ -76,6 +76,24 @@ export default function BuyerDashboard() {
     };
     fetchLeads();
     fetchConversations();
+
+    // Real-time subscription for new conversations
+    const channel = supabase
+      .channel(`buyer-conversations-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "conversations", filter: `buyer_id=eq.${user.id}` },
+        (payload) => {
+          const newConv = payload.new as Conversation;
+          setConversations(prev => {
+            if (prev.find(c => c.id === newConv.id)) return prev;
+            return [newConv, ...prev];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
   }, [user]);
 
   if (loading) {
