@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Property } from "@/lib/types";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useLanguage } from "@/lib/LanguageContext";
+import { getAmenityTranslation } from "@/lib/amenitiesTranslations";
 
 const COUNTRY_KEY: Record<string, string> = {
   Greece: "footer.greece",
@@ -147,7 +148,7 @@ export default function PropertyCard({ property }: { property: Property }) {
           <div className="flex flex-wrap gap-1.5 mb-4">
             {property.amenities.slice(0, 3).map((amenity) => (
               <span key={amenity} className="bg-blue-50 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
-                {amenity}
+                {getAmenityTranslation(amenity, lang)}
               </span>
             ))}
             {property.amenities.length > 3 && (

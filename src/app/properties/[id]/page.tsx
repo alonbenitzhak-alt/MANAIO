@@ -8,6 +8,7 @@ import { useProperties } from "@/lib/PropertiesContext";
 import LeadForm from "@/components/LeadForm";
 import ShareButtons from "@/components/ShareButtons";
 import { useLanguage } from "@/lib/LanguageContext";
+import { getAmenityTranslation } from "@/lib/amenitiesTranslations";
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
@@ -221,7 +222,7 @@ export default function PropertyDetailsPage({
                       <div className="flex flex-wrap gap-2">
                         {property.amenities.map((amenity) => (
                           <span key={amenity} className="bg-white border border-blue-200 text-blue-700 text-sm font-medium px-3 py-1.5 rounded-full">
-                            ✓ {amenity}
+                            ✓ {getAmenityTranslation(amenity, lang)}
                           </span>
                         ))}
                       </div>
