@@ -111,6 +111,10 @@ const elTranslations: Record<string, string> = {
   "card.roi": "Απόδοση",
   "card.bedroom": "Υπνοδωμάτιο",
   "card.bedrooms": "Υπνοδωμάτια",
+  "card.bathrooms": "Μπάνια",
+  "card.sqm": "m²",
+  "card.furnished": "Επιπλωμένο",
+  "card.unfurnished": "Χωρίς επίπλωση",
   "card.cta": "Κλικ για Περισσότερες Λεπτομέρειες",
   "card.price": "Τιμή",
   // Detail
@@ -874,6 +878,9 @@ const ruTranslations: Record<string, string> = {
   "card.bedrooms": "Спальни",
   "card.cta": "Нажмите для подробностей",
   "card.price": "Цена",
+  "card.sqm": "м²",
+  "card.furnished": "Меблировано",
+  "card.unfurnished": "Без мебели",
   // Detail
   "detail.home": "Главная",
   "detail.properties": "Объекты",
@@ -1635,6 +1642,9 @@ const arTranslations: Record<string, string> = {
   "card.bedrooms": "غرف نوم",
   "card.cta": "انقر للمزيد من التفاصيل",
   "card.price": "السعر",
+  "card.sqm": "م²",
+  "card.furnished": "مفروش",
+  "card.unfurnished": "غير مفروش",
   // Detail
   "detail.home": "الرئيسية",
   "detail.properties": "العقارات",
@@ -2390,6 +2400,10 @@ const translations: Record<string, Record<string, string>> = {
     "card.bedroom": "חדר",
     "card.bedrooms": "חדרים",
     "card.cta": "לחץ לפרטים נוספים",
+    "card.price": "מחיר",
+    "card.sqm": "מ״ר",
+    "card.furnished": "מרוהט",
+    "card.unfurnished": "ללא רהיטים",
 
     // Property Details
     "detail.home": "ראשי",
@@ -3208,6 +3222,10 @@ const translations: Record<string, Record<string, string>> = {
     "card.bedroom": "Bedroom",
     "card.bedrooms": "Bedrooms",
     "card.cta": "Click for More Details",
+    "card.price": "Price",
+    "card.sqm": "m²",
+    "card.furnished": "Furnished",
+    "card.unfurnished": "Unfurnished",
 
     // Property Details
     "detail.home": "Home",
