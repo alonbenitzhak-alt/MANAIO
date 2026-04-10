@@ -5,19 +5,22 @@ import { useLanguage } from "@/lib/LanguageContext";
 
 interface SplashImage {
   url: string;
-  location: string;
+  location_en: string;
   location_he: string;
+  location_el: string;
+  location_ru: string;
+  location_ar: string;
 }
 
 const SPLASH_IMAGES: SplashImage[] = [
-  { url: "/splash-1.jpg", location: "Athens, Greece", location_he: "אתונה, יוון" },
-  { url: "/splash-2.jpg", location: "Mykonos, Greece", location_he: "מיקונוס, יוון" },
-  { url: "/splash-3.jpg", location: "Crete, Greece", location_he: "כרתים, יוון" },
-  { url: "/splash-4.jpg", location: "Limassol, Cyprus", location_he: "לימסול, קפריסין" },
-  { url: "/splash-5.jpg", location: "Paphos, Cyprus", location_he: "פאפוס, קפריסין" },
-  { url: "/splash-6.jpg", location: "Santorini, Greece", location_he: "סנטוריני, יוון" },
-  { url: "/splash-7.jpg", location: "Thessaloniki, Greece", location_he: "סלוניקי, יוון" },
-  { url: "/splash-8.jpg", location: "Nicosia, Cyprus", location_he: "ניקוסיה, קפריסין" },
+  { url: "/splash-1.jpg", location_en: "Cape Greco, Cyprus", location_he: "קייפ גרקו, קפריסין", location_el: "Ακρωτήρι Γρέκο, Κύπρος", location_ru: "Мыс Греко, Кипр", location_ar: "كيب جريكو، قبرص" },
+  { url: "/splash-2.jpg", location_en: "Meteora, Greece", location_he: "מטאורה, יוון", location_el: "Μετέωρα, Ελλάδα", location_ru: "Метеора, Греция", location_ar: "ميتيورا، اليونان" },
+  { url: "/splash-3.jpg", location_en: "Koniitsa, Greece", location_he: "קוניטצה, יוון", location_el: "Κόνιτσα, Ελλάδα", location_ru: "Конница, Греция", location_ar: "كونيتسا، اليونان" },
+  { url: "/splash-4.jpg", location_en: "Volos, Greece", location_he: "ויקוס, יוון", location_el: "Βόλος, Ελλάδα", location_ru: "Волос, Греция", location_ar: "فولوس، اليونان" },
+  { url: "/splash-5.jpg", location_en: "Mount Olympus, Greece", location_he: "הר אולימפוס, יוון", location_el: "Όρος Όλυμπος, Ελλάδα", location_ru: "Гора Олимп, Греция", location_ar: "جبل أولمبوس، اليونان" },
+  { url: "/splash-6.jpg", location_en: "Mount Olympus, Greece", location_he: "הר אולימפוס, יוון", location_el: "Όρος Όλυμπος, Ελλάδα", location_ru: "Гора Олимп, Греция", location_ar: "جبل أولمبوس، اليونان" },
+  { url: "/splash-7.jpg", location_en: "Palaios Panteleimonas, Greece", location_he: "פליאוס פנדלימונאס, יוון", location_el: "Παλαιός Παντελεήμονας, Ελλάδα", location_ru: "Старый Пантелеймон, Греция", location_ar: "باليوس بانتليمونا، اليونان" },
+  { url: "/splash-8.jpg", location_en: "Aegina, Greece", location_he: "אגינה, יוון", location_el: "Αίγινα, Ελλάδα", location_ru: "Эгина, Греция", location_ar: "إيجينا، اليونان" },
 ];
 
 export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
@@ -130,7 +133,11 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
                 textShadow: "0 1px 4px rgba(0,0,0,0.7)",
               }}
             >
-              {lang === "he" ? selectedImage.location_he : selectedImage.location}
+              {lang === "he" ? selectedImage.location_he :
+               lang === "el" ? selectedImage.location_el :
+               lang === "ru" ? selectedImage.location_ru :
+               lang === "ar" ? selectedImage.location_ar :
+               selectedImage.location_en}
             </span>
           </div>
         </div>
