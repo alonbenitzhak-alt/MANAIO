@@ -25,7 +25,7 @@ export default function PropertyCard({ property }: { property: Property }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 border border-gray-100 group hover:-translate-y-1">
       {/* Image */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-48 sm:h-64 overflow-hidden">
         <Image
           src={property.images[0]}
           alt={displayTitle}
@@ -99,8 +99,8 @@ export default function PropertyCard({ property }: { property: Property }) {
           {locationLabel}
         </p>
 
-        {/* Stats row - 4 columns */}
-        <div className="grid grid-cols-4 gap-2 mb-4">
+        {/* Stats row - responsive columns */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
           {/* Bedrooms */}
           <div className="flex flex-col items-center text-center">
             <svg className="w-4 h-4 text-gray-500 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

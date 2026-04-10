@@ -69,17 +69,17 @@ export default function PropertyDetailsPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="mb-8">
-              <div className="rounded-2xl overflow-hidden h-[450px] md:h-[550px] mb-3 relative">
+              <div className="rounded-2xl overflow-hidden h-[280px] sm:h-[400px] md:h-[550px] mb-3 relative">
                 <Image src={property.images[selectedImage]} alt={displayTitle} fill priority={selectedImage === 0} className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" quality={90} />
                 {property.is_demo && (
-                  <div className="absolute top-4 start-4 z-10">
-                    <span className="bg-red-600 text-white text-lg font-bold px-6 py-2 rounded-full shadow-lg">
+                  <div className="absolute top-2 sm:top-4 start-2 sm:start-4 z-10">
+                    <span className="bg-red-600 text-white text-sm sm:text-lg font-bold px-3 sm:px-6 py-1 sm:py-2 rounded-full shadow-lg">
                       {t("property.demo")}
                     </span>
                   </div>
                 )}
               </div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {property.images.map((img, i) => (
                   <button
                     key={i}
