@@ -66,12 +66,13 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
         <div
           style={{
             animation: "logoEntry 0.8s ease-out forwards",
+            marginBottom: "-20px",
           }}
         >
           <img
             src="/logo.svg"
             alt="MANAIO"
-            className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
+            className="w-48 h-48 sm:w-56 sm:h-56 object-contain"
             style={{
               filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.5))",
             }}
