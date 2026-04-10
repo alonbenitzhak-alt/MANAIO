@@ -2825,9 +2825,6 @@ const translations: Record<string, Record<string, string>> = {
     "propertyType.house": "בית",
     "propertyType.land": "קרקע",
 
-    // Card price label
-    "card.price": "מחיר",
-
     // Admin tabs & stats
     "admin.tab.pendingAgents": "סוכנים ממתינים",
     "admin.tab.properties": "נכסים פעילים",
@@ -3646,9 +3643,6 @@ const translations: Record<string, Record<string, string>> = {
     "propertyType.penthouse": "Penthouse",
     "propertyType.house": "House",
     "propertyType.land": "Land",
-
-    // Card price label
-    "card.price": "Price",
 
     // Admin tabs & stats
     "admin.tab.pendingAgents": "Pending Agents",
