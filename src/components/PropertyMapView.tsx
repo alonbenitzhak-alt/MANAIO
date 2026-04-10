@@ -19,27 +19,36 @@ export default function PropertyMapView({ properties, selectedId }: PropertyMapV
     if (!mapRef.current || mapInstance.current) return;
 
     // Initialize map
-    mapInstance.current = L.map(mapRef.current).setView([39.5, 25], 4);
+    try {
+      mapInstance.current = L.map(mapRef.current, {
+        preferCanvas: true,
+      }).setView([39.5, 25], 4);
 
-    // Add tile layer
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19,
-    }).addTo(mapInstance.current);
+      // Add tile layer with proper attribution
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        minZoom: 2,
+      }).addTo(mapInstance.current);
+    } catch (e) {
+      console.error("Map initialization error:", e);
+      return;
+    }
 
     // Add markers for each property
     properties.forEach((property) => {
       const [lat, lng] = property.coords;
       if (lat === 0 && lng === 0) return; // Skip invalid coords
 
-      const marker = L.marker([lat, lng], {
-        icon: L.icon({
-          iconUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiMwMDY2Y2MiIHJ4PSI4Ii8+PHRleHQgeD0iMjAiIHk9IjI0IiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUi4oKkPC90ZXh0Pjwvc3ZnPg==",
-          iconSize: [40, 40],
-          iconAnchor: [20, 40],
-          popupAnchor: [0, -40],
-        }),
-      }).addTo(mapInstance.current!);
+      const icon = L.divIcon({
+        html: `<div style="background:#0066cc;color:white;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:bold;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:3px solid white;">📍</div>`,
+        className: "",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -40],
+      });
+
+      const marker = L.marker([lat, lng], { icon }).addTo(mapInstance.current!);
 
       const popupContent = `
         <div style="min-width: 200px; font-family: system-ui;">
