@@ -51,7 +51,19 @@ export default function AIChatWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [thinking, setThinking] = useState(false);
+  const [showWhatsApp, setShowWhatsApp] = useState(true);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // WhatsApp configuration - update with your company's WhatsApp number
+  const whatsappNumber = "972586836555";
+  const whatsappMessage = encodeURIComponent(
+    lang === "he" ? "שלום, אני מעוניין בעזרה בנושא השקעה" :
+    lang === "el" ? "Γεια σας, ενδιαφέρομαι να λάβω βοήθεια σχετικά με μια επένδυση" :
+    lang === "ru" ? "Привет, я заинтересован в помощи по инвестициям" :
+    lang === "ar" ? "مرحبا، أنا مهتم بالمساعدة فيما يتعلق بالاستثمار" :
+    "Hello, I'm interested in getting help with investments"
+  );
+  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   const userMessages = messages.filter((m) => m.role === "user").length;
   const limitReached = userMessages >= MAX_QUESTIONS;
@@ -97,7 +109,30 @@ export default function AIChatWidget() {
   const remaining = MAX_QUESTIONS - userMessages;
 
   return (
-    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-2">
+    <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start gap-3">
+      {/* WhatsApp Button */}
+      {showWhatsApp && (
+        <div className="relative group">
+          <a
+            href={whatsappURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white"
+            title="Chat on WhatsApp"
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371 0-.57 0-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378l-.361.214-3.741-.982.998 3.645-.235.364a9.864 9.864 0 001.512 5.147l.359.361 3.699.914-1.035-3.982.313-.368a5.92 5.92 0 002.84-5.119c0-3.263-2.612-5.9-5.81-5.9m7.021-.188c1.675.029 3.29.703 4.533 1.968 1.243 1.266 1.94 2.881 1.91 4.556-.034 3.639-3.043 6.628-6.679 6.628h-.016c-1.088-.02-2.159-.225-3.168-.601l-3.652.964 1.04-3.797c-.609-1.231-.942-2.601-.922-4.042.030-3.639 3.043-6.628 6.679-6.628l.036.001z" />
+            </svg>
+          </a>
+          <button
+            onClick={() => setShowWhatsApp(false)}
+            className="absolute -top-2 -right-2 w-5 h-5 bg-gray-400 text-white rounded-full flex items-center justify-center hover:bg-gray-500 transition-colors text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {open && (
         <div className="w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden" style={{ height: 500 }}>
           {/* Header */}
