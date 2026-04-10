@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import { SiWhatsapp } from "react-icons/si";
 import { useAuth } from "@/lib/AuthContext";
 import { useLanguage } from "@/lib/LanguageContext";
 
@@ -117,12 +119,10 @@ export default function AIChatWidget() {
             href={whatsappURL}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white"
+            className="w-14 h-14 bg-[#25D366] rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white"
             title="Chat on WhatsApp"
           >
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371 0-.57 0-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-5.031 1.378l-.361.214-3.741-.982.998 3.645-.235.364a9.864 9.864 0 001.512 5.147l.359.361 3.699.914-1.035-3.982.313-.368a5.92 5.92 0 002.84-5.119c0-3.263-2.612-5.9-5.81-5.9m7.021-.188c1.675.029 3.29.703 4.533 1.968 1.243 1.266 1.94 2.881 1.91 4.556-.034 3.639-3.043 6.628-6.679 6.628h-.016c-1.088-.02-2.159-.225-3.168-.601l-3.652.964 1.04-3.797c-.609-1.231-.942-2.601-.922-4.042.030-3.639 3.043-6.628 6.679-6.628l.036.001z" />
-            </svg>
+            <SiWhatsapp className="w-7 h-7" />
           </a>
           <button
             onClick={() => setShowWhatsApp(false)}
@@ -138,11 +138,14 @@ export default function AIChatWidget() {
           {/* Header */}
           <div className="bg-gradient-to-r from-primary-800 to-primary-600 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
+              <Image
+                src="/logo.svg"
+                alt="MANAIO"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+                priority
+              />
               <div>
                 <p className="text-white font-semibold text-sm">{t("ai.chat.title")}</p>
                 <p className="text-primary-200 text-xs">{t("ai.chat.subtitle")}</p>
@@ -250,7 +253,7 @@ export default function AIChatWidget() {
       {/* Bubble button */}
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-14 h-14 bg-gradient-to-br from-primary-700 to-primary-500 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white"
+        className="w-14 h-14 bg-gradient-to-br from-primary-700 to-primary-500 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105 flex items-center justify-center text-white relative"
         title={t("ai.chat.buttonTitle")}
       >
         {open ? (
@@ -258,9 +261,14 @@ export default function AIChatWidget() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
+          <Image
+            src="/logo.svg"
+            alt="MANAIO"
+            width={32}
+            height={32}
+            className="w-8 h-8"
+            priority
+          />
         )}
       </button>
     </div>
