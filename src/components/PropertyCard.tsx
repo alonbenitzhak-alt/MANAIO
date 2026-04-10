@@ -25,16 +25,18 @@ export default function PropertyCard({ property }: { property: Property }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 border border-gray-100 group hover:-translate-y-1">
       {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="relative h-64 overflow-hidden">
         <Image
           src={property.images[0]}
           alt={displayTitle}
           fill
+          priority={property.is_demo}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover group-hover:scale-110 transition-transform duration-700"
+          quality={90}
         />
         {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 
         {/* Demo badge */}
         {property.is_demo && (

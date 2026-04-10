@@ -69,8 +69,8 @@ export default function PropertyDetailsPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="mb-8">
-              <div className="rounded-2xl overflow-hidden h-[400px] md:h-[500px] mb-3 relative">
-                <Image src={property.images[selectedImage]} alt={displayTitle} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" />
+              <div className="rounded-2xl overflow-hidden h-[450px] md:h-[550px] mb-3 relative">
+                <Image src={property.images[selectedImage]} alt={displayTitle} fill priority={selectedImage === 0} className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" quality={90} />
                 {property.is_demo && (
                   <div className="absolute top-4 start-4 z-10">
                     <span className="bg-red-600 text-white text-lg font-bold px-6 py-2 rounded-full shadow-lg">
@@ -84,9 +84,9 @@ export default function PropertyDetailsPage({
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`relative rounded-xl overflow-hidden h-24 md:h-28 border-2 transition-all ${i === selectedImage ? "border-primary-500 ring-2 ring-primary-200" : "border-transparent hover:border-gray-300"}`}
+                    className={`relative rounded-xl overflow-hidden h-28 md:h-32 border-2 transition-all ${i === selectedImage ? "border-primary-500 ring-2 ring-primary-200" : "border-transparent hover:border-gray-300"}`}
                   >
-                    <Image src={img} alt="" fill className="object-cover" sizes="33vw" />
+                    <Image src={img} alt="" fill className="object-cover" sizes="33vw" quality={85} />
                   </button>
                 ))}
               </div>
