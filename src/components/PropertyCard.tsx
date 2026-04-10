@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import { Property } from "@/lib/types";
 import { useFavorites } from "@/lib/FavoritesContext";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -17,6 +18,7 @@ const COUNTRY_KEY: Record<string, string> = {
 export default function PropertyCard({ property }: { property: Property }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const { t, lang } = useLanguage();
+  const [imageError, setImageError] = useState(false);
   const favorited = isFavorite(property.id);
   const displayTitle = property.translations?.[lang]?.title ?? (lang === "he" ? property.title_he : undefined) ?? property.title;
 
@@ -26,16 +28,26 @@ export default function PropertyCard({ property }: { property: Property }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-400 border border-gray-100 group hover:-translate-y-1">
       {/* Image */}
-      <div className="relative h-48 sm:h-64 overflow-hidden">
-        <Image
-          src={property.images[0]}
-          alt={displayTitle}
-          fill
-          priority={property.is_demo}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover group-hover:scale-110 transition-transform duration-700"
-          quality={90}
-        />
+      <div className="relative h-48 sm:h-64 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300">
+        {!imageError ? (
+          <Image
+            src={property.images[0]}
+            alt={displayTitle}
+            fill
+            priority={property.is_demo}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover group-hover:scale-110 transition-transform duration-700"
+            quality={90}
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-300">
+            <div className="text-center">
+              <div className="text-4xl mb-2">🏠</div>
+              <p className="text-gray-600 text-sm font-semibold">Image unavailable</p>
+            </div>
+          </div>
+        )}
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
 

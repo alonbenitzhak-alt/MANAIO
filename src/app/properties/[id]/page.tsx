@@ -23,6 +23,7 @@ export default function PropertyDetailsPage({
   const { properties } = useProperties();
   const property = properties.find((p) => p.id === id);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const { t, lang } = useLanguage();
 
   const adminWhatsapp = process.env.NEXT_PUBLIC_ADMIN_WHATSAPP || "972586836555";
@@ -70,8 +71,26 @@ export default function PropertyDetailsPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <div className="mb-8">
-              <div className="rounded-2xl overflow-hidden h-[280px] sm:h-[400px] md:h-[550px] mb-3 relative">
-                <Image src={property.images[selectedImage]} alt={displayTitle} fill priority={selectedImage === 0} className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" quality={90} />
+              <div className="rounded-2xl overflow-hidden h-[280px] sm:h-[400px] md:h-[550px] mb-3 relative bg-gray-300">
+                {!imageErrors[selectedImage] ? (
+                  <Image
+                    src={property.images[selectedImage]}
+                    alt={displayTitle}
+                    fill
+                    priority={selectedImage === 0}
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    quality={90}
+                    onError={() => setImageErrors({...imageErrors, [selectedImage]: true})}
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-300">
+                    <div className="text-center">
+                      <div className="text-6xl mb-4">🏠</div>
+                      <p className="text-gray-600 font-semibold">Image unavailable</p>
+                    </div>
+                  </div>
+                )}
                 {property.is_demo && (
                   <div className="absolute top-2 sm:top-4 start-2 sm:start-4 z-10">
                     <span className="bg-red-600 text-white text-sm sm:text-lg font-bold px-3 sm:px-6 py-1 sm:py-2 rounded-full shadow-lg">
