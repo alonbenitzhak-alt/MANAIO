@@ -228,17 +228,58 @@ export default function Navbar() {
               )}
 
               {/* Language Selector */}
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value as Lang)}
-                className="text-xs font-bold border border-gray-200 rounded-lg px-2 py-1.5 text-gray-600 hover:bg-gray-50 transition-colors bg-white cursor-pointer outline-none focus:ring-2 focus:ring-primary-500"
-              >
-                <option value="he">🇮🇱 עברית</option>
-                <option value="en">🇬🇧 English</option>
-                <option value="el">🇬🇷 Ελληνικά</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="ar">🇸🇦 العربية</option>
-              </select>
+              <div className="flex items-center gap-1 border border-gray-200 rounded-lg p-1 bg-white">
+                <button
+                  onClick={() => setLang("he")}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
+                    lang === "he"
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  🇮🇱 HE
+                </button>
+                <button
+                  onClick={() => setLang("en")}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
+                    lang === "en"
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  🇬🇧 EN
+                </button>
+                <button
+                  onClick={() => setLang("el")}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
+                    lang === "el"
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  🇬🇷 EL
+                </button>
+                <button
+                  onClick={() => setLang("ru")}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
+                    lang === "ru"
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  🇷🇺 RU
+                </button>
+                <button
+                  onClick={() => setLang("ar")}
+                  className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
+                    lang === "ar"
+                      ? "bg-primary-600 text-white"
+                      : "text-gray-600 hover:bg-gray-50"
+                  }`}
+                >
+                  🇸🇦 AR
+                </button>
+              </div>
 
               {user ? (
                 <div className="flex items-center gap-3">
@@ -329,17 +370,58 @@ export default function Navbar() {
               {t("nav.favorites")} {favorites.length > 0 && `(${favorites.length})`}
             </Link>
             <div className="px-3 py-2">
-              <select
-                value={lang}
-                onChange={(e) => { setLang(e.target.value as Lang); setMobileOpen(false); }}
-                className="w-full text-base font-medium text-primary-600 bg-primary-50 rounded-lg px-3 py-2 cursor-pointer outline-none border border-primary-100"
-              >
-                <option value="he">🇮🇱 עברית</option>
-                <option value="en">🇬🇧 English</option>
-                <option value="el">🇬🇷 Ελληνικά</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="ar">🇸🇦 العربية</option>
-              </select>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => { setLang("he"); setMobileOpen(false); }}
+                  className={`flex-1 px-2 py-2 rounded text-sm font-bold transition-colors ${
+                    lang === "he"
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  🇮🇱 HE
+                </button>
+                <button
+                  onClick={() => { setLang("en"); setMobileOpen(false); }}
+                  className={`flex-1 px-2 py-2 rounded text-sm font-bold transition-colors ${
+                    lang === "en"
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  🇬🇧 EN
+                </button>
+                <button
+                  onClick={() => { setLang("el"); setMobileOpen(false); }}
+                  className={`flex-1 px-2 py-2 rounded text-sm font-bold transition-colors ${
+                    lang === "el"
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  🇬🇷 EL
+                </button>
+                <button
+                  onClick={() => { setLang("ru"); setMobileOpen(false); }}
+                  className={`flex-1 px-2 py-2 rounded text-sm font-bold transition-colors ${
+                    lang === "ru"
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  🇷🇺 RU
+                </button>
+                <button
+                  onClick={() => { setLang("ar"); setMobileOpen(false); }}
+                  className={`flex-1 px-2 py-2 rounded text-sm font-bold transition-colors ${
+                    lang === "ar"
+                      ? "bg-primary-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  🇸🇦 AR
+                </button>
+              </div>
             </div>
             {user ? (
               <>
