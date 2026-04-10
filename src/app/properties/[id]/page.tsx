@@ -120,7 +120,7 @@ export default function PropertyDetailsPage({
                 {[
                   { label: t("detail.expectedRoi"), value: `${property.expected_roi}%`, accent: true },
                   { label: t("detail.bedrooms"), value: property.bedrooms.toString() },
-                  { label: property.area_sqm ? "Area" : null, value: property.area_sqm ? `${property.area_sqm} m²` : null },
+                  { label: property.area_sqm ? t("detail.area") : null, value: property.area_sqm ? `${property.area_sqm} ${t("card.sqm")}` : null },
                   { label: t("detail.propertyType"), value: t(`propertyType.${property.property_type.toLowerCase()}`) || property.property_type },
                   { label: t("detail.country"), value: t(`footer.${property.country.toLowerCase()}`) || property.country },
                 ].filter(item => item.label !== null).map((item) => (
@@ -162,7 +162,7 @@ export default function PropertyDetailsPage({
                   </div>
 
                   <p className="text-sm text-gray-500 pt-4 border-t border-gray-200">
-                    This neighborhood overview is based on current market conditions and community feedback. For the most up-to-date information, we recommend speaking with our local partner who can provide detailed insights based on their on-the-ground knowledge.
+                    {t("detail.neighborhoodDisclaimer")}
                   </p>
                 </div>
               </div>
@@ -232,7 +232,7 @@ export default function PropertyDetailsPage({
                   {property.furnished !== undefined && (
                     <div className="mt-4 p-3 bg-white rounded-lg border border-blue-200">
                       <span className="text-sm font-medium text-gray-900">
-                        {property.furnished ? "✓ Furnished" : "○ Unfurnished"}
+                        {property.furnished ? `✓ ${t("card.furnished")}` : `○ ${t("card.unfurnished")}`}
                       </span>
                     </div>
                   )}

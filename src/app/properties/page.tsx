@@ -133,7 +133,7 @@ function PropertiesContent() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6.553 3.276A1 1 0 0121 20.382V9.618a1 1 0 00-1.447-.894L15 11m0 0l6-3.618m-6 3.618v10" />
           </svg>
-          📍 Map View
+          {t("properties.mapView")}
         </Link>
       </div>
 

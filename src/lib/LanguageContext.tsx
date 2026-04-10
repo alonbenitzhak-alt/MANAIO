@@ -107,6 +107,8 @@ const elTranslations: Record<string, string> = {
   "properties.noResultsSub": "Δοκιμάστε να αλλάξετε τα κριτήρια αναζήτησης",
   "properties.loading": "Φόρτωση ακινήτων...",
   "properties.search": "Αναζήτηση κατά πόλη, χώρα, τύπο ακινήτου...",
+  "properties.mapView": "📍 Προβολή Χάρτη",
+  "properties.map": "📍 Χάρτης",
   // Card
   "card.roi": "Απόδοση",
   "card.bedroom": "Υπνοδωμάτιο",
@@ -145,6 +147,7 @@ const elTranslations: Record<string, string> = {
   "detail.gettingAround": "Μετακίνηση",
   "detail.servicesAmenities": "Υπηρεσίες & Ανέσεις",
   "detail.lifestyleCulture": "Τρόπος Ζωής & Πολιτισμός",
+  "detail.neighborhoodDisclaimer": "Αυτή η περιγραφή της γειτονιάς βασίζεται σε τρέχουσες συνθήκες αγοράς και ανατροφοδότηση της κοινότητας. Για τις πιο πρόσφατες πληροφορίες, σας συνιστούμε να μιλήσετε με τον τοπικό μας συνεργάτη που μπορεί να παράσχει λεπτομερή στοιχεία βάσει της γνώσης του εδάφους.",
   "detail.features": "Χαρακτηριστικά Ακινήτου",
   "detail.area": "Εμβαδόν",
   "detail.bathrooms": "Μπάνια",
@@ -872,6 +875,8 @@ const ruTranslations: Record<string, string> = {
   "properties.noResultsSub": "Попробуйте изменить критерии поиска",
   "properties.loading": "Загрузка объектов...",
   "properties.search": "Поиск по городу, стране, типу объекта...",
+  "properties.mapView": "📍 Вид на карту",
+  "properties.map": "📍 Карта",
   // Card
   "card.roi": "Доходность",
   "card.bedroom": "Спальня",
@@ -909,6 +914,7 @@ const ruTranslations: Record<string, string> = {
   "detail.gettingAround": "Передвижение",
   "detail.servicesAmenities": "Услуги и удобства",
   "detail.lifestyleCulture": "Образ жизни и культура",
+  "detail.neighborhoodDisclaimer": "Этот обзор района основан на текущих условиях рынка и отзывах сообщества. Для получения наиболее актуальной информации мы рекомендуем поговорить с нашим местным партнером, который сможет предоставить подробную информацию на основе своих местных знаний.",
   "detail.features": "Характеристики объекта",
   "detail.area": "Площадь",
   "detail.bathrooms": "Ванные комнаты",
@@ -1636,6 +1642,8 @@ const arTranslations: Record<string, string> = {
   "properties.noResultsSub": "جرب تعديل معايير البحث",
   "properties.loading": "جاري تحميل العقارات...",
   "properties.search": "البحث بالمدينة أو الدولة أو نوع العقار...",
+  "properties.mapView": "📍 عرض الخريطة",
+  "properties.map": "📍 الخريطة",
   // Card
   "card.roi": "العائد",
   "card.bedroom": "غرفة نوم",
@@ -1673,6 +1681,7 @@ const arTranslations: Record<string, string> = {
   "detail.gettingAround": "التنقل",
   "detail.servicesAmenities": "الخدمات والمرافق",
   "detail.lifestyleCulture": "نمط الحياة والثقافة",
+  "detail.neighborhoodDisclaimer": "يعتمد هذا النظرة العامة للحي على ظروف السوق الحالية وتعليقات المجتمع. للحصول على أحدث المعلومات، نوصيك بالتحدث مع شريكنا المحلي الذي يمكنه تقديم رؤى مفصلة بناءً على معرفته على الأرض.",
   "detail.features": "مميزات العقار",
   "detail.area": "المساحة",
   "detail.bathrooms": "الحمامات",
@@ -2433,6 +2442,7 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "ניווט וניידות",
     "detail.servicesAmenities": "שירותים ותשתיות",
     "detail.lifestyleCulture": "אורח חיים ותרבות",
+    "detail.neighborhoodDisclaimer": "סקירה זו של השכונה מבוססת על תנאי שוק נוכחיים ותגובות הקהילה. למידע עדכני ביותר, אנו ממליצים לדבר עם השותף המקומי שלנו שיכול לספק תובנות מפורטות על סמך הידע שלו בשטח.",
     "detail.features": "תכונות הנכס",
     "detail.area": "שטח",
     "detail.bathrooms": "חדרי אמבטיה",
@@ -2944,6 +2954,8 @@ const translations: Record<string, Record<string, string>> = {
 
     // Properties search
     "properties.search": "חיפוש לפי עיר, מדינה, סוג נכס...",
+    "properties.mapView": "📍 תצוגת מפה",
+    "properties.map": "📍 מפה",
 
     // Lead status labels
     "status.sent": "נשלח",
@@ -3252,6 +3264,7 @@ const translations: Record<string, Record<string, string>> = {
     "detail.gettingAround": "Getting Around",
     "detail.servicesAmenities": "Services & Amenities",
     "detail.lifestyleCulture": "Lifestyle & Culture",
+    "detail.neighborhoodDisclaimer": "This neighborhood overview is based on current market conditions and community feedback. For the most up-to-date information, we recommend speaking with our local partner who can provide detailed insights based on their on-the-ground knowledge.",
     "detail.features": "Property Features",
     "detail.area": "Area",
     "detail.bathrooms": "Bathrooms",
@@ -3763,6 +3776,8 @@ const translations: Record<string, Record<string, string>> = {
 
     // Properties search
     "properties.search": "Search by city, country, property type...",
+    "properties.mapView": "📍 Map View",
+    "properties.map": "📍 Map",
 
     // Lead status labels
     "status.sent": "Sent",
