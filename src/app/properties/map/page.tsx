@@ -42,7 +42,7 @@ export default function PropertiesMapPage() {
           <span>/</span>
           <span className="text-gray-900 font-medium">{t("properties.title")}</span>
           <span>/</span>
-          <span className="text-gray-900 font-medium">📍 Map</span>
+          <span className="text-gray-900 font-medium">{t("properties.map")}</span>
         </div>
       </div>
 
